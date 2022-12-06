@@ -10,6 +10,7 @@ import * as cldrStatus from "./cldrStatus.js";
 import * as cldrSurvey from "./cldrSurvey.js";
 import * as cldrTable from "./cldrTable.js";
 import * as cldrText from "./cldrText.js";
+import * as cldrUserLevels from "./cldrUserLevels.js";
 import * as cldrVote from "./cldrVote.js";
 
 import InfoPanel from "../views/InfoPanel.vue";
@@ -508,14 +509,6 @@ function updateRowVoteInfo(tr, theRow) {
         value,
         value === theRow.winningValue ? "winner" : "value"
       );
-      if (value === theRow.inheritedValue) {
-        valdiv.appendChild(
-          cldrDom.createChunk(
-            cldrText.get("voteInfo_votesForSpecificValue"),
-            "p"
-          )
-        );
-      }
     }
     if (isectionIsUsed) {
       valdiv.appendChild(isection);
@@ -532,7 +525,10 @@ function updateRowVoteInfo(tr, theRow) {
     const itemVotesLength = item.votes ? Object.keys(item.votes).length : 0;
     const anon =
       itemVotesLength == 1 &&
-      item.votes[Object.keys(item.votes)[0]].level === "anonymous";
+      cldrUserLevels.match(
+        item.votes[Object.keys(item.votes)[0]].level,
+        cldrUserLevels.ANONYMOUS
+      );
     if (itemVotesLength == 0 || anon) {
       var vrow = cldrDom.createChunk(
         null,

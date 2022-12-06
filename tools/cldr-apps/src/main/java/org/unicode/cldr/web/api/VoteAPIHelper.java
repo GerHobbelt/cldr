@@ -76,10 +76,29 @@ public class VoteAPIHelper {
         return handleGetRows(args);
     }
 
-    static Response handleGetOnePage(String loc, String session, String page) {
+    static Response handleGetOnePage(String loc, String session, String page, String xpstrid) {
         ArgsForGet args = new ArgsForGet(loc, session);
-        args.page = page;
+        if ("auto".equals(page) && xpstrid != null && !xpstrid.isEmpty()) {
+            args.page = getPageFromXpathStringId(xpstrid);
+        } else {
+            args.page = page;
+        }
         return handleGetRows(args);
+    }
+
+    private static String getPageFromXpathStringId(String xpstrid) {
+        try {
+            String xpath = CookieSession.sm.xpt.getByStringID(xpstrid);
+            if (xpath != null) {
+                PathHeader ph = CookieSession.sm.getSTFactory().getPathHeader(xpath);
+                if (ph != null) {
+                    return ph.getPageId().name();
+                }
+            }
+        } catch (Throwable t) {
+            return null;
+        }
+        return null;
     }
 
     private static Response handleGetRows(ArgsForGet args) {
@@ -115,7 +134,7 @@ public class VoteAPIHelper {
                 // Should not get here.
                 return new STError(ErrorCode.E_INTERNAL, "handleGetRows: need xpstrid or page, but not both").build();
             }
-            final DataPage pageData = DataPage.make(pageId, null, mySession, locale, xp, matcher);
+            final DataPage pageData = DataPage.make(pageId, mySession, locale, xp, matcher);
             pageData.setUserForVotelist(mySession.user);
             r.page = new RowResponse.Page();
 
@@ -301,45 +320,46 @@ public class VoteAPIHelper {
 
     static Response handleVote(String loc, String xpstrid, VoteRequest request, final CookieSession mySession) {
         VoteResponse r = new VoteResponse();
-
         mySession.userDidAction();
-
         CLDRLocale locale = CLDRLocale.getInstance(loc);
         if (!UserRegistry.userCanModifyLocale(mySession.user, locale)) {
             return Response.status(Status.FORBIDDEN).build();
         }
+        loc = locale.getBaseName(); // sanitized
         final SurveyMain sm = CookieSession.sm;
         final String xp = sm.xpt.getByStringID(xpstrid);
         if (xp == null) {
             return Response.status(Status.NOT_FOUND).build(); // no XPath found
         }
-        CheckCLDR.Options options = DataPage.getOptions(null, mySession, locale); // TODO: why null for WebContext here?
+        CheckCLDR.Options options = DataPage.getOptions(mySession, locale);
         final STFactory stf = sm.getSTFactory();
         synchronized (mySession) {
             try {
                 final String origValue = request.value;
                 final Exception[] exceptionList = new Exception[1];
-                final String val = processValue(locale, xp, exceptionList, origValue);
+                final CLDRFile cldrFile = stf.make(loc, true, true);
+                final String val = processValue(locale, xp, exceptionList, origValue, cldrFile);
                 final List<CheckStatus> result = new ArrayList<>();
+                if (val == null && origValue != null && !origValue.isEmpty()) {
+                    normalizedToZeroLengthError(r, result);
+                }
                 final TestResultBundle cc = stf.getTestResult(locale, options);
-                runTests(mySession, r, locale, sm, cc, xp, val, result);
+                runTests(cc, xp, val, result);
                 addDaipException(loc, xp, result, exceptionList, val, origValue);
-                r.setResults(result);
-                r.testsRun = cc.toString();
+                r.setTestResults(result);
                 // Create a DataPage for this single XPath.
-                // NOTE: tests may be run twice, since we call both runTests and DataPage.make!
-                // -- If so, this should be corrected before we actually use this code!
-                DataPage page = DataPage.make(null, null, mySession, locale, xp, null);
+                DataPage page = DataPage.make(null, mySession, locale, xp, null);
                 page.setUserForVotelist(mySession.user);
-                DataRow pvi = page.getDataRow(xp);
-                // First, calculate the status for showing
-                r.statusAction = calculateShowRowAction(locale, stf, xp, val, pvi);
-
+                DataRow dataRow = page.getDataRow(xp);
+                // First, calculate the status for showing (unless already set by normalizedToZeroLengthError)
+                if (r.statusAction == null) {
+                    r.statusAction = calculateShowRowAction(cldrFile, xp, val, dataRow);
+                }
                 if (!r.statusAction.isForbidden()) {
-                    CandidateInfo ci = calculateCandidateItem(result, val, pvi);
-                    // Now, recalculate the statusACtion for accepting the new item
+                    CandidateInfo ci = calculateCandidateItem(result, val, dataRow);
+                    // Now, recalculate the statusAction for accepting the new item
                     r.statusAction = CLDRConfig.getInstance().getPhase()
-                        .getAcceptNewItemAction(ci, pvi, CheckCLDR.InputMethod.DIRECT,
+                        .getAcceptNewItemAction(ci, dataRow, CheckCLDR.InputMethod.DIRECT,
                             stf.getPathHeader(xp), mySession.user);
                     if (!r.statusAction.isForbidden()) {
                         try {
@@ -348,7 +368,6 @@ public class VoteAPIHelper {
                                 request.voteLevelChanged = null;
                             }
                             ballotBox.voteForValue(mySession.user, xp, val, request.voteLevelChanged);
-                            r.submitResult = ballotBox.getResolver(xp);
                             r.didVote = true;
                         } catch (VoteNotAcceptedException e) {
                             if (e.getErrCode() == ErrorCode.E_PERMANENT_VOTE_NO_FORUM) {
@@ -364,38 +383,55 @@ public class VoteAPIHelper {
                 return (new STError(t).build());
             }
         }
-
         return Response.ok(r).build();
     }
 
-    private static void runTests(final CookieSession mySession, VoteResponse r, CLDRLocale locale, final SurveyMain sm, TestResultBundle cc, String xp,
-        String val, final List<CheckStatus> result) {
+    private static void normalizedToZeroLengthError(VoteResponse r, List<CheckStatus> result) {
+        final String message = "DAIP returned a 0 length string";
+        r.didNotSubmit = message;
+        r.statusAction = CheckCLDR.StatusAction.FORBID_ERRORS;
+        String[] list = { message };
+        result.add(new CheckStatus().setMainType(CheckStatus.errorType)
+            .setSubtype(Subtype.internalError)
+            .setCause(new CheckCLDR() {
+                @Override
+                public CheckCLDR handleCheck(String path, String fullPath, String value, Options options,
+                                             List<CheckStatus> result) {
+                    return null;
+                }
+            })
+            .setMessage("Input Processor Error: {0}")
+            .setParameters(list));
+    }
+
+    private static void runTests(TestResultBundle cc, String xp,
+                                 String val, final List<CheckStatus> result) {
         if (val != null) {
-            try (SurveyMain.UserLocaleStuff uf = sm.getUserFile(mySession, locale)) {
-                final CLDRFile file = uf.cldrfile;
-                cc.check(xp, result, val);
-                r.dataEmpty = file.isEmpty();
-            }
+            cc.check(xp, result, val);
         }
     }
 
-    private static String processValue(CLDRLocale locale, String xp, Exception[] exceptionList, final String origValue) {
+    private static String processValue(CLDRLocale locale, String xp, Exception[] exceptionList, final String origValue, CLDRFile cldrFile) {
         String val;
-        if (origValue != null) {
+        if (origValue != null && !origValue.isEmpty()) {
             final DisplayAndInputProcessor daip = new DisplayAndInputProcessor(locale, true);
+            daip.enableInheritanceReplacement(cldrFile);
             val = daip.processInput(xp, origValue, exceptionList);
+            if (val.isEmpty()) {
+                val = null; // the caller will recognize this as exceptional, not Abstain
+            }
         } else {
             val = null;
         }
         return val;
     }
 
-    private static CandidateInfo calculateCandidateItem(final List<CheckStatus> result, final String candVal, DataRow pvi) {
+    private static CandidateInfo calculateCandidateItem(final List<CheckStatus> result, final String candVal, DataRow dataRow) {
         CandidateInfo ci;
         if (candVal == null) {
             ci = null; // abstention
         } else {
-            ci = pvi.getItem(candVal); // existing item?
+            ci = dataRow.getItem(candVal); // existing item?
             if (ci == null) { // no, new item
                 ci = new CandidateInfo() {
                     @Override
@@ -418,19 +454,15 @@ public class VoteAPIHelper {
         return ci;
     }
 
-    private static CheckCLDR.StatusAction calculateShowRowAction(CLDRLocale locale, STFactory stf, String xp, String val, DataRow pvi) {
-        CheckCLDR.StatusAction showRowAction = pvi.getStatusAction();
+    private static CheckCLDR.StatusAction calculateShowRowAction(CLDRFile cldrFile, String xp, String val, DataRow dataRow) {
+        CheckCLDR.StatusAction showRowAction = dataRow.getStatusAction();
         if (CldrUtility.INHERITANCE_MARKER.equals(val)) {
-            if (pvi.wouldInheritNull()) {
+            if (dataRow.wouldInheritNull()) {
                 showRowAction = CheckCLDR.StatusAction.FORBID_NULL;
-            } else {
-                // TODO: expensive, the caller probably should provide a CLDRFile.
-                CLDRFile cldrFile = stf.make(locale.getBaseName(), true, true);
-                if (CheckForCopy.sameAsCode(val, xp, cldrFile.getUnresolved(), cldrFile)) {
-                    showRowAction = CheckCLDR.StatusAction.FORBID_CODE;
-                }
+            } else if (CheckForCopy.sameAsCode(val, xp, cldrFile.getUnresolved(), cldrFile)) {
+                showRowAction = CheckCLDR.StatusAction.FORBID_CODE;
             }
-        } else if (pvi.isUnvotableRoot(val)) {
+        } else if (dataRow.isUnvotableRoot(val)) {
             showRowAction = CheckCLDR.StatusAction.FORBID_ROOT;
         }
         return showRowAction;

@@ -72,17 +72,15 @@ const strings = {
 
   userlevel_admin: "Admin",
   userlevel_tc: "TC",
-  userlevel_expert: "Expert",
   userlevel_vetter: "Vetter",
-  userlevel_street: "Guest",
+  userlevel_guest: "Guest",
   userlevel_locked: "Locked",
   userlevel_manager: "Manager",
 
   userlevel_admin_desc: "Administrator",
   userlevel_tc_desc: "CLDR-Technical Committee member",
-  userlevel_expert_desc: "Language Expert",
   userlevel_vetter_desc: "Regular Vetter",
-  userlevel_street_desc: "Guest User",
+  userlevel_guest_desc: "Guest User",
   userlevel_manager_desc: "Project Manager",
   userlevel_locked_desc: "Locked User, no login",
 
@@ -213,8 +211,6 @@ const strings = {
   voteInfo_moreInfo:
     "Click here for a full explanation of the icons and their meanings.",
   voteInfo_votesForInheritance: "These are votes for inheritance.",
-  voteInfo_votesForSpecificValue:
-    "These are votes for the specific value currently matching the inherited value. Votes for this specific value are combined with any votes for inheritance.",
   // CheckCLDR.StatusAction
   StatusAction_msg: "Not submitted: ${0}",
   StatusAction_popupmsg:
@@ -401,7 +397,7 @@ const strings = {
     "This is the Forum Bulk Close Posts page. The results may take several minutes to load.",
 
   jsonStatus_msg:
-    "You should see your content shortly, thank you for waiting. By the way, there are ${users} logged-in users and ${guests} visitors to the Survey Tool. The server's workload is about ${sysloadpct} of normal capacity. You have been waiting about ${waitTime} seconds.",
+    "You should see your content shortly, thank you for waiting. By the way, there are ${users} logged-in users and ${observers} visitors to the Survey Tool. The server's workload is about ${sysloadpct} of normal capacity. You have been waiting about ${waitTime} seconds.",
   err_what_section: "load part of this locale",
   err_what_locmap: "load the list of locales",
   err_what_menus: "load the Survey Tool menus",
@@ -503,6 +499,8 @@ const strings = {
     "Check if any changes are needed in your language.",
   notification_category_error:
     "The Survey Tool detected an error in the winning value.",
+  notification_category_inherited_changed:
+    "The winning inherited value was altered from its baseline value. (Informational)",
   notification_category_losing:
     "The value that your organization chose (overall) is either not the winning value, or doesn’t have enough votes to be approved. " +
     "This might be due to a dispute between members of your organization.",

@@ -488,11 +488,15 @@ public class VettingViewer<T> {
             if (skipForLimitedSubmission(path, errorStatus, oldValue)) {
                 return;
             }
-            if (!onlyRecordErrors && choices.contains(NotificationCategory.changedOldValue)) {
-                if (oldValue != null && !oldValue.equals(value)) {
-                    problems.add(NotificationCategory.changedOldValue);
-                    vc.problemCounter.increment(NotificationCategory.changedOldValue);
-                }
+            if (!onlyRecordErrors && choices.contains(NotificationCategory.changedOldValue) &&
+                changedFromBaseline(path, value, oldValue, sourceFile)) {
+                problems.add(NotificationCategory.changedOldValue);
+                vc.problemCounter.increment(NotificationCategory.changedOldValue);
+            }
+            if (!onlyRecordErrors && choices.contains(NotificationCategory.inheritedChanged) &&
+                inheritedChangedFromBaseline(path, value, sourceFile)) {
+                problems.add(NotificationCategory.inheritedChanged);
+                vc.problemCounter.increment(NotificationCategory.inheritedChanged);
             }
             VoteStatus voteStatus = userVoteStatus.getStatusForUsersOrganization(sourceFile, path, organization);
             boolean itemsOkIfVoted = (voteStatus == VoteStatus.ok);
@@ -511,6 +515,43 @@ public class VettingViewer<T> {
                 R2<SectionId, PageId> group = Row.of(ph.getSectionId(), ph.getPageId());
                 sorted.put(group, new WritingInfo(ph, problems, htmlMessage, firstSubtype()));
             }
+        }
+
+        private boolean changedFromBaseline(String path, String value, String oldValue, CLDRFile sourceFile) {
+            if (oldValue != null && !oldValue.equals(value)) {
+                if (CldrUtility.INHERITANCE_MARKER.equals(oldValue)) {
+                    String baileyValue = sourceFile.getBaileyValue(path, null, null);
+                    if (baileyValue != null && baileyValue.equals(value)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private boolean inheritedChangedFromBaseline(String path, String value, CLDRFile sourceFile) {
+            Output<String> pathWhereFound = new Output<>();
+            Output<String> localeWhereFound = new Output<>();
+            String baileyValue = sourceFile.getBaileyValue(path, pathWhereFound, localeWhereFound);
+            if (baileyValue == null ||
+                GlossonymConstructor.PSEUDO_PATH.equals(pathWhereFound.toString()) ||
+                XMLSource.ROOT_ID.equals(localeWhereFound.toString()) ||
+                XMLSource.CODE_FALLBACK_ID.equals(localeWhereFound.toString())) {
+                return false;
+            }
+            if (!baileyValue.equals(value) && !CldrUtility.INHERITANCE_MARKER.equals(value)) {
+                return false;
+            }
+            String baselineInheritedValue;
+            if (localeWhereFound.toString().equals(localeId)) { // sideways inheritance
+                baselineInheritedValue = baselineFile.getWinningValue(pathWhereFound.toString());
+            } else { // inheritance from other locale
+                Factory baselineFactory = CLDRConfig.getInstance().getCommonAndSeedAndMainAndAnnotationsFactory();
+                CLDRFile parentFile = baselineFactory.make(localeWhereFound.toString(), true);
+                baselineInheritedValue = parentFile.getWinningValue(pathWhereFound.toString());
+            }
+            return !baileyValue.equals(baselineInheritedValue);
         }
 
         private Subtype firstSubtype() {
@@ -766,7 +807,8 @@ public class VettingViewer<T> {
             // other data
             this.choices = choices;
 
-            EnumSet<NotificationCategory> thingsThatRequireOldFile = EnumSet.of(NotificationCategory.englishChanged, NotificationCategory.missingCoverage, NotificationCategory.changedOldValue);
+            EnumSet<NotificationCategory> thingsThatRequireOldFile = EnumSet.of(NotificationCategory.englishChanged,
+                NotificationCategory.missingCoverage, NotificationCategory.changedOldValue, NotificationCategory.inheritedChanged);
             ourChoicesThatRequireOldFile = choices.clone();
             ourChoicesThatRequireOldFile.retainAll(thingsThatRequireOldFile);
 
@@ -1298,7 +1340,7 @@ public class VettingViewer<T> {
              * treat the item as missing. Reference: https://unicode.org/cldr/trac/ticket/11765
              */
             String localeFound = sourceFile.getSourceLocaleIdExtended(path, status, false /* skipInheritanceMarker */);
-            final boolean localeFoundIsRootOrCodeFallback = localeFound.equals("root")
+            final boolean localeFoundIsRootOrCodeFallback = localeFound.equals(XMLSource.ROOT_ID)
                 || localeFound.equals(XMLSource.CODE_FALLBACK_ID);
             final boolean isParentRoot = CLDRLocale.getInstance(sourceFile.getLocaleID()).isParentRoot();
             /*

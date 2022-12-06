@@ -1,10 +1,6 @@
 package org.unicode.cldr.web.api;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -46,8 +42,8 @@ public class AddUser {
                 description = "Forbidden"),
         })
     public Response addUser(
-        @QueryParam("s") @Schema(required = true, description = "Session String") String sessionString,
-        AddUserRequest request) {
+        AddUserRequest request,
+        @HeaderParam(Auth.SESSION_HEADER) String sessionString) {
         try {
             CookieSession session = Auth.getSession(sessionString);
             if (session == null) {
@@ -117,7 +113,7 @@ public class AddUser {
         u.org = new_org;
         u.userlevel = request.level;
         u.locales = new_locales;
-        u.setPassword(UserRegistry.makePassword(u.email + u.org + session.user.email));
+        u.setPassword(UserRegistry.makePassword());
         if (request.level < 0 || !reg.canSetUserLevel(session.user, u, request.level)) {
             return new AddUserResponse(AddUserError.BAD_LEVEL);
         }
