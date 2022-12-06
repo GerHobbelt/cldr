@@ -47,6 +47,7 @@ import org.unicode.cldr.util.CldrUtility;
 import org.unicode.cldr.util.CoverageInfo;
 import org.unicode.cldr.util.DateTimeFormats;
 import org.unicode.cldr.util.DtdData.IllegalByDtdException;
+import org.unicode.cldr.util.VoterReportStatus.ReportId;
 import org.unicode.cldr.util.Factory;
 import org.unicode.cldr.util.Level;
 import org.unicode.cldr.util.PathHeader;
@@ -345,6 +346,8 @@ public class SurveyAjax extends HttpServlet {
                     CookieSession.checkForExpiredSessions();
                     mySession = CookieSession.retrieve(sess); // or peek?
                     if (mySession != null) {
+                        long millisSinceAction = System.currentTimeMillis() - mySession.getLastActionMillisSinceEpoch();
+                        r2.put("millisSinceAction", millisSinceAction);
                         r2.put("millisTillKick", mySession.millisTillKick());
                     } else {
                         r2.put("session_err", "no session");
@@ -510,8 +513,11 @@ public class SurveyAjax extends HttpServlet {
                             for (SurveyMain.ReportMenu m : SurveyMain.ReportMenu.values()) {
                                 JSONObject report = new JSONObject();
                                 report.put("url", m.urlStub());
-                                report.put("hasQuery", false);
-                                report.put("display", m.display());
+                                reports.put(report);
+                            }
+                            for (final ReportId m : ReportId.values()) {
+                                JSONObject report = new JSONObject();
+                                report.put("url", "r_" + m.name());
                                 reports.put(report);
                             }
 
@@ -1751,7 +1757,7 @@ public class SurveyAjax extends HttpServlet {
      * submit them as in submitOldVotes.
      *
      * @param r the SurveyJSONWrapper in which to write
-     * @param user the User
+     * @param user the User, or null (do nothing)
      * @param sm the SurveyMain instance
      * @throws IOException
      * @throws JSONException
@@ -1760,7 +1766,7 @@ public class SurveyAjax extends HttpServlet {
     private void doAutoImportOldWinningVotes(SurveyJSONWrapper r, User user, SurveyMain sm)
                throws IOException, JSONException, SQLException {
 
-        if (alreadyAutoImportedVotes(user.id, "ask")) {
+        if (user == null || alreadyAutoImportedVotes(user.id, "ask")) {
             return;
         }
         alreadyAutoImportedVotes(user.id, "set");
@@ -2465,6 +2471,13 @@ public class SurveyAjax extends HttpServlet {
         String which = request.getParameter("x");
 
         response.setContentType("text/html");
+        generateReport(which, out, sm, l);
+    }
+
+    /**
+     * Hook to generate one of the 'old three' reports.
+     */
+    static public void generateReport(final String which, Writer out, SurveyMain sm, CLDRLocale l) throws IOException {
         if ("r_datetime".equals(which)) {
             generateDateTimesReport(out, sm, l);
         } else if ("r_zones".equals(which)) {

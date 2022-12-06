@@ -21,7 +21,7 @@ import com.google.common.collect.ImmutableSortedSet;
 
 /**
  * This class manages the Limited Submission process.
- * 
+ *
  * TODO: see https://unicode-org.atlassian.net/browse/CLDR-15230 for TODOs here
  */
 public final class SubmissionLocales {
@@ -61,13 +61,18 @@ public final class SubmissionLocales {
         .addAll(HIGH_LEVEL_LOCALES)
         .build();
 
-    
+
     /**
      * Subset of CLDR_LOCALES, minus special which are only those which
      * are TC orgs
      */
     public static final Set<String> TC_ORG_LOCALES;
 
+    /**
+     * Set to true iff ONLY grammar locales should be limited submission
+     * {@link GrammarInfo#getGrammarLocales()}
+     */
+    public static final boolean ONLY_GRAMMAR_LOCALES = false;
 
     /**
      * Update this in each limited release.
@@ -75,12 +80,14 @@ public final class SubmissionLocales {
     public static final Set<String> LOCALES_FOR_LIMITED;
     static {
         Set<String> temp = new HashSet<>(CLDR_OR_HIGH_LEVEL_LOCALES);
-        temp.retainAll(GrammarInfo.getGrammarLocales());
+        if (ONLY_GRAMMAR_LOCALES) {
+            temp.retainAll(GrammarInfo.getGrammarLocales());
+        }
         LOCALES_FOR_LIMITED = ImmutableSortedSet.copyOf(temp);
 
         Set<String> temp2 = new HashSet<>(CLDR_LOCALES);
         temp2.removeAll(SPECIAL_ORG_LOCALES);
-        TC_ORG_LOCALES = ImmutableSortedSet.copyOf(temp);
+        TC_ORG_LOCALES = ImmutableSortedSet.copyOf(temp2);
     }
 
     /**
@@ -105,6 +112,8 @@ public final class SubmissionLocales {
             + "(personNames/.*"
             // v43: Turkey and its alternate
             + "|localeDisplayNames/territories/territory\\[@type=\"TR\"\\].*"
+            // v43: Exemplar city for America/Ciudad_Juarez
+            + "|dates/timeZoneNames/zone[@type=\"America/Ciudad_Juarez\"]/exemplarCity"
         + ")");
 
     // Pattern.compile("//ldml/units/unitLength\\[@type=\"long\"]");
@@ -153,7 +162,7 @@ public final class SubmissionLocales {
                 throw new RuntimeException(String.format("Could not fetch coverage for %s:%s", localeString, path), e);
             }
         }
-    };
+    }
 
 
     /**

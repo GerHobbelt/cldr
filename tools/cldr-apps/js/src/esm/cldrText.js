@@ -371,6 +371,9 @@ const strings = {
   coverage_menu_desc:
     'Change the displayed coverage level. "Default" will use your organization\'s preferred value for this locale, if any.',
   coverage_unknown: "Unknown",
+  coverage_reset_msg: "Coverage Reset",
+  coverage_reset_desc:
+    "The coverage level was reset to its default after a period of inactivity",
 
   section_mail: "Messages",
 
@@ -442,6 +445,7 @@ const strings = {
   special_bulk_close_posts: "Bulk Close Posts",
   special_createAndLogin: "Create and Login",
   special_default: "Missing Page",
+  special_dashboard: "Dashboard",
   special_error_subtypes: "Error Subtypes",
   special_flagged: "Flagged Items",
   special_forum: "Forum Posts",
@@ -459,6 +463,7 @@ const strings = {
   special_r_compact: "Numbers",
   special_r_datetime: "Datetime",
   special_r_zones: "Zones",
+  special_r_personnames: "Person Names",
   special_recent_activity: "Recent Activity",
   special_retry: "Retry",
   special_retry_inplace: "Retry",
@@ -535,6 +540,7 @@ const strings = {
   locale_rejection_unknown: "Unknown or not in CLDR",
   locale_rejection_outside_org_coverage: "Outside of org’s coverage",
 
+  transcript_flyover: "Explain vote counts",
   transcript_note:
     "PREVIEW FEATURE: The above is an attempt to explain votes. Feedback to https://unicode-org.atlassian.net/browse/CLDR-14943",
 

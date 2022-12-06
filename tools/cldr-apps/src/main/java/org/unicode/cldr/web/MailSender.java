@@ -265,11 +265,8 @@ public class MailSender implements Runnable {
             xpath = null;
         }
         final DBUtils dbutils = DBUtils.getInstance();
-        Connection conn = dbutils.getDBConnection();
-        if (conn == null) {
-            return;
-        }
         try (
+            Connection conn = dbutils.getDBConnection();
             PreparedStatement s2 = DBUtils.prepareStatementWithArgs(conn,
                 "INSERT INTO " + CLDR_MAIL + "(sender, " + USER +
                 ",subject,text,queue_date,cc,locale,xpath,post) VALUES(?,?,?,?,?,?,?,?,?)",
@@ -433,11 +430,9 @@ public class MailSender implements Runnable {
     private Transport processOneMail(Session ourSession, Transport transport) {
         DBUtils db = DBUtils.getInstance();
         java.sql.Timestamp sqlnow = DBUtils.sqlNow();
-        Connection conn = db.getAConnection();
-        if (conn == null) {
-            return transport;
-        }
+
         try (
+            Connection conn = db.getAConnection();
             PreparedStatement s = DBUtils.prepareStatementWithArgsUpdateable(conn, "select * from " + CLDR_MAIL
                 + " where sent_date is NULL and id > ? and try_count < 3 order by id "
                 + (DBUtils.db_Mysql ? "limit 1" : ""), lastIdProcessed);

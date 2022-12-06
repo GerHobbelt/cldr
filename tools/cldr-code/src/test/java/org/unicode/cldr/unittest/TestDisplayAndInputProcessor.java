@@ -576,4 +576,18 @@ public class TestDisplayAndInputProcessor extends TestFmwk {
         val = daip.processInput(xpath, "a  ।  b", null);
         assertEquals("U+0964 DEVANAGARI DANDA with spaces becomes pipe", normVal, val);
     }
+
+    public void TestFSR() {
+        DisplayAndInputProcessor daip = new DisplayAndInputProcessor(info.getEnglish(), false);
+        checkPathAllowsEmpty(daip, DisplayAndInputProcessor.FSR_START_PATH);
+        checkPathAllowsEmpty(daip, DisplayAndInputProcessor.NOL_START_PATH);
+    }
+
+    public void checkPathAllowsEmpty(DisplayAndInputProcessor daip, String xpath) {
+        String val = daip.processInput(xpath, DisplayAndInputProcessor.EMPTY_ELEMENT_VALUE, null);
+        assertEquals(DisplayAndInputProcessor.EMPTY_ELEMENT_VALUE + " input for " + xpath, "", val);
+        String roundTrip = daip.processForDisplay(xpath, "");
+        assertEquals("Empty FSR output for" + xpath, DisplayAndInputProcessor.EMPTY_ELEMENT_VALUE, roundTrip);
+    }
+
 }
