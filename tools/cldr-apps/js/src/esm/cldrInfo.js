@@ -221,9 +221,15 @@ function show(str, tr, hideIfLast, fn) {
 
   if (tr && tr.theRow) {
     const { theRow } = tr;
-    const { helpHtml, rdf, placeholderStatus, placeholderInfo } = theRow;
-    if (helpHtml || rdf) {
-      cldrDeferHelp.addDeferredHelpTo(fragment, helpHtml, rdf);
+    const {
+      helpHtml,
+      rdf,
+      placeholderStatus,
+      placeholderInfo,
+      translationHint,
+    } = theRow;
+    if (helpHtml || rdf || translationHint) {
+      cldrDeferHelp.addDeferredHelpTo(fragment, helpHtml, rdf, translationHint);
     }
     if (placeholderStatus !== "DISALLOWED") {
       // Hide the placeholder status if DISALLOWED
@@ -568,6 +574,26 @@ function updateRowVoteInfo(tr, theRow) {
     tr.voteDiv.appendChild(
       cldrDom.createChunk(msg, "p", "alert alert-warning fix-popover-help")
     );
+  }
+  if (theRow.voteTranscript) {
+    const transcriptBox = cldrDom.createChunk(
+      "",
+      "div",
+      "transcript-container"
+    );
+    const transcriptText = cldrDom.createChunk(
+      theRow.voteTranscript,
+      "pre",
+      "transcript-text"
+    );
+    transcriptBox.appendChild(transcriptText);
+    const transcriptNote = cldrDom.createChunk(
+      cldrText.get("transcript_note"),
+      "p",
+      "alert alert-warning"
+    );
+    transcriptBox.appendChild(transcriptNote);
+    tr.voteDiv.appendChild(transcriptBox);
   }
 }
 

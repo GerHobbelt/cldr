@@ -753,47 +753,29 @@ function updateRowCodeCell(tr, theRow, cell) {
  * Called by updateRow.
  */
 function updateRowEnglishComparisonCell(tr, theRow, cell) {
+  let trHint = theRow.translationHint; // sometimes null
   if (theRow.displayName) {
-    const hintPos = theRow.displayName.indexOf("[translation hint");
-    let hasExample = false;
-    if (theRow.displayExample) {
-      hasExample = true;
-    }
-    if (hintPos != -1) {
-      theRow.displayExample =
-        theRow.displayName.substr(hintPos, theRow.displayName.length) +
-        (theRow.displayExample
-          ? theRow.displayExample.replace(/\[translation hint.*?\]/g, "")
-          : "");
-      theRow.displayName = theRow.displayName.substr(0, hintPos);
-    }
     cell.appendChild(
       cldrDom.createChunk(theRow.displayName, "span", "subSpan")
     );
-    const TRANS_HINT_ID = "en_ZZ"; // must match SurveyMain.TRANS_HINT_ID
-    cldrSurvey.setLang(cell, TRANS_HINT_ID);
-    if (theRow.displayExample) {
-      appendExample(cell, theRow.displayExample, TRANS_HINT_ID);
-    }
-    if (hintPos != -1 || hasExample) {
-      const infos = document.createElement("div");
-      infos.className = "infos-code";
-      if (hintPos != -1) {
-        const img = document.createElement("img");
-        img.src = "hint.png";
-        img.alt = "Translation hint";
-        infos.appendChild(img);
-      }
-      if (hasExample) {
-        const img = document.createElement("img");
-        img.src = "example.png";
-        img.alt = "Example";
-        infos.appendChild(img);
-      }
-      cell.appendChild(infos);
-    }
   } else {
     cell.appendChild(document.createTextNode(""));
+    if (!trHint) {
+      trHint = cldrText.get("empty_comparison_cell_hint");
+    }
+  }
+  const TRANS_HINT_ID = "en"; // expected to match SurveyMain.TRANS_HINT_ID
+  cldrSurvey.setLang(cell, TRANS_HINT_ID);
+  if (theRow.displayExample || trHint) {
+    const infos = document.createElement("div");
+    infos.className = "infos-code";
+    if (trHint) {
+      appendTranslationHintIcon(infos, trHint, TRANS_HINT_ID);
+    }
+    if (theRow.displayExample) {
+      appendExampleIcon(infos, theRow.displayExample, TRANS_HINT_ID);
+    }
+    cell.appendChild(infos);
   }
   cldrInfo.listen(null, tr, cell, null);
   cell.isSetup = true;
@@ -1116,13 +1098,40 @@ function checkLRmarker(field, value) {
   }
 }
 
+function appendTranslationHintIcon(parent, text, loc) {
+  const el = document.createElement("span");
+  el.className = "d-trans-hint well well-sm";
+  el.textContent = "Translation hint: " + text;
+  cldrSurvey.setLang(el, loc);
+  parent.appendChild(el);
+  // This is related to "mouseenter" configured in cldrEvent.startup
+  const img = document.createElement("img");
+  img.className = "d-trans-hint-img";
+  img.src = "hint.png";
+  img.alt = "Translation hint";
+  parent.appendChild(img);
+  return el;
+}
+
+function appendExampleIcon(parent, text, loc) {
+  const el = appendExample(parent, text, loc);
+  const img = document.createElement("img");
+  // This is related to "mouseenter" configured in cldrEvent.startup
+  img.className = "d-example-img";
+  img.src = "example.png";
+  img.alt = "Example";
+  parent.appendChild(img);
+  return el;
+}
+
+// caution: this is called from other modules as well as by appendExampleIcon
 function appendExample(parent, text, loc) {
-  const div = document.createElement("div");
-  div.className = "d-example well well-sm";
-  div.innerHTML = text;
-  cldrSurvey.setLang(div, loc);
-  parent.appendChild(div);
-  return div;
+  const el = document.createElement("div");
+  el.className = "d-example well well-sm";
+  el.innerHTML = text;
+  cldrSurvey.setLang(el, loc);
+  parent.appendChild(el);
+  return el;
 }
 
 /**

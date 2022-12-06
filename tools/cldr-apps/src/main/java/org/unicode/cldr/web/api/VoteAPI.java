@@ -185,6 +185,7 @@ public class VoteAPI {
             public String rdf;
             public boolean rowFlagged;
             public StatusAction statusAction;
+            public String translationHint;
             public String voteVhash;
             public VotingResults votingResults;
             public String winningValue;
@@ -192,6 +193,9 @@ public class VoteAPI {
             public String xpath;
             public int xpathId;
             public String xpstrid;
+
+            @Schema(description = "prose description of voting outcome")
+            public String voteTranscript;
         }
 
         public static final class Page {
