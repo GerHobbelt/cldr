@@ -12748,27 +12748,27 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<personName order="sorting" length="short" usage="referring" formality="informal">
 			<namePattern>↑↑↑</namePattern>
 		</personName>
-		<sampleName item="givenOnly">
+		<sampleName item="nativeG">
 			<nameField type="given">Stefan</nameField>
 		</sampleName>
-		<sampleName item="givenSurnameOnly">
+		<sampleName item="nativeGS">
 			<nameField type="given">Ingrid</nameField>
 			<nameField type="surname">Andersson</nameField>
 		</sampleName>
-		<sampleName item="given12Surname">
+		<sampleName item="nativeGGS">
 			<nameField type="given">Johan</nameField>
 			<nameField type="given2">Harald</nameField>
 			<nameField type="surname">Wallin</nameField>
 		</sampleName>
-		<sampleName item="full">
-			<nameField type="prefix">Prof. dr</nameField>
+		<sampleName item="foreignFull">
+			<nameField type="title">Prof. dr</nameField>
 			<nameField type="given">Ann-Christine</nameField>
 			<nameField type="given-informal">Anki</nameField>
 			<nameField type="given2">Eva Sofia</nameField>
 			<nameField type="surname-prefix">van den</nameField>
 			<nameField type="surname-core">Karlsson</nameField>
 			<nameField type="surname2">Beck Strand</nameField>
-			<nameField type="suffix">med. dr. fil. dr. jur. dr.</nameField>
+			<nameField type="credentials">med. dr. fil. dr. jur. dr.</nameField>
 		</sampleName>
 	</personNames>
 </ldml>

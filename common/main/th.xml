@@ -11311,7 +11311,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 			<namePattern>↑↑↑</namePattern>
 		</personName>
 		<personName order="givenFirst" length="long" usage="referring" formality="informal">
-			<namePattern>{given}{given2}{surname}{surname2}{suffix}</namePattern>
+			<namePattern>{given}{given2}{surname}{surname2}{credentials}</namePattern>
 		</personName>
 		<personName order="givenFirst" length="long" usage="addressing" formality="formal">
 			<namePattern>↑↑↑</namePattern>
@@ -11433,27 +11433,27 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<personName order="sorting" length="short" usage="referring" formality="informal">
 			<namePattern>↑↑↑</namePattern>
 		</personName>
-		<sampleName item="givenOnly">
+		<sampleName item="nativeG">
 			<nameField type="given">ธนา</nameField>
 		</sampleName>
-		<sampleName item="givenSurnameOnly">
+		<sampleName item="nativeGS">
 			<nameField type="given">ไอริณ</nameField>
 			<nameField type="surname">กล้าหาญ</nameField>
 		</sampleName>
-		<sampleName item="given12Surname">
+		<sampleName item="nativeGGS">
 			<nameField type="given">วีระพล</nameField>
 			<nameField type="given2">ชัยยศ</nameField>
 			<nameField type="surname">พิชิตชัย</nameField>
 		</sampleName>
-		<sampleName item="full">
-			<nameField type="prefix">ศ.ดร.</nameField>
+		<sampleName item="foreignFull">
+			<nameField type="title">ศ.ดร.</nameField>
 			<nameField type="given">โสพล</nameField>
 			<nameField type="given-informal">สอง</nameField>
 			<nameField type="given2">ชัยฤทธิ์</nameField>
 			<nameField type="surname-prefix">ณ</nameField>
 			<nameField type="surname-core">นคร</nameField>
 			<nameField type="surname2">↑↑↑</nameField>
-			<nameField type="suffix">↑↑↑</nameField>
+			<nameField type="credentials">↑↑↑</nameField>
 		</sampleName>
 	</personNames>
 </ldml>

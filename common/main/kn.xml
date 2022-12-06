@@ -12302,27 +12302,27 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<personName order="sorting" length="short" usage="referring" formality="informal">
 			<namePattern>↑↑↑</namePattern>
 		</personName>
-		<sampleName item="givenOnly">
+		<sampleName item="nativeG">
 			<nameField type="given">ಸಿನ್‌ಬಾದ್</nameField>
 		</sampleName>
-		<sampleName item="givenSurnameOnly">
+		<sampleName item="nativeGS">
 			<nameField type="given">ಐರಿನ್</nameField>
 			<nameField type="surname">ಆ್ಯಡ್ಲರ್</nameField>
 		</sampleName>
-		<sampleName item="given12Surname">
+		<sampleName item="nativeGGS">
 			<nameField type="given">ಜಾನ್</nameField>
 			<nameField type="given2">ಹಮಿಶ್</nameField>
 			<nameField type="surname">ವ್ಯಾಟ್ಸನ್</nameField>
 		</sampleName>
-		<sampleName item="full">
-			<nameField type="prefix">ಪ್ರೊ. ಡಾ.</nameField>
+		<sampleName item="foreignFull">
+			<nameField type="title">ಪ್ರೊ. ಡಾ.</nameField>
 			<nameField type="given">ಅಡಾ ಕಾರ್ನೆಲಿಯಾ</nameField>
 			<nameField type="given-informal">ನೀಲ್</nameField>
 			<nameField type="given2">ಇವಾ ಸೋಫಿಯಾ</nameField>
 			<nameField type="surname-prefix">ವ್ಯಾನ್ ಡೆನ್</nameField>
 			<nameField type="surname-core">ವೋಲ್ಫ್</nameField>
 			<nameField type="surname2">ಬೆಕರ್ ಸ್ಮಿತ್</nameField>
-			<nameField type="suffix">ಎಂ.ಡಿ. ಪಿ.ಎಚ್.ಡಿ.</nameField>
+			<nameField type="credentials">ಎಂ.ಡಿ. ಪಿ.ಎಚ್.ಡಿ.</nameField>
 		</sampleName>
 	</personNames>
 </ldml>

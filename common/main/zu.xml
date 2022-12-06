@@ -10144,27 +10144,27 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<personName order="sorting" length="short" usage="referring" formality="informal">
 			<namePattern>↑↑↑</namePattern>
 		</personName>
-		<sampleName item="givenOnly">
+		<sampleName item="nativeG">
 			<nameField type="given">Sinbad</nameField>
 		</sampleName>
-		<sampleName item="givenSurnameOnly">
+		<sampleName item="nativeGS">
 			<nameField type="given">u-Irene</nameField>
 			<nameField type="surname">u-Adier</nameField>
 		</sampleName>
-		<sampleName item="given12Surname">
+		<sampleName item="nativeGGS">
 			<nameField type="given">u-John</nameField>
 			<nameField type="given2">u-Hamish</nameField>
 			<nameField type="surname">u-Watson</nameField>
 		</sampleName>
-		<sampleName item="full">
-			<nameField type="prefix">u-Prof. Dr.</nameField>
+		<sampleName item="foreignFull">
+			<nameField type="title">u-Prof. Dr.</nameField>
 			<nameField type="given">u-Ada Cornelia</nameField>
 			<nameField type="given-informal">u-Neele</nameField>
 			<nameField type="given2">u-Eva Sophia</nameField>
 			<nameField type="surname-prefix">u-van den</nameField>
 			<nameField type="surname-core">u-Wold</nameField>
 			<nameField type="surname2">u-Becker Schmidt</nameField>
-			<nameField type="suffix">M.D. Ph.D.</nameField>
+			<nameField type="credentials">M.D. Ph.D.</nameField>
 		</sampleName>
 	</personNames>
 </ldml>

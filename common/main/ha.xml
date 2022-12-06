@@ -9479,27 +9479,27 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<personName order="sorting" length="short" usage="referring" formality="informal">
 			<namePattern>↑↑↑</namePattern>
 		</personName>
-		<sampleName item="givenOnly">
+		<sampleName item="nativeG">
 			<nameField type="given">Sinbad</nameField>
 		</sampleName>
-		<sampleName item="givenSurnameOnly">
+		<sampleName item="nativeGS">
 			<nameField type="given">Irene</nameField>
 			<nameField type="surname">Adler</nameField>
 		</sampleName>
-		<sampleName item="given12Surname">
+		<sampleName item="nativeGGS">
 			<nameField type="given">John</nameField>
 			<nameField type="given2">Hamish</nameField>
 			<nameField type="surname">Watson</nameField>
 		</sampleName>
-		<sampleName item="full">
-			<nameField type="prefix">Farf. Dr.</nameField>
+		<sampleName item="foreignFull">
+			<nameField type="title">Farf. Dr.</nameField>
 			<nameField type="given">Ada Cornelia</nameField>
 			<nameField type="given-informal">Neele</nameField>
 			<nameField type="given2">Eva Sophia</nameField>
 			<nameField type="surname-prefix">van den</nameField>
 			<nameField type="surname-core">Wolf</nameField>
 			<nameField type="surname2">Becker Schmidt</nameField>
-			<nameField type="suffix">M.D. Ph.D.</nameField>
+			<nameField type="credentials">M.D. Ph.D.</nameField>
 		</sampleName>
 	</personNames>
 </ldml>

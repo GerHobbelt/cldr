@@ -203,9 +203,14 @@ public class CheckPlaceHolders extends CheckCLDR {
                 break;
             case surname:
                 // can't have surname2 unless we have surname
-                String modPath = pathParts.cloneAsThawed().setAttribute(-1, "type", Field.surname2.toString()).toString();
+                final XPathParts thawedPathParts = pathParts.cloneAsThawed();
+                String modPath = thawedPathParts.setAttribute(-1, "type", Field.surname2.toString()).toString();
                 String surname2Value = checkAccessor.getStringValue(modPath);
-                if (surname2Value != null && !surname2Value.equals("∅∅∅")) {
+                String modPathcore = thawedPathParts.setAttribute(-1, "type", "surname-core").toString();
+                String surnameCoreValue = checkAccessor.getStringValue(modPathcore);
+                if (surname2Value != null
+                    && !surname2Value.equals("∅∅∅")
+                    && (surnameCoreValue == null || surnameCoreValue.equals("∅∅∅"))) {
                     result.add(new CheckStatus().setCause(checkAccessor)
                         .setMainType(CheckStatus.errorType)
                         .setSubtype(Subtype.invalidPlaceHolder)
@@ -303,7 +308,9 @@ public class CheckPlaceHolders extends CheckCLDR {
                 Set<Modifier> modifiers = modifiedField.getModifiers();
                 Field field = modifiedField.getField();
                 switch (field) {
-                case prefix: case suffix:
+                case title:
+                case credentials:
+                case generation:
                     if (usageIsMonogram) {
                         result.add(new CheckStatus().setCause(checkAccessor)
                             .setMainType(CheckStatus.errorType)
@@ -597,7 +604,7 @@ public class CheckPlaceHolders extends CheckCLDR {
         Set<String> orderErrors = null;
         for (String item : SPLIT_SPACE.split(value)) {
             boolean mv = (item.equals(locale))
-               || CLDR_LOCALES_FOR_NAME_ORDER.contains(item);
+                || CLDR_LOCALES_FOR_NAME_ORDER.contains(item);
             if (!mv) {
                 if (orderErrors == null) {
                     orderErrors = new LinkedHashSet<>();

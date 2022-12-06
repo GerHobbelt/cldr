@@ -385,7 +385,7 @@ public class TestCoverageLevel extends TestFmwkPlus {
         final Pattern calendar100 = PatternCache.get("(coptic|ethiopic-amete-alem|islamic-(rgsa|tbla|umalqura))");
 
         final Pattern language100 = PatternCache.get("("
-            + "ach|aeb?|afh|ak[kz]|aln|ang|ar[coqswyz]|ase|avk|"
+            + "ach|aeb?|afh|ajp|ak[kz]|aln|ang|ar[coqswyz]|ase|avk|"
             + "ba[lrx]|bb[cj]|be[jw]|bf[dq]|bgc|bgn|bik|bjn|bkm|bpy|bqi|br[ah]|bss|bu[am]|byv|"
             + "ca[dry]|cch|ch[bgnp]|cic|cop|cps|crh?|csb|"
             + "de[ln]|din|doi|dtp|dum|dyu|"
@@ -400,7 +400,7 @@ public class TestCoverageLevel extends TestFmwkPlus {
             + "ma[fn]|md[er]|mga|mnc|mrj|mus|mw[rv]|mye|"
             + "nan|nds(_NL)?|njo|no[nv]?|nwc|ny[mo]|nzi|"
             + "oj|osa|ota|"
-            + "pal|pcd|pd[ct]|peo|pfl|phn|pi|pms|pnt|pon|pro|"
+            + "pal|pap|pcd|pd[ct]|peo|pfl|phn|pi|pms|pnt|pon|pro|"
             + "qug|"
             + "raj|rgn|rif|rom|rtm|ru[eg]|"
             + "sa[msz]|sbp|sd[ch]|se[eil]|sg[as]|shu?|sid|sl[iy]|sog|srr|stq|su[sx]|syc|szl|"

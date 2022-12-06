@@ -22,6 +22,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Pattern;
 
+import org.unicode.cldr.util.MatchValue.LiteralMatchValue;
+import org.unicode.cldr.util.personname.PersonNameFormatter;
+
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
@@ -113,7 +116,7 @@ public class DtdData extends XMLFileReader.SimpleHandler {
         public final Mode mode;
         public final String defaultValue;
         public final AttributeType type;
-        public final Map<String, Integer> values;
+        public final Map<String, Integer> values; // immutable
         private final Set<String> commentsPre;
         private Set<String> commentsPost;
         private boolean isDeprecatedAttribute;
@@ -322,6 +325,15 @@ public class DtdData extends XMLFileReader.SimpleHandler {
             return type == AttributeType.ENUMERATED_TYPE ? ENUM_LEAD + JOINER_COMMA_SPACE.join(values.keySet()) + ENUM_TRAIL
                 : matchValue != null ? AUG_LEAD + matchValue.toString() + AUG_TRAIL
                     : "";
+        }
+
+        public Set<String> getMatchLiterals() {
+            if (type == AttributeType.ENUMERATED_TYPE) {
+                return values.keySet();
+            } else if (matchValue != null && matchValue instanceof LiteralMatchValue) {
+                return ((LiteralMatchValue)matchValue).getItems();
+            }
+            return null;
         }
 
         public Attribute getMatchingName(Map<Attribute, Integer> attributes) {
@@ -1335,19 +1347,26 @@ public class DtdData extends XMLFileReader.SimpleHandler {
         "minute", "minute-short", "minute-narrow",
         "second", "second-short", "second-narrow",
         "zone", "zone-short", "zone-narrow").freeze();
-    static MapComparator<String> nameFieldOrder = new MapComparator<String>().add(
-        "prefix", "given", "given-informal", "given2",
-        "surname", "surname-prefix", "surname-core", "surname2", "suffix").freeze();
-    static MapComparator<String> orderValueOrder = new MapComparator<String>().add(
-        "givenFirst", "surnameFirst", "sorting").freeze();
-    static MapComparator<String> lengthValueOrder = new MapComparator<String>().add(
-        "long", "medium", "short").freeze();
-    static MapComparator<String> usageValueOrder = new MapComparator<String>().add(
-        "referring", "addressing", "monogram").freeze();
-    static MapComparator<String> formalityValueOrder = new MapComparator<String>().add(
-        "formal", "informal").freeze();
-    static MapComparator<String> sampleNameItemOrder = new MapComparator<String>().add(
-        "givenOnly", "givenSurnameOnly", "given12Surname", "full").freeze();
+    static MapComparator<String> nameFieldOrder = new MapComparator<String>()
+        .add(PersonNameFormatter.ModifiedField.ALL_SAMPLES)
+        .freeze();
+    static MapComparator<String> orderValueOrder = new MapComparator<String>()
+        .add(PersonNameFormatter.Order.ALL, Object::toString)
+        .freeze();
+    static MapComparator<String> lengthValueOrder = new MapComparator<String>()
+        .add(PersonNameFormatter.Length.ALL, Object::toString)
+        .freeze();
+    static MapComparator<String> usageValueOrder = new MapComparator<String>()
+        .add(PersonNameFormatter.Usage.ALL, Object::toString)
+        .freeze();
+    static MapComparator<String> formalityValueOrder = new MapComparator<String>()
+        .add(PersonNameFormatter.Formality.ALL, Object::toString)
+        .freeze();
+    static MapComparator<String> sampleNameItemOrder = new MapComparator<String>()
+        .add(PersonNameFormatter.SampleType.ALL, Object::toString)
+        .freeze();
+
+    // TODO We could build these from the dtd data for literal values. That way they would always be in sync.
 
     /* TODO: change this to be data-file driven. Can do with new Unit preferences info; also put them in a more meaningful order (metric vs other; size) */
 

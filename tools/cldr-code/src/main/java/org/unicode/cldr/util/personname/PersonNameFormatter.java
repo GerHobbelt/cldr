@@ -16,11 +16,11 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.unicode.cldr.util.CLDRFile;
 import org.unicode.cldr.util.ChainedMap;
 import org.unicode.cldr.util.ChainedMap.M3;
-import org.unicode.cldr.util.LanguageTagParser;
 import org.unicode.cldr.util.Pair;
 import org.unicode.cldr.util.XPathParts;
 
@@ -58,12 +58,13 @@ public class PersonNameFormatter {
     public static final boolean DEBUG = System.getProperty("PersonNameFormatter.DEBUG") != null;
 
     public enum Field {
-        prefix,
+        title,
         given,
         given2,
         surname,
         surname2,
-        suffix;
+        generation,
+        credentials;
         public static final Comparator<Iterable<Field>> ITERABLE_COMPARE = Comparators.lexicographical(Comparator.<Field>naturalOrder());
         public static final Set<Field> ALL = ImmutableSet.copyOf(Field.values());
     }
@@ -233,15 +234,35 @@ public class PersonNameFormatter {
      * @internal
      */
     public enum SampleType {
-        givenOnly,
-        givenSurnameOnly,
-        given12Surname,
-        full,
-        foreign;
-        public static final Set<SampleType> ALL = ImmutableSet.of(givenOnly,
-            givenSurnameOnly,
-            given12Surname,
-            full); // exclude foreign for now
+        nativeG, nativeGS, nativeGGS, nativeFull,
+        foreignG, foreignGS, foreignGGS, foreignFull,
+        ;
+        public static final Set<SampleType> ALL = ImmutableSet.copyOf(values());
+        public static final List<String> ALL_STRINGS = ALL.stream().map(x -> x.toString()).collect(Collectors.toUnmodifiableList());
+        final boolean isNative;
+        final String abbreviation;
+
+        private SampleType() {
+            String _abbreviation = null;
+            if (name().startsWith("native")) {
+                isNative = true;
+                _abbreviation = "N" + name().substring(6);
+            } else if (name().startsWith("foreign")) {
+                isNative = false;
+                _abbreviation = "F" + name().substring(7);
+            } else {
+                throw new IllegalArgumentException("Code needs adjustment!");
+            }
+            abbreviation = _abbreviation.replace("Full", "F");
+        }
+
+        public boolean isNative() {
+            return isNative;
+        }
+
+        public String toAbbreviation() {
+            return abbreviation;
+        }
     }
 
     /**
@@ -327,6 +348,10 @@ public class PersonNameFormatter {
                 .compare(modifiers, o.modifiers, Modifier.ITERABLE_COMPARE)
                 .result();
         }
+        public static final Set<String> ALL_SAMPLES = ImmutableSet.of(
+            "title", "given", "given-informal", "given2", //
+            "surname", "surname-prefix", "surname-core", "surname2", "generation", "generation", "credentials"
+            );
     }
 
     /**
@@ -1513,23 +1538,31 @@ public class PersonNameFormatter {
                 String value = cldrFile.getStringValue(path);
                 if (value != null && !value.equals("∅∅∅")) {
                     XPathParts parts = XPathParts.getFrozenInstance(path);
-                    names.put(SampleType.valueOf(parts.getAttributeValue(-2, "item")), ModifiedField.from(parts.getAttributeValue(-1, "type")), value);
+                    names.put(
+                        SampleType.valueOf(parts.getAttributeValue(-2, "item")),
+                        ModifiedField.from(parts.getAttributeValue(-1, "type")),
+                        value);
                 }
             }
         }
 
         Map<SampleType, SimpleNameObject> result = new TreeMap<>();
+        final String fileLocale = cldrFile.getLocaleID();
+        final ULocale nativeLocale = new ULocale(fileLocale);
+        final ULocale foreignLocale = new ULocale(fileLocale.equals("es") || fileLocale.startsWith("es_") ? "nl" : "es");
         for (Entry<SampleType, Map<ModifiedField, String>> entry : names) {
-            SimpleNameObject name = new SimpleNameObject(new ULocale(cldrFile.getLocaleID()), entry.getValue());
+            SampleType key = entry.getKey();
+            ULocale nameLocale = key.isNative() ? nativeLocale : foreignLocale;
+            SimpleNameObject name = new SimpleNameObject(nameLocale, entry.getValue());
             result.put(entry.getKey(), name);
         }
 
-        // add special foreign name for non-spacing languages
-        LanguageTagParser ltp = new LanguageTagParser();
-        SimpleNameObject extraName = FOREIGN_NAME_FOR_NON_SPACING.get(ltp.set(cldrFile.getLocaleID()).getLanguageScript());
-        if (extraName != null) {
-            result.put(SampleType.foreign, extraName);
-        }
+//        // add special foreign name for non-spacing languages
+//        LanguageTagParser ltp = new LanguageTagParser();
+//        SimpleNameObject extraName = FOREIGN_NAME_FOR_NON_SPACING.get(ltp.set(cldrFile.getLocaleID()).getLanguageScript());
+//        if (extraName != null) {
+//            result.put(SampleType.foreignGGS, extraName);
+//        }
         return ImmutableMap.copyOf(result);
     }
 
