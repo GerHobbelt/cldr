@@ -29,7 +29,9 @@ import org.unicode.cldr.util.CLDRFile;
 import org.unicode.cldr.util.ChainedMap;
 import org.unicode.cldr.util.ChainedMap.M3;
 import org.unicode.cldr.util.LanguageTagParser;
+import org.unicode.cldr.util.LocaleIDParser;
 import org.unicode.cldr.util.Pair;
+import org.unicode.cldr.util.XMLSource;
 import org.unicode.cldr.util.XPathParts;
 
 import com.google.common.base.Joiner;
@@ -772,7 +774,7 @@ public class PersonNameFormatter {
                 ++p1;
             }
 
-            // get the range of nonwhitespace characters at the end of l2
+            // get the range of nonwhitespace   characters at the end of l2
             int p2 = l2.length() - 1;
             while (p2 >= 0 && !Character.isWhitespace(l2.charAt(p2))) {
                 --p2;
@@ -1786,6 +1788,38 @@ public class PersonNameFormatter {
             throw new IllegalArgumentException("No empty patterns allowed: " + pm);
         }
         return Pair.of(pm, np);
+    }
+
+    public Order getOrderFromLocale(ULocale inputLocale) {
+        Map<ULocale, Order> localeToOrder = getNamePatternData().getLocaleToOrder();
+        ULocale myLocale = inputLocale;
+        while (true) {
+            Order result = localeToOrder.get(myLocale);
+            if (result != null) {
+                return result;
+            }
+            String parentLocaleString = LocaleIDParser.getParent(myLocale.toString());
+            if (XMLSource.ROOT_ID.equals(parentLocaleString)) {
+                break;
+            }
+            myLocale = new ULocale(parentLocaleString);
+        }
+        // if my locale is not in the locale chain, it is probably because
+        // we have a case like hi_Latn, which has a different base language.
+        // So try the truncation:
+        myLocale = inputLocale;
+        while (true) {
+            Order result = localeToOrder.get(myLocale);
+            if (result != null) {
+                return result;
+            }
+            String parentLocaleString = LanguageTagParser.getSimpleParent(myLocale.toString());
+            if (parentLocaleString.isEmpty()) {
+                break;
+            }
+            myLocale = new ULocale(parentLocaleString);
+        }
+        return null;
     }
 
     /**
