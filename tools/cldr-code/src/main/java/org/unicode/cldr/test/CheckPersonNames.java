@@ -1,5 +1,6 @@
 package org.unicode.cldr.test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.unicode.cldr.test.CheckCLDR.CheckStatus.Subtype;
@@ -9,20 +10,26 @@ import org.unicode.cldr.util.CLDRFile;
 import org.unicode.cldr.util.CldrUtility;
 import org.unicode.cldr.util.LocaleIDParser;
 import org.unicode.cldr.util.XPathParts;
+import org.unicode.cldr.util.personname.PersonNameFormatter;
+import org.unicode.cldr.util.personname.PersonNameFormatter.NamePattern;
 import org.unicode.cldr.util.personname.PersonNameFormatter.Optionality;
 import org.unicode.cldr.util.personname.PersonNameFormatter.SampleType;
 
+import com.ibm.icu.text.MessageFormat;
 import com.ibm.icu.text.UnicodeSet;
 
 public class CheckPersonNames extends CheckCLDR {
 
     static final String MISSING = CldrUtility.NO_INHERITANCE_MARKER;
+
     boolean isRoot = false;
     boolean hasRootParent = false;
+    String initialSeparator = " ";
 
-    UnicodeSet allowedCharacters;
+    private UnicodeSet allowedCharacters;
+    private boolean spacesNeededInNames;
 
-    static final UnicodeSet BASE_ALLOWED = new UnicodeSet("[\\p{sc=Common}\\p{sc=Inherited}-\\p{N}-[∅]]").freeze();
+    static final UnicodeSet BASE_ALLOWED = new UnicodeSet("[\\p{sc=Common}\\p{sc=Inherited}-\\p{N}-[❮❯∅<>∅0]]").freeze();
     static final UnicodeSet HANI = new UnicodeSet("[\\p{sc=Hani}]").freeze();
     static final UnicodeSet KORE = new UnicodeSet("[\\p{sc=Hang}]").addAll(HANI).freeze();
     static final UnicodeSet JPAN = new UnicodeSet("[\\p{sc=Kana}\\p{sc=Hira}]").addAll(HANI).freeze();
@@ -38,6 +45,12 @@ public class CheckPersonNames extends CheckCLDR {
         String script = new LikelySubtags().getLikelyScript(localeId);
         allowedCharacters = new UnicodeSet(BASE_ALLOWED).addAll(getUnicodeSetForScript(script))
             .freeze();
+        spacesNeededInNames = !PersonNameFormatter.LocaleSpacingData.getInstance()
+            .getScriptsNotNeedingSpacesInNames()
+            .contains(script);
+
+        String initialPatternSequence = cldrFileToCheck.getStringValue("//ldml/personNames/initialPattern[@type=\"initialSequence\"]");
+        initialSeparator = MessageFormat.format(initialPatternSequence, "", "");
 //
         return super.setCldrFileToCheck(cldrFileToCheck, options, possibleErrors);
     }
@@ -59,16 +72,40 @@ public class CheckPersonNames extends CheckCLDR {
     @Override
     public CheckCLDR handleCheck(String path, String fullPath, String value, Options options,
         List<CheckStatus> result) {
-        if (value == null
-            || isRoot
+        if (isRoot
             || !path.startsWith("//ldml/personNames/")) {
             return this;
         }
 
         XPathParts parts = XPathParts.getFrozenInstance(path);
-        String category = parts.getElement(2);
+        switch(parts.getElement(2)) {
+        case "personName":
+            NamePattern namePattern = NamePattern.from(0, value);
+            ArrayList<List<String>> failures = namePattern.findInitialFailures(initialSeparator);
+            for (List<String> row :    failures) {
+                String previousField = row.get(0);
+                String intermediateLiteral = row.get(1);
+                String followingField = row.get(1);
+                result.add(new CheckStatus().setCause(this)
+                                .setMainType(CheckStatus.errorType)
+                                .setSubtype(Subtype.illegalCharactersInPattern)
+                                .setMessage("The gap between {0} and {2} must be the same as the pattern-initialSequence, =“{1}”",
+                                    previousField, intermediateLiteral, followingField));
+            }
 
-        if (category.equals("sampleName")) {
+            break;
+        case "foreignSpaceReplacement":
+            if (spacesNeededInNames && !" ".equals(value)) {
+                result.add(new CheckStatus().setCause(this)
+                    .setMainType(CheckStatus.errorType)
+                    .setSubtype(Subtype.illegalCharactersInPattern)
+                    .setMessage("ForeignSpaceReplacement must be space if script requires spaces."));
+            }
+            break;
+        case "sampleName":
+            if (value == null) {
+                break;
+            }
             if (!allowedCharacters.containsAll(value) && !value.equals(CldrUtility.NO_INHERITANCE_MARKER)) {
                 UnicodeSet bad = new UnicodeSet().addAll(value).removeAll(allowedCharacters);
                 final Type mainType = getPhase() != Phase.BUILD ? CheckStatus.errorType : CheckStatus.warningType; // we need to be able to check this in without error
@@ -115,6 +152,7 @@ public class CheckPersonNames extends CheckCLDR {
                         .setMessage(message));
                 }
             }
+            break;
         }
         return this;
     }

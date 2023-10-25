@@ -55,6 +55,8 @@ import com.ibm.icu.text.BreakIterator;
 import com.ibm.icu.text.CaseMap;
 import com.ibm.icu.text.MessageFormat;
 import com.ibm.icu.text.Transliterator;
+import com.ibm.icu.text.UTF16;
+import com.ibm.icu.text.UnicodeSet;
 import com.ibm.icu.util.Output;
 import com.ibm.icu.util.ULocale;
 
@@ -160,6 +162,7 @@ public class PersonNameFormatter {
         prefix,
         core,
         ;
+        public static final Set<Modifier> INITIALS = ImmutableSet.of(initialCap, initial);
         public static final Comparator<Iterable<Modifier>> ITERABLE_COMPARE = Comparators.lexicographical(Comparator.<Modifier>naturalOrder());
         public static final Comparator<Collection<Modifier>> LONGEST_FIRST = new Comparator<>() {
 
@@ -243,9 +246,9 @@ public class PersonNameFormatter {
     private static final ImmutableSet<String> G = ImmutableSet.of("given");
     private static final ImmutableSet<String> GS = ImmutableSet.of("given", "surname");
     private static final ImmutableSet<String> GGS = ImmutableSet.of("given", "given2", "surname");
-    private static final ImmutableSet<String> GGSWithSurnameCore = ImmutableSet.of("given", "given2", "surname-core");
+    private static final ImmutableSet<String> GWithSurnameCore = ImmutableSet.of("given", "surname-core");
     private static final ImmutableSet<String> Full = ImmutableSet.of("title", "given", "given-informal", "given2", "surname-prefix", "surname-core", "surname2", "generation", "credentials");
-    private static final ImmutableSet<String> FullMinusSurname = ImmutableSet.copyOf(Sets.difference(Full, Collections.singleton("surname2")));
+    private static final ImmutableSet<String> FullMinusSurname2 = ImmutableSet.copyOf(Sets.difference(Full, Collections.singleton("surname2")));
 
     public enum Optionality {required, optional, disallowed}
     /**
@@ -256,11 +259,11 @@ public class PersonNameFormatter {
         nativeG(G, G),
         nativeGS(GS, GS),
         nativeGGS(GGS, GS),
-        nativeFull(Full, GGSWithSurnameCore),
+        nativeFull(Full, GWithSurnameCore),
         foreignG(G, G),
         foreignGS(GS, GS),
         foreignGGS(GGS, GGS),
-        foreignFull(Full, FullMinusSurname),
+        foreignFull(Full, FullMinusSurname2),
         ;
         public static final Set<SampleType> ALL = ImmutableSet.copyOf(values());
         public static final List<String> ALL_STRINGS = ALL.stream().map(x -> x.toString()).collect(Collectors.toUnmodifiableList());
@@ -652,11 +655,27 @@ public class PersonNameFormatter {
 
         public String format(NameObject nameObject, FormatParameters nameFormatParameters, FallbackFormatter fallbackInfo) {
             StringBuilder result = new StringBuilder();
-            boolean seenLeadingField = false;
-            boolean seenEmptyLeadingField = false;
-            boolean seenEmptyField = false;
-            StringBuilder literalTextBefore = new StringBuilder();
-            StringBuilder literalTextAfter = new StringBuilder();
+            /*
+             * We have a series of literals and placeholders.
+             * • The literals are never "",
+             * • while the placeholders may have a value or may be missing (null).
+             * If we have a missing placeholder at the start, we discard the literal (if any) before it.
+             *      1. Effectively, that means that we don't append it to result until we've seen the following field.
+             * If we have a missing placeholder at the end, we discard a literal (if any) after it.
+             *      2. Effectively, that means that we don't append it to result if the last placeholder was missing.
+             * If we have adjacent missing placeholders, then we discard the literal between them.
+             *
+             * We also coalesce literals A and B. This can only happen if we had one or more empty placeholders:
+             *      3. If A.endsWith(B) then we discard it.
+             *      4. Any sequence of multiple whitespace is reduced to the first.
+             * The following booleans represent the state we are in:
+             */
+            boolean seenLeadingField = false; // set to true with not missing (so we have at least 1 non-missing field)
+            boolean seenEmptyLeadingField = false; // set to false with not missing; set to true with missing and !seenLeadingField
+            boolean seenEmptyField = false; // set to false with seenEmptyField & not missing; set to true with missing & seenLeadingField
+
+            StringBuilder literalTextBefore = new StringBuilder(); // literal right after a non-missing placeholder
+            StringBuilder literalTextAfter = new StringBuilder();  // literal right after a missing placeholder
 
             // Check that we either have a given value in the pattern or a surname value in the name object
             if (!nameObject.getAvailableFields().contains(Field.surname) && !hasNonInitialGiven()) {
@@ -686,10 +705,11 @@ public class PersonNameFormatter {
                         seenLeadingField = true;
                         seenEmptyLeadingField = false;
                         if (seenEmptyField) {
-                            result.append(coalesceLiterals(literalTextBefore, literalTextAfter));
+                            result.append(coalesceLiterals(literalTextBefore, literalTextAfter)); // also clears literalTextBefore&After
                             result.append(bestValue);
                             seenEmptyField = false;
                         } else {
+                            // discard literalTextAfter
                             result.append(literalTextBefore);
                             literalTextBefore.setLength(0);
                             result.append(bestValue);
@@ -743,6 +763,9 @@ public class PersonNameFormatter {
         }
 
         private String coalesceLiterals(StringBuilder l1, StringBuilder l2) {
+            if (endsWith(l1,l2)) {
+                l2.setLength(0);
+            }
             // get the range of nonwhitespace characters at the beginning of l1
             int p1 = 0;
             while (p1 < l1.length() && !Character.isWhitespace(l1.charAt(p1))) {
@@ -771,6 +794,21 @@ public class PersonNameFormatter {
             l2.setLength(0);
 
             return result;
+        }
+
+        private boolean endsWith(StringBuilder l1, StringBuilder l2) {
+            final int l2Length = l2.length();
+            final int delta = l1.length() - l2Length;
+            if (delta < 0) {
+                return false;
+            }
+            for (int i = 0; i < l2Length; ++i) {
+                // don't have to worry about unpaired surrogates.
+                if (l1.charAt(i+delta) != l2.charAt(i)) {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public NamePattern(int rank, List<NamePatternElement> elements) {
@@ -970,6 +1008,50 @@ public class PersonNameFormatter {
                 }
             }
             return null;
+        }
+
+        /**
+         * Returns a list of (field, literal, field) that are inconsistent with the initialSeparator (derived from the initialPattern)
+         */
+        public ArrayList<List<String>> findInitialFailures(String _initialSeparator) {
+            ArrayList<List<String>> failures;
+            String initialSeparator = finalWhitespace(_initialSeparator);
+
+            // check that the literal between initial fields matches the initial pattern
+            ModifiedField lastField = null;
+            boolean lastFieldInitial = false;
+            String lastLiteral = "";
+            failures = new ArrayList<>();
+            for (int i = 0; i < getElementCount(); ++i) {
+                // we can have {field}<literal>{field} or {field}{field}
+                ModifiedField field = getModifiedField(i);
+                if (field == null) {
+                    lastLiteral = finalWhitespace(getLiteral(i));
+                } else {
+                    boolean currentFieldInitial = !Collections.disjoint(field.getModifiers(), Modifier.INITIALS);
+                    if (currentFieldInitial && lastFieldInitial) {
+                        if (!initialSeparator.equals(lastLiteral)) {
+                            failures.add(ImmutableList.of(lastField.toString(), lastLiteral, field.toString()));
+                        }
+                    }
+                    lastField = field;
+                    lastFieldInitial = currentFieldInitial;
+                    lastLiteral = "";
+                }
+            }
+            return failures;
+        }
+
+        static final UnicodeSet WS = new UnicodeSet("\\p{whitespace}").freeze();
+
+        private String finalWhitespace(String string) {
+            if (!string.isEmpty()) {
+                int finalCp = string.codePointBefore(string.length());
+                if (WS.contains(finalCp)) {
+                    return UTF16.valueOf(finalCp);
+                }
+            }
+            return "";
         }
     }
 
@@ -1535,12 +1617,12 @@ public class PersonNameFormatter {
         this.fallbackFormatter = fallbackFormatter;
     }
 
-    static final class LocaleSpacingData {
-        static LocaleSpacingData getInstance() {
+    public static final class LocaleSpacingData {
+        public static LocaleSpacingData getInstance() {
             return LocaleSpacingData.SINGLETON;
         }
         static LocaleSpacingData SINGLETON = new LocaleSpacingData();
-        final Set<String> LOCALES_NOT_NEEDING_SPACES;
+        private final Set<String> LOCALES_NOT_NEEDING_SPACES;
         LocaleSpacingData() {
             Set<String> _LOCALE_NOT_NEEDING_SPACES = new TreeSet<>();
             Set<String> EXCLUSIONS = ImmutableSet.of("Thai");
@@ -1557,6 +1639,9 @@ public class PersonNameFormatter {
             }
             LOCALES_NOT_NEEDING_SPACES = ImmutableSet.copyOf(_LOCALE_NOT_NEEDING_SPACES);
         }
+        public Set<String> getScriptsNotNeedingSpacesInNames() {
+            return LOCALES_NOT_NEEDING_SPACES;
+        }
     }
 
     /**
@@ -1570,7 +1655,7 @@ public class PersonNameFormatter {
         String initialSequencePattern = null;
         String foreignSpaceReplacement = " ";
         String formattingScript = new LikelySubtags().getLikelyScript(cldrFile.getLocaleID());
-        String nativeSpaceReplacement = LocaleSpacingData.getInstance().LOCALES_NOT_NEEDING_SPACES.contains(formattingScript) ? "" : " ";
+        String nativeSpaceReplacement = LocaleSpacingData.getInstance().getScriptsNotNeedingSpacesInNames().contains(formattingScript) ? "" : " ";
         Map<ULocale, Order> _localeToOrder = new TreeMap<>();
 
         // read out the data and order it properly
