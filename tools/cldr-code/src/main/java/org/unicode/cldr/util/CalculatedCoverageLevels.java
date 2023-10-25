@@ -13,6 +13,11 @@ import com.google.common.base.Splitter;
 
 
 public class CalculatedCoverageLevels {
+    /**
+     * Assumed level for root. CLDR-16420
+     */
+    final private static Level DEFAULT_ROOT_LEVEL = Level.MODERN;
+
     final Map<String, Level> levels;
 
     protected CalculatedCoverageLevels(Map<String, Level> levels) {
@@ -24,6 +29,30 @@ public class CalculatedCoverageLevels {
      */
     public Map<String, Level> getLevels() {
         return levels;
+    }
+
+    public Level getEffectiveCoverageLevel(String locale) {
+        return getEffectiveCoverageLevel(CLDRLocale.getInstance(locale));
+    }
+
+    public Level getEffectiveCoverageLevel(CLDRLocale locale) {
+        // per spec, assumed level for the explicit root locale
+        if (locale == CLDRLocale.ROOT) {
+            return DEFAULT_ROOT_LEVEL;
+        }
+        // See if there is an explicit entry
+        final Level level = levels.get(locale.getBaseName());
+        if (level != null) {
+            return level;
+        }
+        // Otherwise, tail-recurse on parent, unless the parent is root
+        final CLDRLocale parent = locale.getParent();
+        if (parent == CLDRLocale.ROOT) {
+            // not found: no level.
+            // TODO: should this really be 'core'? if at least core? CLDR-16420
+            return null;
+        }
+        return getEffectiveCoverageLevel(parent);
     }
 
     /**
@@ -59,15 +88,16 @@ public class CalculatedCoverageLevels {
         while ((line = r.readLine()) != null) {
             no++;
             line = line.trim();
-            if(line.startsWith("#") || line.isBlank()) {
+            if(line.isBlank() || line.startsWith("#")) {
                 continue;
             }
             final List<String> l = SEMICOLON.splitToList(line);
-            if (l.size() != 2) {
+            if (l.size() != 3) {
                 throw new IllegalArgumentException("coverageLevels.txt:"+no+": expected 2 fields, got " + l.size());
             }
             final String uloc = l.get(0);
             final String level = l.get(1);
+            final String name = l.get(2);
             final Level lev = Level.fromString(level);
             if (levels.put(uloc, lev) != null) {
                 throw new IllegalArgumentException("coverageLevels.txt:"+no+": duplicate locale " + uloc);
