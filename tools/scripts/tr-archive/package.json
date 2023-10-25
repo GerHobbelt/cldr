@@ -7,8 +7,8 @@
     "@not-dalia/gfm-toc": "github:not-dalia/gfm-toc",
     "anchor-js": "^4.3.1",
     "highlight.js": "^11.6.0",
-    "jsdom": "^20.0.2",
-    "marked": "^4.0.10"
+    "jsdom": "^20.0.3",
+    "marked": "^4.2.5"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
