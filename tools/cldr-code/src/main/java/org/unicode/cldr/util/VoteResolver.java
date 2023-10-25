@@ -101,6 +101,9 @@ public class VoteResolver<T> {
      * @param args
      */
     private final void annotateTranscript(String fmt, Object... args) {
+        if (DEBUG) {
+            System.out.println("Transcript: " + String.format(fmt, args));
+        }
         if (transcript == null) {
             return;
         }
@@ -934,7 +937,7 @@ public class VoteResolver<T> {
         // TODO: clear these out between reuse
         // Are there other values that should be cleared?
         oValue = null;
-        winningValue = null;
+        setWinningValue(null);
         nValue = null;
 
         if (transcript != null) {
@@ -1062,7 +1065,7 @@ public class VoteResolver<T> {
          *
          * Return negative to favor o1, positive to favor o2.
          * @see VoteResolver#setBestNextAndSameVoteValues(Set, HashMap)
-         * @see VoteResolver#annotateNextBestValue(long, long, String, String)
+         * @see VoteResolver#annotateNextBestValue(long, long, T, T)
          */
         @Override
         public int compare(T o1, T o2) {
@@ -1133,12 +1136,12 @@ public class VoteResolver<T> {
          */
         if (sortedValues.size() == 0) {
             if (baselineValue != null) {
-                winningValue = baselineValue;
+                setWinningValue(baselineValue);
                 winningStatus = baselineStatus;
                 annotateTranscript("Winning Value: '%s' with status '%s' because there were no unconflicted votes.", winningValue, winningStatus);
                 // Declare the winner here, because we're about to return from the function
             } else if (organizationToValueAndVote.baileySet) {
-                winningValue = (T) CldrUtility.INHERITANCE_MARKER;
+                setWinningValue((T) CldrUtility.INHERITANCE_MARKER);
                 winningStatus = Status.missing;
                 annotateTranscript("Winning Value: '%s' with status '%s' because there were no unconflicted votes, and there was a Bailey value set.", winningValue, winningStatus);
                 // Declare the winner here, because we're about to return from the function
@@ -1150,7 +1153,7 @@ public class VoteResolver<T> {
                  *    xpath //ldml/localeDisplayNames/languages/language[@type="zh_Hans"][@alt="long"]
                  * See also checkDataRowConsistency in DataSection.java.
                  */
-                winningValue = (T) NO_WINNING_VALUE;
+                setWinningValue((T) NO_WINNING_VALUE);
                 winningStatus = Status.missing;
                 annotateTranscript("No winning value! status '%s' because there were no unconflicted votes", winningStatus);
                 // Declare the non-winner here, because we're about to return from the function
@@ -1192,10 +1195,10 @@ public class VoteResolver<T> {
         // if we are not as good as the baseline (trunk), use the baseline
         // TODO: how could baselineStatus be null here??
         if (baselineStatus != null && winningStatus.compareTo(baselineStatus) < 0) {
+            setWinningValue(baselineValue);
             annotateTranscript("The optimal value so far with status '%s' would not be as good as the baseline status. " +
-                "Therefore, the winning value is '%s' with status '%s'.", winningStatus, baselineValue, baselineStatus);
+                "Therefore, the winning value is '%s' with status '%s'.", winningStatus, winningValue, baselineStatus);
             winningStatus = baselineStatus;
-            winningValue = baselineValue;
             valuesWithSameVotes.clear();
             valuesWithSameVotes.add(winningValue);
         } else {
@@ -1245,7 +1248,7 @@ public class VoteResolver<T> {
         if (voteCount == null || sortedValues == null) {
             return;
         }
-        annotateTranscript("Vote weights are being adjusted due to annotation keywords."); // TODO explain this further
+        annotateTranscript("Vote weights are being adjusted due to annotation keywords.");
 
         // Make compMap map individual components to cumulative vote counts.
         HashMap<T, Long> compMap = makeAnnotationComponentMap(sortedValues, voteCount);
@@ -1273,6 +1276,7 @@ public class VoteResolver<T> {
      */
     private HashMap<T, Long> makeAnnotationComponentMap(Set<T> sortedValues, HashMap<T, Long> voteCount) {
         HashMap<T, Long> compMap = new HashMap<>();
+        annotateTranscript("- First, components are split up and total votes calculated");
         for (T value : sortedValues) {
             Long count = voteCount.get(value);
             List<T> comps = splitAnnotationIntoComponentsList(value);
@@ -1285,10 +1289,10 @@ public class VoteResolver<T> {
                 }
             }
         }
-        if (DEBUG) {
-            System.out.println("\n\tComponents in adjustAnnotationVoteCounts:");
-            for (T comp : compMap.keySet()) {
-                System.out.println("\t" + comp + ":" + compMap.get(comp));
+        if (transcript != null && !DEBUG) {
+            for (Entry<T, Long> comp : compMap.entrySet()) {
+                // TODO: could sort here, or not.
+                annotateTranscript("-- component '%s' has weight %d", comp.getKey().toString(), comp.getValue());
             }
         }
         return compMap;
@@ -1311,6 +1315,7 @@ public class VoteResolver<T> {
      */
     private void calculateNewCountsBasedOnAnnotationComponents(Set<T> sortedValues, HashMap<T, Long> voteCount, HashMap<T, Long> compMap) {
         voteCount.clear();
+        annotateTranscript("- Next, the original values get new counts, each based on the geometric mean of the products of all components.");
         for (T value : sortedValues) {
             List<T> comps = splitAnnotationIntoComponentsList(value);
             double product = 1.0;
@@ -1324,6 +1329,7 @@ public class VoteResolver<T> {
              */
             Long newCount = Math.round(Math.pow(product, 1.0 / comps.size())); // geometric mean
             voteCount.put(value, newCount);
+            // Don't annotate these here, annotate them once sorted
         }
     }
 
@@ -1399,6 +1405,12 @@ public class VoteResolver<T> {
         LinkedHashSet<T> oldWinnerComps = null;
         LinkedHashSet<T> superiorSupersets = null;
         for (T value : sortedValues) {
+            // Annotate the means here
+            final long rawCount = rawVoteCount.get(value);
+            final long newCount = voteCount.get(value);
+            if (rawCount != newCount) {
+                annotateTranscript("-- Value '%s' has updated value '%d'", value, newCount);
+            }
             if (oldWinner == null) {
                 oldWinner = value;
                 oldWinnerRawCount = rawVoteCount.get(value);
@@ -1422,10 +1434,14 @@ public class VoteResolver<T> {
             for (T value : superiorSupersets) {
                 if (newWinner == null) {
                     newWinner = value;
-                    voteCount.put(newWinner, voteCount.get(oldWinner) + 2); // more than oldWinner and newSecond
+                    long newWinnerCount = voteCount.get(oldWinner) + 2;
+                    annotateTranscript("- Optimal value (O) '%s' was promoted to value '%d' due to having a superior raw vote count", newWinner, newWinnerCount);
+                    voteCount.put(newWinner, newWinnerCount); // more than oldWinner and newSecond
                 } else {
                     newSecond = value;
-                    voteCount.put(newSecond, voteCount.get(oldWinner) + 1); // more than oldWinner, less than newWinner
+                    long newSecondCount = voteCount.get(oldWinner) + 1;
+                    annotateTranscript("- Next value (N) '%s' was promoted to value '%d' due to having a superior raw vote count", newSecond, newSecondCount);
+                    voteCount.put(newSecond, newSecondCount); // more than oldWinner, less than newWinner
                     break;
                 }
             }
@@ -1459,7 +1475,7 @@ public class VoteResolver<T> {
             ++i;
             long valueWeight = voteCount.get(value);
             if (i == 0) {
-                winningValue = value;
+                setWinningValue(value);
                 weightArray[0] = valueWeight;
                 valuesWithSameVotes.add(value);
                 annotateTranscript("The optimal value (O) is '%s', with a weight of %d", winningValue, valueWeight);
@@ -1598,6 +1614,15 @@ public class VoteResolver<T> {
             resolveVotes();
         }
         return winningValue;
+    }
+
+    /**
+     * Set the Winning Value; if the given value matches Bailey, change it to INHERITANCE_MARKER
+     *
+     * @param value the value to set (prior to changeBaileyToInheritance)
+     */
+    private void setWinningValue(T value) {
+        winningValue = changeBaileyToInheritance(value);
     }
 
     public List<T> getValuesWithSameVotes() {
