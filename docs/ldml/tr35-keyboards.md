@@ -74,13 +74,12 @@ The LDML specification is divided into the following parts:
   * [Element: locale](#Element_locale)
   * [Element: version](#Element_version)
   * [Element: info](#Element_info)
-  * [Element: names](#Element_names)
-  * [Element: name](#Element_name)
   * [Element: settings](#Element_settings)
   * [Element: keys](#Element_keys)
   * [Element: key](#Element_key)
     * [Implied Keys](#implied-keys)
-    * [Elements: flicks, flick](#Element_flicks)
+    * [Elements: flicks](#Element_flicks)
+    * [Elements: flick, flickSegment](#Element_flick)
   * [Element: import](#Element_import)
   * [Element: displays](#Element_displays)
   * [Element: display](#Element_display)
@@ -276,7 +275,7 @@ Currently, the following attribute values allow _UnicodeSet_ notation:
 The `\u{...}` notation, a subset of hex notation, is described in [UTS #18 section 1.1](https://www.unicode.org/reports/tr18/#Hex_notation). It can refer to one or multiple individual codepoints. Currently, the following attribute values allow the `\u{...}` notation:
 
 * `to`, `longPress`, `multiTap`, and `longPressDefault` on the `<key>` element
-* `to` on the `<flick>` element
+* `to` on the `<flickSegment>` element
 * `from` or `to` on the `<transform>` element
 * `value` on the `<variable>` element
 * `to` and `display` on the `<display>` element
@@ -334,7 +333,7 @@ This is the top level element. All other elements defined below are under this e
 >
 > Parents: _none_
 >
-> Children: [displays](#Element_displays), [import](#Element_import), [info](#Element_info), [keys](#Element_keys), [layers](#Element_layers), [locales](#Element_locales), [names](#Element_names), [settings](#Element_settings), [_special_](tr35.md#special), [transforms](#Element_transforms), [variables](#Element_variables), [version](#Element_version)
+> Children: [displays](#Element_displays), [import](#Element_import), [info](#Element_info), [keys](#Element_keys), [flicks](#Element_flicks), [layers](#Element_layers), [locales](#Element_locales), [settings](#Element_settings), [_special_](tr35.md#special), [transforms](#Element_transforms), [variables](#Element_variables), [version](#Element_version)
 >
 > Occurrence: required, single
 >
@@ -485,7 +484,9 @@ Element containing informative properties about the layout, for displaying in us
 **Syntax**
 
 ```xml
-<info author="{author}"
+<info
+      name="{keyboard name}"
+      author="{author}"
       layout="{hint of the layout}"
       indicator="{short identifier}" />
 ```
@@ -496,9 +497,26 @@ Element containing informative properties about the layout, for displaying in us
 >
 > Children: _none_
 >
-> Occurrence: optional, single
+> Occurrence: required, single
 >
 > </small>
+
+_Attribute:_ `name` (required)
+
+> Note that this is the only required attribute for the `<info>` element.
+>
+> This attribute is an informative name for the keyboard.
+
+```xml
+<keyboard3 locale="bg-t-k0-phonetic-trad">
+    …
+    <info name="Bulgarian (Phonetic Traditional)" />
+    …
+</keyboard3>
+```
+
+* * *
+
 
 _Attribute:_ `author`
 
@@ -516,69 +534,6 @@ _Attribute:_ `indicator`
 > Typically, this is shown on a UI element that allows switching keyboard layouts and/or input languages.
 >
 > This attribute is not localized.
-
-* * *
-
-### <a name="Element_names" href="#Element_names">Element: names</a>
-
-Element used to store any names given to the layout.
-
-These names are not localized but are informative names for the keyboard. Localization of these names would be done as separate data items elsewhere in CLDR.
-
-**Syntax**
-
-```xml
-<names>
-    {set of name elements}
-</names>
-```
-
-> <small>
->
-> Parents: [keyboard3](#Element_keyboard)
->
-> Children: [name](#Element_name), [_special_](tr35.md#special)
->
-> Occurrence: required, single
->
-> </small>
-
-### <a name="Element_name" href="#Element_name">Element: name</a>
-
-A single name given to the layout.
-
-**Syntax**
-
-```xml
-<name value="..">
-```
-
-> <small>
->
-> Parents: [names](#Element_names)
->
-> Children: _none_
->
-> Occurrence: required, multiple
->
-> </small>
-
-_Attribute:_ `value` (required)
-
-> The name of the layout.
-
-
-**Example**
-
-```xml
-<keyboard3 locale="bg-t-k0-phonetic-trad">
-    …
-    <names>
-        <name value="Bulgarian (Phonetic Traditional)" />
-    </names>
-    …
-</keyboard3>
-```
 
 * * *
 
@@ -638,18 +593,13 @@ There is only a single `<keys>` element in each layout.
     <key … />
     <key … />
     <key … />
-    <flicks … />
-    <key … />
-    <flicks … />
 </keys>
 ```
-
-`key` and `flicks` elements may be interleaved in any order.
 
 > <small>
 >
 > Parents: [keyboard3](#Element_keyboard)
-> Children: [key](#Element_key), [flicks](#Element_flicks)
+> Children: [key](#Element_key)
 > Occurrence: optional, single
 >
 > </small>
@@ -870,24 +820,47 @@ Thus, the implied keys behave as if the following import were present.
 
 * * *
 
-#### <a name="Element_flicks" href="#Element_flicks">Elements: flicks, flick</a>
+#### <a name="Element_flicks" href="#Element_flicks">Elements: flicks</a>
 
-The `flicks` element is used to generate results from a "flick" of the finger on a mobile device.
+The `flicks` element is a collection of `flick` elements.
+
+> <small>
+>
+> Parents: [keyboard3](#Element_keyboard3)
+>
+> Children: [flick](#Element_flick), [import](#Element_import), [_special_](tr35.md#special)
+>
+> Occurrence: optional, single
+> </small>
+
+* * *
+
+#### <a name="Element_flick" href="#Element_flick">Elements: flick, flickSegment</a>
+
+The `flick` element is used to generate results from a "flick" of the finger on a mobile device.
 
 **Syntax**
 
 ```xml
-<key id="a" flicks="a-flicks" to="a" />
-<flicks id="a-flicks">
-    {a set of flick elements}
-</flicks>
+<keyboard3>
+    <keys>
+        <key id="a" flicks="a-flicks" to="a" />
+    </keys>
+    <flicks>
+        <flick id="a-flicks">
+            <flickSegment … />
+            <flickSegment … />
+            <flickSegment … />
+        </flick>
+    </flicks>
+</keyboard3>
 ```
 
 > <small>
 >
-> Parents: [keys](#Element_keys)
+> Parents: [flicks](#Element_flicks)
 >
-> Children: [flick](#Element_flick), [_special_](tr35.md#special)
+> Children: [flickSegment](#Element_flickSegment), [_special_](tr35.md#special)
 >
 > Occurrence: optional, multiple
 >
@@ -897,8 +870,8 @@ _Attribute:_ `id` (required)
 
 > The `id` attribute identifies the flicks. It can be any NMTOKEN.
 >
-> The `flicks` do not share a namespace with the `key`s, so it would also be allowed
-> to have `<key id="a" flicks="a"/><flicks id="a"/>`
+> The `flick` elements do not share a namespace with the `key`s, so it would also be allowed
+> to have `<key id="a" flick="a"/>`
 >
 > In the future, this attribute’s definition is expected to be updated to align with [UAX#31](https://www.unicode.org/reports/tr31/). Please see [CLDR-17043](https://unicode-org.atlassian.net/browse/CLDR-17043) for more details.
 
@@ -906,12 +879,12 @@ _Attribute:_ `id` (required)
 **Syntax**
 
 ```xml
-<flick directions="{list of directions}" to="{the output}" />
+<flickSegment directions="{list of directions}" to="{the output}" />
 ```
 
 > <small>
 >
-> Parents: [flicks](#Element_flicks)
+> Parents: [flick](#Element_flick)
 >
 > Children: _none_
 >
@@ -931,9 +904,9 @@ _Attribute:_ `to` (required)
 where a flick to the Northeast then South produces two code points.
 
 ```xml
-<flicks id="a">
-    <flick directions="ne s" to="\u{ABCD}\u{DCBA}" />
-</flicks>
+<flick id="a">
+    <flickSegment directions="ne s" to="\u{ABCD}\u{DCBA}" />
+</flick>
 ```
 
 * * *
@@ -956,7 +929,7 @@ If two identical elements are defined, the later element will take precedence, t
 ```
 > <small>
 >
-> Parents: [displays](#Element_displays), [keyboard3](#Element_keyboard), [keys](#Element_keys), [layers](#Element_layers), [names](#Element_names), [reorders](#Element_reorders), [transformGroup](#Element_transformGroup), [transforms](#Element_transforms), [variables](#Element_variables)
+> Parents: [displays](#Element_displays), [keyboard3](#Element_keyboard), [keys](#Element_keys), [flicks](#Element_flicks), [layers](#Element_layers), [names](#Element_names), [reorders](#Element_reorders), [transformGroup](#Element_transformGroup), [transforms](#Element_transforms), [variables](#Element_variables)
 > Children: _none_
 >
 > Occurrence: optional, multiple
@@ -2747,7 +2720,7 @@ This attribute specifies a key by means of the key’s `id` attribute.
 
 _Attribute:_ `flick`
 
-This attribute specifies a flick gesture to be performed on the specified key instead of a keypress, such as `e` or `nw se`. This value corresponds to the `directions` attribute of the [`<flick>`](#Element_flicks) element.
+This attribute specifies a flick gesture to be performed on the specified key instead of a keypress, such as `e` or `nw se`. This value corresponds to the `directions` attribute of the [`<flickSegment>`](#Element_flickSegment) element.
 
 _Attribute:_ `longPress`
 
