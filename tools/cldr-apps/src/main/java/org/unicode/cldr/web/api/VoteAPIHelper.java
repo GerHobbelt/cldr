@@ -137,7 +137,7 @@ public class VoteAPIHelper {
                 if (xp == null) {
                     return Response.status(404).entity(new STError(ErrorCode.E_BAD_XPATH)).build();
                 }
-                matcher = XPathMatcher.getMatcherForString(xp); // single string
+                matcher = XPathMatcher.exactMatcherForString(xp);
             } else {
                 // Should not get here.
                 return new STError(
@@ -148,6 +148,9 @@ public class VoteAPIHelper {
             final DataPage pageData = DataPage.make(pageId, mySession, locale, xp, matcher);
             pageData.setUserForVotelist(mySession.user);
             r.page = new RowResponse.Page();
+            if (args.xpstrid != null) {
+                r.setOneRowPath(args.xpstrid);
+            }
 
             // don't return default content
             CLDRLocale dcParent =
