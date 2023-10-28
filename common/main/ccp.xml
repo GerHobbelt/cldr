@@ -1025,8 +1025,8 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 			<type key="calendar" type="gregorian">𑄉𑄳𑄢𑄉𑄮𑄢𑄨𑄠𑄚𑄴 𑄇𑄳𑄠𑄣𑄬𑄚𑄴𑄓𑄢𑄴</type>
 			<type key="calendar" type="hebrew">𑄦𑄨𑄝𑄳𑄢𑄪 𑄇𑄳𑄠𑄣𑄬𑄚𑄴𑄓𑄢𑄴</type>
 			<type key="calendar" type="indian">𑄞𑄢𑄧𑄘𑄧𑄢𑄴 𑄎𑄖𑄩𑄠𑄧 𑄝𑄧𑄢𑄴𑄥𑄧𑄛𑄧𑄚𑄴𑄏𑄩</type>
-			<type key="calendar" type="islamic">𑄃𑄨𑄥𑄴𑄣𑄟𑄨𑄇𑄴 𑄇𑄳𑄠𑄣𑄬𑄚𑄴𑄓𑄢𑄴</type>
-			<type key="calendar" type="islamic-civil">𑄃𑄨𑄥𑄴𑄣𑄟𑄨𑄇𑄴-𑄥𑄨𑄞𑄨𑄣𑄴 𑄝𑄧𑄢𑄴𑄥𑄧𑄛𑄧𑄚𑄴𑄏𑄩</type>
+			<type key="calendar" type="islamic" draft="provisional">𑄃𑄨𑄥𑄴𑄣𑄟𑄨𑄇𑄴 𑄇𑄳𑄠𑄣𑄬𑄚𑄴𑄓𑄢𑄴</type>
+			<type key="calendar" type="islamic-civil" draft="provisional">𑄃𑄨𑄥𑄴𑄣𑄟𑄨𑄇𑄴-𑄥𑄨𑄞𑄨𑄣𑄴 𑄝𑄧𑄢𑄴𑄥𑄧𑄛𑄧𑄚𑄴𑄏𑄩</type>
 			<type key="calendar" type="iso8601">ISO-861 𑄇𑄳𑄠𑄣𑄬𑄚𑄴𑄓𑄢𑄴</type>
 			<type key="calendar" type="japanese">𑄎𑄛𑄚𑄨 𑄇𑄳𑄠𑄣𑄬𑄚𑄴𑄓𑄢𑄴</type>
 			<type key="calendar" type="persian">𑄜𑄢𑄴𑄥𑄨 𑄇𑄳𑄠𑄣𑄬𑄚𑄴𑄓𑄢𑄴</type>
@@ -6538,9 +6538,9 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 				<unitPattern count="other">{0} 𑄇𑄳𑄠𑄣𑄮𑄢𑄨</unitPattern>
 			</unit>
 			<unit type="energy-foodcalorie">
-				<displayName>𑄇𑄳𑄠𑄣𑄮𑄢𑄨</displayName>
-				<unitPattern count="one">{0} 𑄇𑄳𑄠𑄣𑄮𑄢𑄨</unitPattern>
-				<unitPattern count="other">{0} 𑄇𑄳𑄠𑄣𑄮𑄢𑄨</unitPattern>
+				<displayName draft="provisional">𑄇𑄳𑄠𑄣𑄮𑄢𑄨</displayName>
+				<unitPattern count="one" draft="provisional">{0} 𑄇𑄳𑄠𑄣𑄮𑄢𑄨</unitPattern>
+				<unitPattern count="other" draft="provisional">{0} 𑄇𑄳𑄠𑄣𑄮𑄢𑄨</unitPattern>
 			</unit>
 			<unit type="energy-kilojoule">
 				<displayName>𑄇𑄨𑄣𑄮𑄎𑄪𑄣𑄴</displayName>
@@ -7225,9 +7225,9 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 				<unitPattern count="other">{0} cal</unitPattern>
 			</unit>
 			<unit type="energy-foodcalorie">
-				<displayName>Cal</displayName>
-				<unitPattern count="one">{0} Cal</unitPattern>
-				<unitPattern count="other">{0} Cal</unitPattern>
+				<displayName draft="provisional">Cal</displayName>
+				<unitPattern count="one" draft="provisional">{0} Cal</unitPattern>
+				<unitPattern count="other" draft="provisional">{0} Cal</unitPattern>
 			</unit>
 			<unit type="energy-kilojoule">
 				<displayName>kJ</displayName>

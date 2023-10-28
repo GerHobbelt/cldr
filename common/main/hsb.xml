@@ -866,9 +866,9 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 			<type key="calendar" type="ethiopic-amete-alem">etiopiska amete-alem-protyka</type>
 			<type key="calendar" type="gregorian">gregorianska protyka</type>
 			<type key="calendar" type="hebrew">židowska protyka</type>
-			<type key="calendar" type="islamic">islamska protyka</type>
-			<type key="calendar" type="islamic-civil">islamska ciwilna protyka</type>
-			<type key="calendar" type="islamic-umalqura">islamska umalqura-protyka</type>
+			<type key="calendar" type="islamic" draft="provisional">islamska protyka</type>
+			<type key="calendar" type="islamic-civil" draft="provisional">islamska ciwilna protyka</type>
+			<type key="calendar" type="islamic-umalqura" draft="provisional">islamska umalqura-protyka</type>
 			<type key="calendar" type="iso8601">protyka po iso-8601</type>
 			<type key="calendar" type="japanese">japanska protyka</type>
 			<type key="calendar" type="persian">persiska protyka</type>
@@ -7112,11 +7112,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 				<unitPattern count="other">{0} kalorijow</unitPattern>
 			</unit>
 			<unit type="energy-foodcalorie">
-				<displayName>kilokalorije</displayName>
-				<unitPattern count="one">{0} kilokalorija</unitPattern>
-				<unitPattern count="two">{0} kilokaloriji</unitPattern>
-				<unitPattern count="few">{0} kilokalorije</unitPattern>
-				<unitPattern count="other">{0} kilokalorijow</unitPattern>
+				<displayName draft="provisional">kilokalorije</displayName>
+				<unitPattern count="one" draft="provisional">{0} kilokalorija</unitPattern>
+				<unitPattern count="two" draft="provisional">{0} kilokaloriji</unitPattern>
+				<unitPattern count="few" draft="provisional">{0} kilokalorije</unitPattern>
+				<unitPattern count="other" draft="provisional">{0} kilokalorijow</unitPattern>
 			</unit>
 			<unit type="energy-kilojoule">
 				<displayName>kilojoule</displayName>
@@ -8510,11 +8510,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 				<unitPattern count="other">{0} cal</unitPattern>
 			</unit>
 			<unit type="energy-foodcalorie">
-				<displayName>kcal</displayName>
-				<unitPattern count="one">{0} kcal</unitPattern>
-				<unitPattern count="two">{0} kcal</unitPattern>
-				<unitPattern count="few">{0} kcal</unitPattern>
-				<unitPattern count="other">{0} kcal</unitPattern>
+				<displayName draft="provisional">kcal</displayName>
+				<unitPattern count="one" draft="provisional">{0} kcal</unitPattern>
+				<unitPattern count="two" draft="provisional">{0} kcal</unitPattern>
+				<unitPattern count="few" draft="provisional">{0} kcal</unitPattern>
+				<unitPattern count="other" draft="provisional">{0} kcal</unitPattern>
 			</unit>
 			<unit type="energy-kilojoule">
 				<displayName>kJ</displayName>
