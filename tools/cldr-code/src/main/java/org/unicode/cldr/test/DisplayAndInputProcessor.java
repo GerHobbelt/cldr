@@ -12,7 +12,6 @@ import com.ibm.icu.text.DateIntervalInfo;
 import com.ibm.icu.text.DateTimePatternGenerator;
 import com.ibm.icu.text.DecimalFormat;
 import com.ibm.icu.text.Normalizer;
-import com.ibm.icu.text.RuleBasedCollator;
 import com.ibm.icu.text.Transform;
 import com.ibm.icu.text.Transliterator;
 import com.ibm.icu.text.UnicodeSet;
@@ -36,10 +35,10 @@ import org.unicode.cldr.util.CLDRConfig;
 import org.unicode.cldr.util.CLDRFile;
 import org.unicode.cldr.util.CLDRLocale;
 import org.unicode.cldr.util.CldrUtility;
+import org.unicode.cldr.util.ComparatorUtilities;
 import org.unicode.cldr.util.DateTimeCanonicalizer;
 import org.unicode.cldr.util.DateTimeCanonicalizer.DateTimePatternType;
 import org.unicode.cldr.util.Emoji;
-import org.unicode.cldr.util.ICUServiceBuilder;
 import org.unicode.cldr.util.LocaleNames;
 import org.unicode.cldr.util.PatternCache;
 import org.unicode.cldr.util.SimpleUnicodeSetFormatter;
@@ -59,6 +58,8 @@ public class DisplayAndInputProcessor {
     public static final String NOL_START_PATH = "//ldml/personNames/nameOrderLocales";
 
     public static final String FSR_START_PATH = "//ldml/personNames/foreignSpaceReplacement";
+    public static final String NSR_START_PATH = "//ldml/personNames/nativeSpaceReplacement";
+
     public static final String EMPTY_ELEMENT_VALUE = "❮EMPTY❯";
 
     private static final boolean FIX_YEARS = true;
@@ -257,30 +258,15 @@ public class DisplayAndInputProcessor {
     void init(CLDRLocale locale, boolean needsCollator) {
         isPosix = locale.toString().contains("POSIX");
         if (needsCollator) {
-            ICUServiceBuilder isb = null;
-            try {
-                isb = ICUServiceBuilder.forLocale(locale);
-            } catch (Exception e) {
-            }
-
-            Collator col;
-            if (isb != null) {
-                try {
-                    col = isb.getRuleBasedCollator();
-                } catch (Exception e) {
-                    col = Collator.getInstance(locale.toULocale());
-                }
-            } else {
-                col = Collator.getInstance(ULocale.ROOT);
-            }
-
-            Collator spaceCol = Collator.getInstance(locale.toULocale());
-            if (spaceCol instanceof RuleBasedCollator) {
-                ((RuleBasedCollator) spaceCol).setAlternateHandlingShifted(false);
-            }
+            Collator col =
+                    ComparatorUtilities.getCldrCollator(locale.toString(), Collator.IDENTICAL);
+            Collator spaceCol =
+                    ComparatorUtilities.getCldrCollator(locale.toString(), Collator.PRIMARY);
             pp = new SimpleUnicodeSetFormatter((Comparator) col);
+            rawFormatter = UnicodeSetPrettyPrinter.from((Comparator) col, (Comparator) spaceCol);
         } else {
             pp = new SimpleUnicodeSetFormatter(); // default collator
+            rawFormatter = new UnicodeSetPrettyPrinter(); // default
         }
         String script = locale.getScript();
         if (script == null || script.length() < 4) {
@@ -393,7 +379,9 @@ public class DisplayAndInputProcessor {
         }
         // Fix up possibly empty field
         if (value.isEmpty()
-                && (path.startsWith(FSR_START_PATH) || path.startsWith(NOL_START_PATH))) {
+                && (path.startsWith(FSR_START_PATH)
+                        || path.startsWith(NSR_START_PATH)
+                        || path.startsWith(NOL_START_PATH))) {
             value = EMPTY_ELEMENT_VALUE;
         }
         return value;
@@ -475,6 +463,7 @@ public class DisplayAndInputProcessor {
         // foreignSpaceReplacement, and anything with built-in attribute xml:space="preserve"
         if (!path.contains("/insertBetween")
                 && !path.contains("/foreignSpaceReplacement")
+                && !path.contains("/nativeSpaceReplacement")
                 && !path.contains("[@xml:space=\"preserve\"]")
                 && !isUnicodeSet) {
             value = value.trim();
