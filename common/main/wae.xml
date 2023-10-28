@@ -187,7 +187,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 			<script type="Taml" draft="contributed">Tamiliš</script>
 			<script type="Telu" draft="contributed">Telugu</script>
 			<script type="Thaa" draft="contributed">Thána</script>
-			<script type="Thai" draft="contributed">↑↑↑</script>
+			<script type="Thai" draft="contributed">Thai</script>
 			<script type="Zxxx" draft="contributed">Schriftlos</script>
 			<script type="Zzzz" draft="contributed">Unkodierti Schrift</script>
 		</scripts>
@@ -1483,8 +1483,8 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 					<pattern type="100000000000000" count="other" draft="provisional">↑↑↑</pattern>
 				</currencyFormat>
 			</currencyFormatLength>
-			<unitPattern count="one" draft="contributed">↑↑↑</unitPattern>
-			<unitPattern count="other" draft="contributed">↑↑↑</unitPattern>
+			<unitPattern count="one" draft="contributed">{0} {1}</unitPattern>
+			<unitPattern count="other" draft="contributed">{0} {1}</unitPattern>
 		</currencyFormats>
 		<currencies>
 			<currency type="BRL">

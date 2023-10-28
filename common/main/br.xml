@@ -180,7 +180,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 			<language type="fit">finneg traoñienn an Torne</language>
 			<language type="fj">fidjieg</language>
 			<language type="fo">faeroeg</language>
-			<language type="fon">↑↑↑</language>
+			<language type="fon">fon</language>
 			<language type="fr">galleg</language>
 			<language type="fr_CA">galleg Kanada</language>
 			<language type="fr_CH">galleg Suis</language>
@@ -325,7 +325,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 			<language type="lua">luba-lulua</language>
 			<language type="lui">luiseno</language>
 			<language type="lun">lunda</language>
-			<language type="luo">↑↑↑</language>
+			<language type="luo">luo</language>
 			<language type="lus">lushai</language>
 			<language type="luy">luyia</language>
 			<language type="lv">latvieg</language>
@@ -554,7 +554,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 			<language type="und">yezh dianav</language>
 			<language type="ur">ourdou</language>
 			<language type="uz">ouzbekeg</language>
-			<language type="vai">↑↑↑</language>
+			<language type="vai">vai</language>
 			<language type="ve">venda</language>
 			<language type="vec">venezieg</language>
 			<language type="vep">vepseg</language>
@@ -9851,11 +9851,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 					<pattern type="100000000000000" count="other" alt="alphaNextToNumber" draft="provisional">000 T ¤</pattern>
 				</currencyFormat>
 			</currencyFormatLength>
-			<unitPattern count="one">↑↑↑</unitPattern>
-			<unitPattern count="two">↑↑↑</unitPattern>
-			<unitPattern count="few">↑↑↑</unitPattern>
-			<unitPattern count="many">↑↑↑</unitPattern>
-			<unitPattern count="other">↑↑↑</unitPattern>
+			<unitPattern count="one">{0} {1}</unitPattern>
+			<unitPattern count="two">{0} {1}</unitPattern>
+			<unitPattern count="few">{0} {1}</unitPattern>
+			<unitPattern count="many">{0} {1}</unitPattern>
+			<unitPattern count="other">{0} {1}</unitPattern>
 		</currencyFormats>
 		<currencies>
 			<currency type="ADP">

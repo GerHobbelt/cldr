@@ -317,7 +317,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 			<language type="lua">luba-lulua</language>
 			<language type="lui">luisenščina</language>
 			<language type="lun">lunda</language>
-			<language type="luo">↑↑↑</language>
+			<language type="luo">luo</language>
 			<language type="lus">mizojščina</language>
 			<language type="luy">luhijščina</language>
 			<language type="lv">latvijščina</language>
@@ -6070,10 +6070,10 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 				</currencyFormat>
 			</currencyFormatLength>
 			<currencyPatternAppendISO draft="contributed">↑↑↑</currencyPatternAppendISO>
-			<unitPattern count="one">↑↑↑</unitPattern>
-			<unitPattern count="two">↑↑↑</unitPattern>
-			<unitPattern count="few">↑↑↑</unitPattern>
-			<unitPattern count="other">↑↑↑</unitPattern>
+			<unitPattern count="one">{0} {1}</unitPattern>
+			<unitPattern count="two">{0} {1}</unitPattern>
+			<unitPattern count="few">{0} {1}</unitPattern>
+			<unitPattern count="other">{0} {1}</unitPattern>
 		</currencyFormats>
 		<currencies>
 			<currency type="ADP">

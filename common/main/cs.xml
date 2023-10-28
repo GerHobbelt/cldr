@@ -632,7 +632,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 			<language type="und">neznámý jazyk</language>
 			<language type="ur">urdština</language>
 			<language type="uz">uzbečtina</language>
-			<language type="vai">↑↑↑</language>
+			<language type="vai">vai</language>
 			<language type="ve">venda</language>
 			<language type="vec">benátština</language>
 			<language type="vep">vepština</language>
@@ -10297,10 +10297,10 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 				</currencyFormat>
 			</currencyFormatLength>
 			<currencyPatternAppendISO>{0} ¤¤</currencyPatternAppendISO>
-			<unitPattern count="one">↑↑↑</unitPattern>
-			<unitPattern count="few">↑↑↑</unitPattern>
-			<unitPattern count="many">↑↑↑</unitPattern>
-			<unitPattern count="other">↑↑↑</unitPattern>
+			<unitPattern count="one">{0} {1}</unitPattern>
+			<unitPattern count="few">{0} {1}</unitPattern>
+			<unitPattern count="many">{0} {1}</unitPattern>
+			<unitPattern count="other">{0} {1}</unitPattern>
 		</currencyFormats>
 		<currencies>
 			<currency type="ADP">
