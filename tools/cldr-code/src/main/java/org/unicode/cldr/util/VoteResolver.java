@@ -15,7 +15,6 @@ import org.unicode.cldr.test.CheckCLDR;
 import org.unicode.cldr.test.CheckCLDR.Phase;
 import org.unicode.cldr.test.CheckWidths;
 import org.unicode.cldr.test.DisplayAndInputProcessor;
-import org.unicode.cldr.util.VettingViewer.VoteStatus;
 
 /**
  * This class implements the vote resolution process agreed to by the CLDR committee. Here is an
@@ -87,7 +86,7 @@ public class VoteResolver<T> {
      * @param fmt
      * @param args
      */
-    private final void annotateTranscript(String fmt, Object... args) {
+    private void annotateTranscript(String fmt, Object... args) {
         if (DEBUG) {
             System.out.println("Transcript: " + String.format(fmt, args));
         }
@@ -109,8 +108,8 @@ public class VoteResolver<T> {
      * <p>Status corresponds to icons as follows: A checkmark means it’s approved and is slated to
      * be used. A cross means it’s a missing value. Green/orange check: The item has enough votes to
      * be used in CLDR. Red/orange/black X: The item does not have enough votes to be used in CLDR,
-     * by most implementations (or is completely missing). Reference:
-     * http://cldr.unicode.org/translation/getting-started/guide
+     * by most implementations (or is completely missing). Reference: <a
+     * href="https://cldr.unicode.org/translation/getting-started/guide">guide</a>
      *
      * <p>When the item is inherited, i.e., winningValue is INHERITANCE_MARKER (↑↑↑), then
      * orange/red X are replaced by orange/red up-arrow. That change is made only on the client.
@@ -118,6 +117,8 @@ public class VoteResolver<T> {
      * <p>Status.approved: green check Status.contributed: orange check Status.provisional: orange X
      * (or orange up-arrow if inherited) Status.unconfirmed: red X (or red up-arrow if inherited
      * Status.missing: black X
+     *
+     * <p>Not to be confused with VoteResolver.VoteStatus
      */
     public enum Status {
         missing,
@@ -297,10 +298,10 @@ public class VoteResolver<T> {
         /**
          * Get the ordered immutable set of different vote counts a user of this level can vote with
          *
-         * @param org the given organization
+         * @param ignoredOrg the given organization
          * @return the set, or null if the user has no choice of vote count
          */
-        public ImmutableSet<Integer> getVoteCountMenu(Organization org) {
+        public ImmutableSet<Integer> getVoteCountMenu(Organization ignoredOrg) {
             // Right now, the organization does not affect the menu.
             // but update the API to future proof.
             return voteCountMenu;
@@ -435,6 +436,41 @@ public class VoteResolver<T> {
         }
     }
 
+    /**
+     * See getStatusForOrganization to see how this is computed.
+     *
+     * <p>Not to be confused with VoteResolver.Status
+     */
+    public enum VoteStatus {
+        /**
+         * The value for the path is either contributed or approved, and the user's organization
+         * didn't vote.
+         */
+        ok_novotes,
+
+        /**
+         * The value for the path is either contributed or approved, and the user's organization
+         * chose the winning value.
+         */
+        ok,
+
+        /** The winning value is neither contributed nor approved. */
+        provisionalOrWorse,
+
+        /**
+         * The user's organization's choice is not winning, and the winning value is either
+         * contributed or approved. There may be insufficient votes to overcome a previously
+         * approved value, or other organizations may be voting against it.
+         */
+        losing,
+
+        /**
+         * There is a dispute, meaning more than one item with votes, or the item with votes didn't
+         * win.
+         */
+        disputed
+    }
+
     /** Internal class for voter information. It is public for testing only */
     public static class VoterInfo {
         private Organization organization;
@@ -556,9 +592,11 @@ public class VoteResolver<T> {
         /** The result of {@link #getTotals(EnumSet)} */
         private final Counter<T> totals = new Counter<>(true);
 
-        private Map<String, Long> nameTime = new LinkedHashMap<>();
-        // map an organization to what it voted for.
+        private final Map<String, Long> nameTime = new LinkedHashMap<>();
+
+        /** map an organization to the value it voted for. */
         private final Map<Organization, T> orgToAdd = new EnumMap<>(Organization.class);
+
         private T baileyValue;
         private boolean baileySet; // was the bailey value set
 
@@ -621,7 +659,7 @@ public class VoteResolver<T> {
             if (DROP_HARD_INHERITANCE) {
                 value = changeBaileyToInheritance(value);
             }
-            /** All votes are added here, even if they will later lose an intra-org dispute. */
+            /* All votes are added here, even if they will later lose an intra-org dispute. */
             allVotesIncludingIntraOrgDispute.add(value, votes, time.getTime());
             nameTime.put(info.getName(), time.getTime());
             if (DEBUG) {
@@ -1298,8 +1336,7 @@ public class VoteResolver<T> {
      */
     private boolean combineInheritanceWithBaileyForVoting(
             Set<T> sortedValues, HashMap<T, Long> voteCount) {
-        if (organizationToValueAndVote == null
-                || organizationToValueAndVote.baileySet == false
+        if (organizationToValueAndVote.baileySet == false
                 || organizationToValueAndVote.baileyValue == null) {
             return false;
         }
@@ -1347,8 +1384,7 @@ public class VoteResolver<T> {
          * Sort again
          */
         List<T> list = new ArrayList<>(sortedValues);
-        Collections.sort(
-                list,
+        list.sort(
                 (v1, v2) -> {
                     long c1 = voteCount.get(v1);
                     long c2 = voteCount.get(v2);
@@ -1378,9 +1414,6 @@ public class VoteResolver<T> {
      * https://www.unicode.org/reports/tr35/tr35-general.html#Annotations
      *
      * <p>http://unicode.org/repos/cldr/tags/latest/common/annotations/
-     *
-     * <p>This function is where the essential algorithm needs to be implemented for
-     * http://unicode.org/cldr/trac/ticket/10973
      *
      * @param sortedValues the set of sorted values
      * @param voteCount the hash giving the vote count for each value in sortedValues
