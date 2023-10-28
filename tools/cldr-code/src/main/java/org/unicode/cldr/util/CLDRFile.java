@@ -167,6 +167,50 @@ public class CLDRFile implements Freezable<CLDRFile>, Iterable<String>, LocaleSt
 
     private File supplementalDirectory;
 
+    /**
+     * Does the value in question either match or inherent the current value?
+     *
+     * <p>To match, the value in question and the current value must be non-null and equal.
+     *
+     * <p>To inherit the current value, the value in question must be INHERITANCE_MARKER and the
+     * current value must equal the bailey value.
+     *
+     * <p>This CLDRFile is only used here for getBaileyValue, not to get curValue
+     *
+     * @param value the value in question
+     * @param curValue the current value, that is, XMLSource.getValueAtDPath(xpathString)
+     * @param xpathString the path identifier
+     * @return true if it matches or inherits, else false
+     */
+    public boolean equalsOrInheritsCurrentValue(String value, String curValue, String xpathString) {
+        if (value == null || curValue == null) {
+            return false;
+        }
+        if (value.equals(curValue)) {
+            return true;
+        }
+        if (value.equals(CldrUtility.INHERITANCE_MARKER)) {
+            String baileyValue = getBaileyValue(xpathString, null, null);
+            if (baileyValue == null) {
+                /* This may happen for Invalid XPath; InvalidXPathException may be thrown. */
+                return false;
+            }
+            if (curValue.equals(baileyValue)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public XMLSource getResolvingDataSource() {
+        if (!isResolved()) {
+            throw new IllegalArgumentException(
+                    "CLDRFile must be resolved for getResolvingDataSource");
+        }
+        // dataSource instanceof XMLSource.ResolvingSource
+        return dataSource;
+    }
+
     public enum DraftStatus {
         unconfirmed,
         provisional,
@@ -2465,6 +2509,18 @@ public class CLDRFile implements Freezable<CLDRFile>, Iterable<String>, LocaleSt
     }
 
     public UnicodeSet getExemplarSet(ExemplarType type, WinningChoice winningChoice, int option) {
+        UnicodeSet result = getRawExemplarSet(type, winningChoice);
+        if (result.isEmpty()) {
+            return result.cloneAsThawed();
+        }
+        UnicodeSet toNuke = new UnicodeSet(HACK_CASE_CLOSURE_SET).removeAll(result);
+        result.closeOver(UnicodeSet.CASE);
+        result.removeAll(toNuke);
+        result.remove(0x20);
+        return result;
+    }
+
+    public UnicodeSet getRawExemplarSet(ExemplarType type, WinningChoice winningChoice) {
         String path = getExemplarPath(type);
         if (winningChoice == WinningChoice.WINNING) {
             path = getWinningPath(path);
@@ -2474,10 +2530,6 @@ public class CLDRFile implements Freezable<CLDRFile>, Iterable<String>, LocaleSt
             return UnicodeSet.EMPTY;
         }
         UnicodeSet result = SimpleUnicodeSetFormatter.parseLenient(v);
-        UnicodeSet toNuke = new UnicodeSet(HACK_CASE_CLOSURE_SET).removeAll(result);
-        result.closeOver(UnicodeSet.CASE);
-        result.removeAll(toNuke);
-        result.remove(0x20);
         return result;
     }
 
