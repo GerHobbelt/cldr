@@ -161,6 +161,13 @@
 				<version>3.5.6</version>
 			</dependency>
 
+
+			<!-- XSD generation -->
+			<dependency>
+				<groupId>org.relaxng</groupId>
+				<artifactId>trang</artifactId>
+				<version>20220510</version>
+			</dependency>
 			<!-- jwt -->
 			<dependency>
 				<groupId>io.jsonwebtoken</groupId>
@@ -176,6 +183,13 @@
 				<groupId>io.jsonwebtoken</groupId>
 				<artifactId>jjwt-gson</artifactId>
 				<version>${jjwt.version}</version>
+			</dependency>
+
+			<!-- for semver -->
+			<dependency>
+				<groupId>com.vdurmont</groupId>
+				<artifactId>semver4j</artifactId>
+				<version>3.1.0</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
