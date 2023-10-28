@@ -7,7 +7,7 @@
 
 	<groupId>org.unicode.cldr</groupId>
 	<artifactId>cldr-all</artifactId>
-	<version>43.0-SNAPSHOT</version>
+	<version>44.0-SNAPSHOT</version>
 	<name>CLDR All Tools</name>
 	<packaging>pom</packaging>
 	<licenses>
@@ -22,13 +22,15 @@
 		<maven.compiler.target>11</maven.compiler.target>
 		<!-- Note: see https://github.com/unicode-org/icu/packages/411079/versions
 			for the icu4j.version tag to use -->
-		<icu4j.version>73.0.1-SNAPSHOT-cldr-2023-03-15</icu4j.version>
+		<icu4j.version>73.1-cldr-2023-04-10</icu4j.version>
 		<junit.jupiter.version>5.8.2</junit.jupiter.version>
 		<maven-surefire-plugin-version>2.22.2</maven-surefire-plugin-version>
 		<assertj-version>3.11.1</assertj-version>
 		<httpcomponents-version>5.0.3</httpcomponents-version>
 		<!--  web-specific properties are under cldr-apps -->
 		<mysql.version>8.0.30</mysql.version>
+		<!-- jsonwebtoken.io -->
+		<jjwt.version>0.11.5</jjwt.version>
 	</properties>
 
 	<modules>
@@ -155,6 +157,23 @@
 				<groupId>org.mybatis</groupId>
 				<artifactId>mybatis</artifactId>
 				<version>3.5.6</version>
+			</dependency>
+
+			<!-- jwt -->
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt-api</artifactId>
+				<version>${jjwt.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt-impl</artifactId>
+				<version>${jjwt.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt-gson</artifactId>
+				<version>${jjwt.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

@@ -1016,6 +1016,11 @@ public class CldrUtility {
     }
 
     /**
+     * License file
+     */
+    public static final String LICENSE = "LICENSE";
+
+    /**
      * Fetch data from jar
      *
      * @param name

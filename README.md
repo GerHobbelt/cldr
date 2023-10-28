@@ -1,6 +1,6 @@
 # Unicode CLDR Project
 
-Latest Release: [v42.0](https://cldr.unicode.org/index/downloads/cldr-42) published 2022-10-19
+Latest Release: [v42.0](https://cldr.unicode.org/index/downloads/cldr-43) published 2023-04-12
 
 ## Build Status
 
@@ -31,7 +31,7 @@ For details about code and other contributions, see [CONTRIBUTING.md](./CONTRIBU
 ### Licenses
 
 - Usage of CLDR data and software is governed by the [Unicode Terms of Use](https://www.unicode.org/copyright.html)
-a copy of which is included as [unicode-license.txt](./unicode-license.txt).
+a copy of which is included as [LICENSE](./LICENSE).
 
 - Some CLDR tools depend on library dependencies managed via Maven,
   use of these libraries is governed by separate license agreements.
