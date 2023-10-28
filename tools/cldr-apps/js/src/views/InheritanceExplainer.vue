@@ -21,6 +21,10 @@
           } in inheritance"
           v-bind:color="colorForReason(reason)"
         >
+          <template #dot v-if="!isTerminal(reason)">
+            <!-- nonterminal show as a down arrow -->
+            <i class="glyphicon glyphicon-circle-arrow-down" />
+          </template>
           <p v-bind:title="reason">
             <b class="locale" v-if="newLocale">{{ newLocale }}</b>
             <span class="reason" v-if="showReason">{{
@@ -37,9 +41,9 @@
           </p>
           <!-- only show on change -->
           <!-- <b v-if="locale" v-bind:title="Locale ID">{{ locale }}</b> -->
-          <p v-if="newXpath" class="xpath">
+          <div v-if="newXpath" class="xpath">
             {{ xpathFull }}
-          </p>
+          </div>
         </a-timeline-item>
       </a-timeline>
     </template>
@@ -75,9 +79,21 @@ export default {
 
       this.itemLocale = locale;
       this.itemXpath = xpath;
-      if (locale && xpath) {
-        this.visible = true;
+      if (!locale || !xpath) {
+        // Not the best UX, but we don't have an easy way
+        // to track whether the locale is set or not without
+        // registering a callback, which seems heavyweight for
+        // this feature. Ideally, we would gray out this button
+        // if inappropriate.
+        notification.info({
+          description:
+            "Please click on an item first, and then clicking this button.",
+          message: "Inheritance Explainer",
+          placement: "topLeft",
+        });
+        return;
       }
+      this.visible = true;
 
       const reasons = cldrInheritance.getInheritanceReasonStrings();
       const explain = cldrInheritance.explainInheritance(locale, xpath);
@@ -102,23 +118,27 @@ export default {
     colorForReason(reason) {
       return (
         {
-          none: "gray",
-          value: "green",
-          itemAlias: "teal",
+          changedAttribute: "yellow",
           codeFallback: "red",
           constructed: "purple",
-          removedAttribute: "blue",
-          changedAttribute: "yellow",
+          fallback: "brown",
           inheritanceMarker: "orange",
+          itemAlias: "teal",
+          none: "gray",
+          removedAttribute: "blue",
+          value: "green",
         }[reason] || null
       );
+    },
+    isTerminal(reason) {
+      return this.reasons[reason]?.terminal;
     },
     go(locale, xpath) {
       const href = `#/${locale}//${xpath}`;
       window.location.assign(href);
     },
     getReason(reason, attribute) {
-      const r = this.reasons[reason] || reason;
+      const r = this.reasons[reason].description || reason;
       return cldrText.subTemplate(r, { attribute });
     },
   },
@@ -126,9 +146,9 @@ export default {
 </script>
 
 <style scoped>
-/* .inheritanceTimeline {
-  overflow-y: scroll;
-} */
+.xpath {
+  font-size: smaller;
+}
 
 .locale {
   padding-right: 0.5em;
