@@ -408,7 +408,11 @@ public class DataPage {
             return coverageValue;
         }
 
+        /** the displayName is the value of the 'English' column. */
         private final String displayName;
+
+        /** Same as displayName, but unprocessed */
+        private final String rawEnglish;
 
         // these apply to the 'winning' item, if applicable
         boolean hasErrors = false;
@@ -437,6 +441,13 @@ public class DataPage {
 
         public String getInheritedValue() {
             return inheritedValue;
+        }
+
+        private String inheritedDisplayValue = null;
+
+        /** like getInheritedValue(), but processed */
+        public String getInheritedDisplayValue() {
+            return inheritedDisplayValue;
         }
 
         /** The winning item for this DataRow. */
@@ -520,7 +531,8 @@ public class DataPage {
             baselineValue = resolver.getBaselineValue();
             baselineStatus = resolver.getBaselineStatus();
 
-            this.displayName = comparisonValueFile.getStringValue(xpath);
+            rawEnglish = comparisonValueFile.getStringValue(xpath);
+            displayName = getProcessor().processForDisplay(xpath, rawEnglish);
         }
 
         /**
@@ -553,9 +565,7 @@ public class DataPage {
             if (value == null) {
                 return null;
             }
-            if (VoteResolver.DROP_HARD_INHERITANCE
-                    && value.equals(inheritedValue)
-                    && !inheritsFromRootOrFallback()) {
+            if (VoteResolver.DROP_HARD_INHERITANCE && value.equals(inheritedValue)) {
                 value = CldrUtility.INHERITANCE_MARKER;
             }
             CandidateItem item = items.get(value);
@@ -573,15 +583,13 @@ public class DataPage {
             if (winningValue != null && winningValue.equals(value)) {
                 winningItem = item;
             }
-            if (baselineValue != null && baselineValue.equals(value)) {
+            if (baselineValue != null
+                    && (baselineValue.equals(value)
+                            || (CldrUtility.INHERITANCE_MARKER.equals(value)
+                                    && baselineValue.equals(inheritedValue)))) {
                 item.isBaselineValue = true;
             }
             return item;
-        }
-
-        private boolean inheritsFromRootOrFallback() {
-            String loc = inheritedLocale.getBaseName();
-            return XMLSource.ROOT_ID.equals(loc) || XMLSource.CODE_FALLBACK_ID.equals(loc);
         }
 
         /** Calculate the hash used for HTML forms for this DataRow. */
@@ -608,6 +616,10 @@ public class DataPage {
 
         public String getDisplayName() {
             return displayName;
+        }
+
+        public String getRawEnglish() {
+            return rawEnglish;
         }
 
         /** Get the locale for this DataRow */
@@ -759,6 +771,7 @@ public class DataPage {
                  */
                 // System.out.println("Warning: no inherited value in updateInheritedValue; xpath =
                 // " + xpath);
+                inheritedDisplayValue = null;
             } else {
                 /*
                  * Unless this DataRow already has an item with value INHERITANCE_MARKER,
@@ -783,6 +796,7 @@ public class DataPage {
                         System.err.println("@@3:" + (System.currentTimeMillis() - lastTime));
                     }
                 }
+                inheritedDisplayValue = getProcessor().processForDisplay(xpath, inheritedValue);
             }
             if ((checkCldr != null) && (inheritedItem != null) && (inheritedItem.tests == null)) {
                 if (TRACE_TIME) {
@@ -848,15 +862,14 @@ public class DataPage {
         }
 
         public String getHelpHTML() {
-            return nativeExampleGenerator.getHelpHtml(xpath, this.displayName);
+            return nativeExampleGenerator.getHelpHtml(xpath, rawEnglish);
         }
 
         public String getDisplayExample() {
             String displayExample = null;
             if (displayName != null) {
                 displayExample =
-                        sm.getComparisonValuesExample()
-                                .getNonTrivialExampleHtml(xpath, displayName);
+                        sm.getComparisonValuesExample().getNonTrivialExampleHtml(xpath, rawEnglish);
             }
             return displayExample;
         }
@@ -1897,10 +1910,6 @@ public class DataPage {
          * baselineValue, or because it has votes), then "add" it again here so that we have myItem and
          * will call setTests.
          *
-         * Also, if inherited value is from root or code-fallback, then we still need a candidate item that's
-         * non-inherited to avoid errors about inheriting from root/fallback, and to match the winning value
-         * which might be not be INHERITANCE_MARKER even though it matches the bailey value.
-         *
          * TODO: It would be better to consolidate where setTests is called for all items, to ensure
          * it's called once and only once for each item that needs it.
          */
@@ -1908,8 +1917,7 @@ public class DataPage {
         if (ourValue != null) {
             if (!VoteResolver.DROP_HARD_INHERITANCE
                     || !ourValue.equals(row.inheritedValue)
-                    || row.items.get(ourValue) != null
-                    || row.inheritsFromRootOrFallback()) {
+                    || row.items.get(ourValue) != null) {
                 myItem = row.addItem(ourValue, "our");
                 if (DEBUG) {
                     System.err.println(

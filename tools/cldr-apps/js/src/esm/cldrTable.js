@@ -20,7 +20,7 @@ import * as cldrStatus from "./cldrStatus.js";
 import * as cldrSurvey from "./cldrSurvey.js";
 import * as cldrText from "./cldrText.js";
 import * as cldrVote from "./cldrVote.js";
-import * as cldrXPathUtils from "./cldrXpathUtils.js";
+import * as cldrXPathUtils from "./cldrXpathUtils.mjs";
 
 const HEADER_ID_PREFIX = "header_";
 const ROW_ID_PREFIX = "row_"; // formerly "r@"
@@ -864,7 +864,7 @@ function updateRowOthersCell(tr, theRow, cell, protoButton, formAdd) {
     copyWinning.onclick = function (e) {
       let theValue = getValidWinningValue(theRow);
       if (theValue === cldrSurvey.INHERITANCE_MARKER || theValue === null) {
-        theValue = theRow.inheritedValue;
+        theValue = theRow.inheritedDisplayValue;
       }
       input.value = theValue || null;
       input.focus();
@@ -995,7 +995,7 @@ function updateRowOthersCell(tr, theRow, cell, protoButton, formAdd) {
 function addVitem(td, tr, theRow, item, newButton) {
   let displayValue = item.value;
   if (displayValue === cldrSurvey.INHERITANCE_MARKER) {
-    displayValue = theRow.inheritedValue;
+    displayValue = theRow.inheritedDisplayValue;
   }
   if (!displayValue && displayValue !== "") {
     return;
