@@ -1442,8 +1442,11 @@ public class UnitConverter implements Freezable<UnitConverter> {
     }
 
     // TODO change to TRIE if the performance isn't good enough, or restructure with regex
+    // https://www.nist.gov/pml/owm/metric-si-prefixes
     public static final ImmutableMap<String, Integer> PREFIX_POWERS =
             ImmutableMap.<String, Integer>builder()
+                    .put("quecto", -30)
+                    .put("ronto", -27)
                     .put("yocto", -24)
                     .put("zepto", -21)
                     .put("atto", -18)
@@ -1464,6 +1467,8 @@ public class UnitConverter implements Freezable<UnitConverter> {
                     .put("exa", 18)
                     .put("zetta", 21)
                     .put("yotta", 24)
+                    .put("ronna", 27)
+                    .put("quetta", 30)
                     .build();
 
     public static final ImmutableMap<String, Rational> PREFIXES;
@@ -1476,6 +1481,12 @@ public class UnitConverter implements Freezable<UnitConverter> {
         PREFIXES = ImmutableMap.copyOf(temp);
     }
 
+    public static final Set<String> METRIC_TAKING_PREFIXES =
+            ImmutableSet.of(
+                    "bit", "byte", "liter", "tonne", "degree", "celsius", "kelvin", "calorie",
+                    "bar");
+    public static final Set<String> METRIC_TAKING_BINARY_PREFIXES = ImmutableSet.of("bit", "byte");
+
     static final Set<String> SKIP_PREFIX =
             ImmutableSet.of("millimeter-ofhg", "kilogram", "kilogram-force");
 
@@ -1484,7 +1495,7 @@ public class UnitConverter implements Freezable<UnitConverter> {
      * If there is no prefix, return the unit and ONE. If there is a prefix return the unit (with
      * prefix stripped) and the prefix factor
      */
-    private static <V> String stripPrefixCommon(
+    public static <V> String stripPrefixCommon(
             String unit, Output<V> deprefix, Map<String, V> unitMap) {
         if (SKIP_PREFIX.contains(unit)) {
             return unit;
@@ -1591,6 +1602,7 @@ public class UnitConverter implements Freezable<UnitConverter> {
         metric,
         ussystem,
         uksystem,
+        jpsystem,
         other;
 
         public static final Set<UnitSystem> SiOrMetric =
