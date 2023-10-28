@@ -36,6 +36,7 @@ For terms of use, see http://www.unicode.org/copyright.html
         <unitConstant constant="gravity" value="9.80665"/>
         <unitConstant constant="PI" value="411557987 / 131002976" status='approximate'/>
         <unitConstant constant="G" value="6.67408E-11" status='approximate' description="https://arxiv.org/pdf/1510.07674.pdf see 2014 CODATA"/>
+        <unitConstant constant="AMU" value="1.66053878283E-27" status='approximate' description="https://www.nist.gov/pml/special-publication-811/nist-guide-si-chapter-5-units-outside-si#table7"/>
     </unitConstants>
     <unitQuantities> 
         <!-- NB: quantity ordering is used in canonical order of derived units. -->
@@ -120,6 +121,7 @@ For terms of use, see http://www.unicode.org/copyright.html
         <convertUnit source='candela' baseUnit='candela' systems="si metric prefixable"/>
         
         <!-- mass -->
+        <convertUnit source='dalton' baseUnit='kilogram' factor='AMU' systems="si_acceptable metric prefixable"/>
         <convertUnit source='grain' baseUnit='kilogram' factor='lb_to_kg/7000' systems="ussystem uksystem"/>
         <convertUnit source='carat' baseUnit='kilogram' factor='0.0002' systems="metric_adjacent"/>
         <convertUnit source='gram' baseUnit='kilogram' factor='0.001' systems="si metric prefixable"/>
@@ -260,7 +262,6 @@ For terms of use, see http://www.unicode.org/copyright.html
 
         <!-- energy -->
         <convertUnit source='electronvolt' baseUnit='kilogram-square-meter-per-square-second' factor='1.602177E-19' systems='si_acceptable metric_adjacent'/>
-        <convertUnit source='dalton' baseUnit='kilogram-square-meter-per-square-second' factor='1.49241808560E-10' systems="si_acceptable metric prefixable"/>
         <convertUnit source='joule' baseUnit='kilogram-square-meter-per-square-second' systems="si metric prefixable"/>
         <convertUnit source='calorie' baseUnit='kilogram-square-meter-per-square-second' factor='4.184' systems="metric_adjacent prefixable"/> <!-- th -->
         <convertUnit source='calorie-it' baseUnit='kilogram-square-meter-per-square-second' factor='4.1868' systems="metric_adjacent prefixable"/> <!-- th -->
@@ -501,7 +502,7 @@ For terms of use, see http://www.unicode.org/copyright.html
         </unitPreferences>
         <unitPreferences category="pressure" usage="baromtrc">
             <unitPreference regions="001">hectopascal</unitPreference>
-            <unitPreference regions="IN US">inch-ofhg</unitPreference>
+            <unitPreference regions="US">inch-ofhg</unitPreference>
             <unitPreference regions="BR EG GB IL TH">millibar</unitPreference>
             <unitPreference regions="MX RU">millimeter-ofhg</unitPreference>
         </unitPreferences>
@@ -526,7 +527,7 @@ For terms of use, see http://www.unicode.org/copyright.html
         <unitPreferences category="speed" usage="wind">
             <unitPreference regions="001">kilometer-per-hour</unitPreference>
             <unitPreference regions="FI KR NO PL RU SE">meter-per-second</unitPreference>
-            <unitPreference regions="US">mile-per-hour</unitPreference>
+            <unitPreference regions="GB US">mile-per-hour</unitPreference>
         </unitPreferences>
         <unitPreferences category="temperature" usage="default">
             <unitPreference regions="001">celsius</unitPreference>
