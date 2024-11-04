@@ -62,6 +62,7 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import org.unicode.cldr.test.CoverageLevel2;
 import org.unicode.cldr.tool.LikelySubtags;
 import org.unicode.cldr.tool.SubdivisionNames;
@@ -128,6 +129,24 @@ public class SupplementalDataInfo {
 
         public String toShortId() {
             return name().substring(0, 1).toUpperCase();
+        }
+    }
+
+    public class UnitPrefixInfo {
+        final String abbreviation;
+        final int base;
+        final int power;
+
+        public UnitPrefixInfo(String abbreviation, int base, int power) {
+            this.abbreviation = abbreviation;
+            this.base = base;
+            this.power = power;
+        }
+
+        @Override
+        public String toString() {
+            return String.format(
+                    "%s\t%s", abbreviation, String.valueOf(base) + "^" + String.valueOf(power));
         }
     }
 
@@ -977,6 +996,8 @@ public class SupplementalDataInfo {
 
     private Map<String, UnitIdComponentType> unitIdComponentType = new TreeMap<>();
 
+    private Map<String, UnitPrefixInfo> unitPrefixInfo = new TreeMap<>();
+
     public Map<String, GrammarInfo> grammarLocaleToTargetToFeatureToValues = new TreeMap<>();
     public Map<String, GrammarDerivation> localeToGrammarDerivation = new TreeMap<>();
 
@@ -1233,11 +1254,14 @@ public class SupplementalDataInfo {
 
         unitIdComponentType = CldrUtility.protectCollection(unitIdComponentType);
 
+        unitPrefixInfo = CldrUtility.protectCollection(unitPrefixInfo);
+
         timeData = CldrUtility.protectCollection(timeData);
 
         validityInfo = CldrUtility.protectCollection(validityInfo);
         attributeValidityInfo = CldrUtility.protectCollection(attributeValidityInfo);
-        parentLocales = Collections.unmodifiableMap(parentLocales);
+        parentLocales = CldrUtility.protectCollection(parentLocales);
+        parentLocalesSkipNonLikely = ImmutableSet.copyOf(parentLocalesSkipNonLikely);
         languageGroups = ImmutableSetMultimap.copyOf(languageGroups);
 
         grammarLocaleToTargetToFeatureToValues =
@@ -1386,6 +1410,10 @@ public class SupplementalDataInfo {
                     if (handleUnitUnitIdComponents(parts)) {
                         return;
                     }
+                } else if (level1.equals("unitPrefixes")) {
+                    if (handleUnitPrefix(parts)) {
+                        return;
+                    }
                 } else if (level1.equals("unitConstants")) {
                     if (handleUnitConstants(parts)) {
                         return;
@@ -1437,6 +1465,22 @@ public class SupplementalDataInfo {
                                                 + value)
                                 .initCause(e);
             }
+        }
+
+        private boolean handleUnitPrefix(XPathParts parts) {
+            //      <unitPrefix type='quecto' symbol='q' power10='-30'/>
+            String power10 = parts.getAttributeValue(-1, "power10");
+            String power2 = parts.getAttributeValue(-1, "power2");
+            if ((power10 != null) == (power2 != null)) {
+                throw new IllegalArgumentException("Must have exactly one @power2 or @power10");
+            }
+            unitPrefixInfo.put(
+                    parts.getAttributeValue(-1, "type"),
+                    new UnitPrefixInfo(
+                            parts.getAttributeValue(-1, "symbol"),
+                            power10 != null ? 10 : 2,
+                            Integer.parseInt(power10 != null ? power10 : power2)));
+            return true;
         }
 
         private boolean handlePersonNamesDefaults(String value, XPathParts parts) {
@@ -1603,8 +1647,9 @@ public class SupplementalDataInfo {
             //            }
             String factor = parts.getAttributeValue(-1, "factor");
             String offset = parts.getAttributeValue(-1, "offset");
+            String special = parts.getAttributeValue(-1, "special");
             String systems = parts.getAttributeValue(-1, "systems");
-            unitConverter.addRaw(source, target, factor, offset, systems);
+            unitConverter.addRaw(source, target, factor, offset, special, systems);
             return true;
         }
 
@@ -1831,25 +1876,49 @@ public class SupplementalDataInfo {
             }
         }
 
+        public static final String NONLIKELYSCRIPT = "nonlikelyScript";
+
         private void handleParentLocales(XPathParts parts) {
-            if (parts.getAttributeValue(1, "component") != null) {
-                // CLDR-16253 added component-specific parents, which we ignore for now.
-                // TODO(CLDR-16361): Figure out how to handle these in CLDR itself.
+            // CLDR-16253 added component-specific parents, which we ignore for now.
+            // TODO(CLDR-16361): Figure out how to handle these in CLDR itself.
+            String componentsString = parts.getAttributeValue(1, "component");
+            Set<ParentLocaleComponent> components;
+            if (componentsString == null) {
+                components = ImmutableSet.of(ParentLocaleComponent.main);
+            } else {
+                components =
+                        split_space
+                                .splitToStream(componentsString)
+                                .map(x -> ParentLocaleComponent.fromString(x))
+                                .collect(Collectors.toSet());
+            }
+            if (!parts.getElement(-1).equals("parentLocale")) {
+                // If there is no parentLocale element , that means we have nothing to add
+                // Since we have pre-populated the parentLocales with component -> empty map,
+                // there is nothing more to do, and we can exit.
+                // We have parsed the components, however, so they are valid
                 return;
             }
             String parent = parts.getAttributeValue(-1, "parent");
             String locales = parts.getAttributeValue(-1, "locales");
-            String[] pl = locales.split(" ");
-            for (int i = 0; i < pl.length; i++) {
-                String old = parentLocales.put(pl[i], parent);
-                if (old != null) {
-                    throw new IllegalArgumentException(
-                            "Locale "
-                                    + pl[i]
-                                    + " cannot have two parents: "
-                                    + old
-                                    + " and "
-                                    + parent);
+
+            for (ParentLocaleComponent component : components) {
+                Map<String, String> componentParentLocales = parentLocales.get(component);
+                if (locales.equals(NONLIKELYSCRIPT)) {
+                    parentLocalesSkipNonLikely.add(component);
+                    continue;
+                }
+                for (String childLocale : split_space.split(locales)) {
+                    String old = componentParentLocales.put(childLocale, parent);
+                    if (old != null) {
+                        throw new IllegalArgumentException(
+                                "Locale "
+                                        + childLocale
+                                        + " cannot have two parents: "
+                                        + old
+                                        + " and "
+                                        + parent);
+                    }
                 }
             }
         }
@@ -2335,7 +2404,15 @@ public class SupplementalDataInfo {
     private Map<String, String> likelyOrigins = new TreeMap<>();
     // make public temporarily until we resolve.
     private SortedSet<CoverageLevelInfo> coverageLevels = new TreeSet<>();
-    private Map<String, String> parentLocales = new HashMap<>();
+    private Map<ParentLocaleComponent, Map<String, String>> parentLocales = new HashMap<>();
+
+    { // Prefill, since we know we will need these
+        Arrays.stream(ParentLocaleComponent.values())
+                .forEach(x -> parentLocales.put(x, new HashMap<>()));
+    }
+
+    private Set<ParentLocaleComponent> parentLocalesSkipNonLikely =
+            EnumSet.noneOf(ParentLocaleComponent.class);
     private Map<String, List<String>> calendarPreferences = new HashMap<>();
     private Map<String, CoverageVariableInfo> localeSpecificVariables = new TreeMap<>();
     private VariableReplacer coverageVariables = new VariableReplacer();
@@ -3069,16 +3146,51 @@ public class SupplementalDataInfo {
         return targetPlurals;
     }
 
-    public String getExplicitParentLocale(String loc) {
-        return parentLocales.get(loc);
+    public enum ParentLocaleComponent {
+        main,
+        collations,
+        segmentations,
+        grammaticalFeatures,
+        plurals;
+
+        public static ParentLocaleComponent fromString(String s) {
+            return s == null
+                    ? ParentLocaleComponent.main // handle empty
+                    : ParentLocaleComponent.valueOf(s);
+        }
     }
 
-    public Set<String> getExplicitChildren() {
-        return parentLocales.keySet();
+    public boolean parentLocalesSkipNonLikely(ParentLocaleComponent component) {
+        return parentLocalesSkipNonLikely.contains(component);
     }
+
+    public String getExplicitParentLocale(String loc, ParentLocaleComponent component) {
+        return parentLocales.get(component).get(loc);
+    }
+
+    //  These are not (now) used by the current code.
+    //  They should not be used, because the answer is incorrect for parentLocalesSkipNonLikely
+    //
+    //    public String getExplicitParentLocale(String loc) {
+    //        return getExplicitParentLocale(loc, ParentLocaleComponent.main);
+    //    }
+    //
+
+    //
+    //    public Set<String> getExplicitChildren() {
+    //        return getExplicitChildren(ParentLocaleComponent.main);
+    //    }
+    //
+    //    public Set<String> getExplicitChildren(ParentLocaleComponent component) {
+    //        return parentLocales.get(component).keySet();
+    //    }
 
     public Collection<String> getExplicitParents() {
-        return parentLocales.values();
+        return getExplicitParents(ParentLocaleComponent.main);
+    }
+
+    public Collection<String> getExplicitParents(ParentLocaleComponent component) {
+        return parentLocales.get(component).values();
     }
 
     public static final class ApprovalRequirementMatcher {
@@ -5052,5 +5164,13 @@ public class SupplementalDataInfo {
 
     public Multimap<Order, String> getPersonNameOrder() {
         return personNameOrder;
+    }
+
+    public UnitPrefixInfo getUnitPrefixInfo(String prefix) {
+        return unitPrefixInfo.get(prefix);
+    }
+
+    public Set<String> getUnitPrefixes() {
+        return unitPrefixInfo.keySet();
     }
 }

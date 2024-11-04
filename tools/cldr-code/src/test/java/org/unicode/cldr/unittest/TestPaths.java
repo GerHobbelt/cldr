@@ -207,7 +207,6 @@ public class TestPaths extends TestFmwkPlus {
 
     final ImmutableSet<String> ALLOWED_NULL =
             ImmutableSet.of(
-                    "//ldml/dates/timeZoneNames/zone[@type=\"Australia/Currie\"]/exemplarCity",
                     "//ldml/dates/timeZoneNames/zone[@type=\"Pacific/Enderbury\"]/exemplarCity");
 
     /** Is the path allowed to have a null value? */
@@ -543,7 +542,7 @@ public class TestPaths extends TestFmwkPlus {
                             // counter, removed, nonFinalValues);
                             if (type != DtdType.keyboardTest3
                                     || !logKnownIssue(
-                                            "CLDR-15034",
+                                            "CLDR-17398",
                                             "keyboardTest data appears as duplicate xpaths")) {
                                 errln(
                                         "Duplicate "

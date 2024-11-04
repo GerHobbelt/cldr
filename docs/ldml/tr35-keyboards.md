@@ -94,7 +94,7 @@ The LDML specification is divided into the following parts:
   * [Element: variables](#element-variables)
   * [Element: string](#element-string)
   * [Element: set](#element-set)
-  * [Element: unicodeSet](#element-unicodeset)
+  * [Element: uset](#element-uset)
   * [Element: transforms](#element-transforms)
     * [Markers](#markers)
   * [Element: transformGroup](#element-transformgroup)
@@ -307,6 +307,96 @@ Attribute values escaped in this manner are annotated with the `<!--@ALLOWS_UESC
 For extensibility, the `<special>` element will be allowed at nearly every level.
 
 See [Element special](tr35.md#special) in Part 1.
+
+## Normalization
+
+Normalization will not typically be the responsibility of the keyboard author, rather this will be managed by the implementation.
+The implementation will apply normalization as appropriate when matching transform rules and `<display>` value matching.
+Output from the keyboard, following application of all transform rules, will be normalized to implementation- or application-requested form.
+
+The attribute value `normalization="disabled"` can be used to indicate that no automatic normalization happens in input, matching, or output.  Using this setting should be done with caution. See [`<settings>`](#element-settings).
+
+Input source files may be in any normalization format, however, authors should be aware of two areas where normalization affects keyboard operation: that of transform matching, and that of output.
+
+### Normalization and Transform Matching
+
+Regardless of the normalization form in the keyboard source file or in the edit buffer context, transform matching will be performed using **NFD**. For example, all of the following transforms will match the input strings `è̠`, whether the input is U+00E8 U+0320, U+0065 U+0320 U+0300, or U+0065 U+0300 U+0320.
+
+```xml
+<transform from="e\u{0320}\u{0300}" /> <!-- NFD -->
+<transform from="\u{00E8}\u{0320}"  /> <!-- NFC: è + U+0320 -->
+<transform from="e\u{0300}\u{0320}" /> <!-- Unnormalized -->
+```
+
+### Normalization and Markers
+
+A special issue occurs when markers are involved. Markers are not text, and so are themselves affected by the normalization algorithm.
+However, the markers must be reordered by the implementation along with their surrounding characters.
+
+**Example 1**
+
+Consider this example, without markers:
+
+- `e\u{0300}\u{0320}` (original)
+- `e\u{0320}\u{0300}` (NFD)
+
+If we add markers:
+
+- `e\u{0300}\m{marker}\u{0320}` (original)
+- `e\m{marker}\u{0320}\u{0300}` (NFD)
+
+During a processing step, such as appending a keystroke or one stage of applying a transform, the marker is 'glued' to the _following_ character. In the above example, `\m{marker}` was 'glued' to the `\u{0320}`. If a marker occured at the end of input or at the end of a normalization-safe segment, the marker is 'glued' to the end of that segment during that normalization step.
+
+The 'gluing' is only applicable during one particular processing step. It does not persist or affect further processing steps or future keystrokes.
+
+A second example:
+
+**Example 2**
+
+- `e\m{marker0}\u{0300}\m{marker1}\u{0320}\m{marker2}` (original)
+- `e\m{marker1}\u{0320}\m{marker0}\u{0300}\m{marker2}` (NFD)
+
+Here `\m{marker2}` is 'glued' to the end of the segment. However, if additional text is added such as by a subsequent keystroke (which may add an additional combining character, for example), this marker may be 'glued' to that following text.
+
+Markers remain in the same normalization-safe segment during normalization. Consider:
+
+**Example 3**
+
+- `e\u{0300}\m{marker1}\u{0320}a\u{0300}\m{marker2}\u{0320}` (original)
+- `e\m{marker1}\u{0320}\u{0300}a\m{marker2}\u{0320}\u{0300}` (NFD)
+
+There are two normalization-safe segments here:
+
+1. `e\u{0300}\m{marker1}\u{0320}`
+2. `a\u{0300}\m{marker2}\u{0320}`
+
+Normalization (and marker rearranging) occurs within each segment.  While `\m{marker1}` is 'glued' to the `\u{0320}`, it is glued within the first segment and has no effect on the second segment.
+
+#### Rationale for 'gluing' markers
+
+It is recognized that the processing described here seems to be an innovation among Unicode normalization implementations.
+
+This specification has markers 'glued' (remaining with) the following character so that if a context ends with a marker, that marker would be guaranteed to remain at the end after processing.  Authors can keep a marker together with a character of interest by emitting the marker just before the character of interest, that is, `output="\m{marker}X"` instead of `output="X\m{marker}"`.
+
+### Normalization and Character Classes
+
+If pre-composed (non-NFD) characters are used in [character classes](#regex-like-syntax), such as `[á-é]` or `[\u{00e1}-\u{00e9}]`, these may not match as keyboard authors expect, as the U+00E1 character will not occur in NFD form.
+
+The above could be written instead as a  `(á|â|ã|ä|å|æ|ç|è|é)`, or as a set variable `<set id="Ex" value="á â ã ä å æ ç è é"/>` and matched as `$[Ex]`.
+
+Implementations may want to warn users when character classes include non-NFD characters.
+
+### Normalization and Output
+
+On output, text will be normalized into the form requested by that implementation, or possibly specifically requested by a particular application.
+For example, many platforms may request NFC as the output format. In such a case, all text emitted via the keyboard will be transformed into NFC.
+
+Existing text in a document will only have normalization applied within a single normalization-safe segment from the caret.
+
+### Normalization-safe Segments
+
+For purposes of the above discussion, "normalization-safe segments" are defined as a string of codepoints which are (1) already in [NFD](https://www.unicode.org/reports/tr15/#Norm_Forms), and (2) begin with a character with [Canonical Combining Class](https://www.unicode.org/reports/tr44/#Canonical_Combining_Class_Values) of `0`. See [UAX #15 Section 9.1: Stable Code Points](https://www.unicode.org/reports/tr15/#Stable_Code_Points) for related discussion.  Text under consideration can be segmented by locating such characters.
+
 
 * * *
 
@@ -556,13 +646,10 @@ An element used to keep track of layout-specific settings by implementations. Th
 
 _Attribute:_ `normalization="disabled"`
 
-> Normalization will not typically be the responsibility of the keyboard author, rather this will be managed by the implementation.
-> The implementation will apply normalization as appropriate when matching transform rules and `<display>` value matching.
-> Output from the keyboard, following application of all transform rules, will be normalized to implementation or application-requested form.
+> The presence of this attrinbute indicates that normalization will not be applied to input text, matching, or output.
+> See [Normalization](#normalization) for additional details.
 >
-> However, it is recognized that there may be some keyboards which, for compatibility or legacy reasons, need to manage their own normalization. The implementation in that case will do no normalization at all. The keyboard author must make use of transforms in the keyboard to any required normalization. In this case, the attribute value `normalization="disabled"` is used to indicate that no automatic normalization happens.
->
-> **Note**: while this attribute is allowed by the specification, its use is discouraged, and keyboards with `normalization="disabled"` would not be accepted into the ClDR repository.
+> **Note**: while this attribute is allowed by the specification, it should be used with caution, and keyboards with `normalization="disabled"` would not be accepted into the ClDR repository.
 
 
 **Example**
@@ -1435,7 +1522,7 @@ Here is an example of a `row` element:
 >
 > Parents: [keyboard3](#element-keyboard3)
 >
-> Children: [import](#element-import), [_special_](tr35.md#special), [string](#element-string), [set](#element-set), [unicodeSet](#element-unicodeset)
+> Children: [import](#element-import), [_special_](tr35.md#special), [string](#element-string), [set](#element-set), [uset](#element-uset)
 >
 > Occurrence: optional, single
 > </small>
@@ -1450,7 +1537,7 @@ Note that the `id=` attribute must be unique across all children of the `variabl
 <variables>
     <string id="y" value="yes" /> <!-- a simple string-->
     <set id="upper" value="A B C D E FF" /> <!-- a set with 6 items -->
-    <unicodeSet id="consonants" value="[कसतनमह]" /> <!-- a UnicodeSet -->
+    <uset id="consonants" value="[कसतनमह]" /> <!-- a UnicodeSet -->
 </variables>
 ```
 
@@ -1571,7 +1658,7 @@ See [transform](#element-transform) for further details and syntax.
 
 * * *
 
-### Element: unicodeSet
+### Element: uset
 
 > <small>
 >
@@ -1587,37 +1674,38 @@ See [transform](#element-transform) for further details and syntax.
 
 _Attribute:_ `id` (required)
 
-> Specifies the identifier (name) of this unicodeSet.
+> Specifies the identifier (name) of this uset.
 > All ids must be unique across all types of variables.
 >
 > `id` must match `[0-9A-Za-z_]{1,32}`
 
 _Attribute:_ `value` (required)
 
-> String value in [UnicodeSet](tr35.md#Unicode_Sets) format.
+> String value in a subset of [UnicodeSet](tr35.md#Unicode_Sets) format.
 > Leading and trailing whitespace is ignored.
-> Variables may refer to other string variables if they have been previously defined, using `${string}` syntax, or to other previously-defined UnicodeSets (not sets) using `$[unicodeSet]` syntax.
+> Variables may refer to other string variables if they have been previously defined, using `${string}` syntax, or to other previously-defined `uset` elements (not `set` elements) using `$[...usetId]` syntax.
 
-**Syntax Note**
 
-- Warning: UnicodeSets look superficially similar to regex character classes as used in [`transform`](#element-transform) elements, but they are different. UnicodeSets must be defined with a `unicodeSet` element, and referenced with the `$[unicodeSet]` notation in transforms. UnicodeSets cannot be specified inline in a transform, and can only be used indirectly by reference to the corresponding `unicodeSet` element.
+- Warning: `uset` elements look superficially similar to regex character classes as used in [`transform`](#element-transform) elements, but they are different. `uset`s must be defined with a `uset` element, and referenced with the `$[...usetId]` notation in transforms. `uset`s cannot be specified inline in a transform, and can only be used indirectly by reference to the corresponding `uset` element.
 - Multi-character strings (`{}`) are not supported, such as `[żġħ{ie}{għ}]`.
-- UnicodeSet property notation (`\p{…}` or `[:…:]`) may **NOT** be used, because that would make implementations dependent on a particular version of Unicode. However, implementations and tools may wish to pre-calculate the value of a particular UnicodeSet, and "freeze" it as explicit code points.  The example below of `$[KhmrMn]` matches all nonspacing marks in the `Khmr` script.
-- UnicodeSets may represent a very large number of codepoints. A limit may be set on how many unique range entries may be matched.
+- UnicodeSet property notation (`\p{…}` or `[:…:]`) may **NOT** be used.
+
+> **Rationale**: allowing property notation would make keyboard implementations dependent on a particular version of Unicode. However, implementations and tools may wish to pre-calculate the value of a particular uset, and "freeze" it as explicit code points.  The example below of `$[KhmrMn]` matches nonspacing marks in the `Khmr` script.
+
+- `uset` elements may represent a very large number of codepoints. Keyboard implementations may set a limit on how many unique range entries may be matched.
+- The `uset` element may not be used as the source or target for mapping operations (`$[1:variable]` syntax).
+- The `uset` element may not be referenced by [`key`](#element-key) or [`display`](#element-display) elements.
 
 **Examples**
 
 ```xml
 <variables>
-  <unicodeSet id="consonants" value="[कसतनमह]" /> <!-- unicode set range -->
-  <unicodeSet id="range" value="[a-z D E F G \u{200A}]" /> <!-- a through z, plus a few others -->
-  <unicodeSet id="newrange" value="[$[range]-[G]]" /> <!-- The above range, but not including G -->
-  <unicodeSet id="KhmrMn" value="[\u{17B4}\u{17B5}\u{17B7}-\u{17BD}\u{17C6}\u{17C9}-\u{17D3}\u{17DD}]"> <!--  [[:Khmr:][:Mn:]] as of Unicode 15.0-->
+  <uset id="consonants" value="[कसतनमह]" /> <!-- unicode set range -->
+  <uset id="range" value="[a-z D E F G \u{200A}]" /> <!-- a through z, plus a few others -->
+  <uset id="newrange" value="[$[range]-[G]]" /> <!-- The above range, but not including G -->
+  <uset id="KhmrMn" value="[\u{17B4}\u{17B5}\u{17B7}-\u{17BD}\u{17C6}\u{17C9}-\u{17D3}\u{17DD}]"> <!--  [[:Khmr:][:Mn:]] as of Unicode 15.0-->
 </variables>
 ```
-
-The `unicodeSet` element may not be used as the source or target for mapping operations (`$[1:variable]` syntax).
-The `unicodeSet` element may not be referenced by [`key`](#element-key) and [`display`](#element-display) elements.
 
 * * *
 
@@ -1750,6 +1838,8 @@ Another strategy might be to use a marker to indicate where transforms are desir
 
 In this way, only the `X`, `e` keys will produce `^e` with a _transform_ marker (again, any name could be used) which will cause the transform to be applied. One benefit is that navigating to an existing `^` in a document and adding an `e` will result in `^e`, and this output will not be affected by the transform, because there will be no marker present there (remember that markers are not stored with the document but only recorded in memory temporarily during text input).
 
+Please note important considerations for [Normalization and Markers](#normalization-and-markers).
+
 **Effect of markers on final text**
 
 All markers must be removed before text is returned to the application from the input context.
@@ -1879,7 +1969,8 @@ _Attribute:_ `from` (required)
 
     - supported
     - no Unicode properties such as `\p{…}`
-    - Warning: Character classes look superficially similar to UnicodeSets as defined in [`unicodeSet`](#element-unicodeset) elements, but they are different. UnicodeSets must be defined with a `unicodeSet` element, and referenced with the `$[unicodeSet]` notation in transforms. UnicodeSets cannot be used directly in a transform.
+    - Warning: Character classes look superficially similar to [`uset`](#element-uset) elements, but they are distinct and referenced with the `$[...usetId]` notation in transforms. The `uset` notation cannot be embedded directly in a transform.
+    - See [Normalization and Character Classes](#normalization-and-character-classes) for more details about the impact of normalization on ranges.
 
 - **Bounded quantifier**
 
@@ -1953,11 +2044,11 @@ The following are additions to standard Regex syntax.
 
     In this usage, the variable with `id="zwnj"` will be substituted in at this point in the expression. The variable can contain a range, a character, or any other portion of a pattern. If `zwnj` is a simple string, the pattern will match that string at this point.
 
-- **Set and UnicodeSet variables**
+- **`set` or `uset` variables**
 
     `$[upper]`
 
-    Given a space-separated variable, this syntax will match _any_ of the substrings. This expression may be thought of  (and implemented) as if it were a _non-capturing group_. It may, however, be enclosed within a capturing group. For example, the following definition of `$[upper]` will match as if it were written `(?:A|B|CC|D|E|FF)`.
+    Given a space-separated `set` or `uset` variable, this syntax will match _any_ of the substrings. This expression may be thought of  (and implemented) as if it were a _non-capturing group_. It may, however, be enclosed within a capturing group. For example, the following definition of `$[upper]` will match as if it were written `(?:A|B|CC|D|E|FF)`.
 
     ```xml
     <variables>
@@ -1978,7 +2069,7 @@ The following are additions to standard Regex syntax.
     Tooling may choose to suggest an expansion of properties, such as `\p{Mn}` to all non spacing marks for a certain Unicode version.  As well, a set of variables could be constructed in an `import`-able file matching particularly useful Unicode properties.
 
     ```xml
-    <unicodeSet id="Mn" value="[\u{034F}\u{0591}-\u{05AF}\u{05BD}\u{05C4}\u{05C5}\…]" /> <!-- 1,985 code points -->
+    <uset id="Mn" value="[\u{034F}\u{0591}-\u{05AF}\u{05BD}\u{05C4}\u{05C5}\…]" /> <!-- 1,985 code points -->
     ```
 
 - **Backreferences**
@@ -2066,7 +2157,6 @@ Used in the `to=`
     - The capture group on the `from=` side **must** contain exactly one set variable.  `from="Q($[upper])X"` can be used (other context before or after the capture group), but `from="(Q$[upper])"` may not be used with a mapped variable and is flagged as an error.
 
     - The `from=` and `to=` sides of the pattern must both be using `set` variables. There is no way to insert a set literal on either side and avoid using a variable.
-    A UnicodeSet may not be used directly, but must be defined as a `unicodeSet` variable.
 
     - The two variables (here `upper` and `lower`) must have exactly the same number of whitespace-separated items. Leading and trailing space (such as at the end of `lower`) is ignored. A variable without any spaces is considered to be a set variable of exactly one item.
 

@@ -316,7 +316,7 @@ Note: DTD @-annotations are not currently converted to .xsd. For full CLDR file 
         <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
         <xs:element maxOccurs="unbounded" minOccurs="0" ref="string"/>
         <xs:element maxOccurs="unbounded" minOccurs="0" ref="set"/>
-        <xs:element maxOccurs="unbounded" minOccurs="0" ref="unicodeSet"/>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="uset"/>
         <xs:element maxOccurs="unbounded" minOccurs="0" ref="special"/>
       </xs:sequence>
     </xs:complexType>
@@ -342,7 +342,7 @@ Note: DTD @-annotations are not currently converted to .xsd. For full CLDR file 
   
   
   
-  <xs:element name="unicodeSet">
+  <xs:element name="uset">
     <xs:complexType>
       <xs:attribute name="id" type="xs:NMTOKEN" use="required"/>
       <xs:attribute name="value" use="required"/>
