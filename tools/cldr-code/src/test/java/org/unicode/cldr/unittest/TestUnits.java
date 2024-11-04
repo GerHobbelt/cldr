@@ -24,6 +24,7 @@ import com.ibm.icu.impl.Row.R2;
 import com.ibm.icu.impl.Row.R3;
 import com.ibm.icu.number.FormattedNumber;
 import com.ibm.icu.number.LocalizedNumberFormatter;
+import com.ibm.icu.number.Notation;
 import com.ibm.icu.number.NumberFormatter;
 import com.ibm.icu.number.NumberFormatter.UnitWidth;
 import com.ibm.icu.number.Precision;
@@ -3544,7 +3545,22 @@ public class TestUnits extends TestFmwk {
         has_grammar_X,
         add_grammar,
         skip_grammar,
-        skip_trans
+        skip_trans("\tspecific langs poss.");
+
+        private TranslationStatus() {
+            outName = name();
+        }
+
+        private final String outName;
+
+        private TranslationStatus(String extra) {
+            outName = name() + extra;
+        }
+
+        @Override
+        public String toString() {
+            return outName;
+        }
     }
 
     /**
@@ -3555,7 +3571,8 @@ public class TestUnits extends TestFmwk {
         Set<String> toTranslate = GrammarInfo.getUnitsToAddGrammar();
         final CLDRConfig config = CLDRConfig.getInstance();
         final UnitConverter converter = config.getSupplementalDataInfo().getUnitConverter();
-        Map<String, TranslationStatus> shortUnitToTranslationStatus40 = new TreeMap<>();
+        Map<String, TranslationStatus> shortUnitToTranslationStatus40 =
+                new TreeMap<>(converter.getShortUnitIdComparator());
         for (String longUnit :
                 Validity.getInstance().getStatusToCodes(LstrType.unit).get(Status.regular)) {
             String shortUnit = converter.getShortId(longUnit);
@@ -3583,16 +3600,32 @@ public class TestUnits extends TestFmwk {
                                     : TranslationStatus.skip_grammar;
             shortUnitToTranslationStatus40.put(shortUnit, status);
         }
+        LocalizedNumberFormatter nf =
+                NumberFormatter.with()
+                        .notation(Notation.scientific())
+                        .precision(Precision.fixedSignificantDigits(7))
+                        .locale(Locale.ENGLISH);
+        Output<String> base = new Output<>();
         for (Entry<String, TranslationStatus> entry : shortUnitToTranslationStatus40.entrySet()) {
             String shortUnit = entry.getKey();
+            var conversionInfo = converter.parseUnitId(shortUnit, base, false);
+            String factor =
+                    conversionInfo == null || conversionInfo.special != null
+                            ? "n/a"
+                            : nf.format(conversionInfo.factor.doubleValue())
+                                    .toString()
+                                    .replace("E", " × 10^");
+
             TranslationStatus status40 = entry.getValue();
             if (isVerbose())
                 System.out.println(
-                        shortUnit
+                        converter.getQuantityFromUnit(shortUnit, false)
                                 + "\t"
-                                + converter.getQuantityFromUnit(shortUnit, false)
+                                + shortUnit
                                 + "\t"
                                 + converter.getSystemsEnum(shortUnit)
+                                + "\t"
+                                + factor
                                 + "\t"
                                 + (converter.isSimple(shortUnit) ? "simple" : "complex")
                                 + "\t"
