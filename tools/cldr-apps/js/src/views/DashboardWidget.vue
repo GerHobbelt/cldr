@@ -186,8 +186,8 @@
 
 <script>
 import * as cldrCoverage from "../esm/cldrCoverage.mjs";
-import * as cldrDash from "../esm/cldrDash.mjs";
-import * as cldrGui from "../esm/cldrGui.mjs";
+import * as cldrDashContext from "../esm/cldrDashContext.mjs";
+import * as cldrDashData from "../esm/cldrDashData.mjs";
 import * as cldrLoad from "../esm/cldrLoad.mjs";
 import * as cldrNotify from "../esm/cldrNotify.mjs";
 import * as cldrReport from "../esm/cldrReport.mjs";
@@ -257,9 +257,6 @@ export default {
                   "No scroller.scrollToItem for scrollToCategory"
                 );
               } else {
-                this.console.log(
-                  "Calling scroller for scrollToCategory, i = " + i
-                );
                 scroller.scrollToItem(i);
               }
               return;
@@ -291,10 +288,6 @@ export default {
     },
 
     fetchData() {
-      if (!cldrStatus.getSurveyUser()) {
-        this.fetchErr = "Please log in to see the Dashboard.";
-        return;
-      }
       this.locale = cldrStatus.getCurrentLocale();
       this.level = cldrCoverage.effectiveName(this.locale);
       if (!this.locale || !this.level) {
@@ -303,8 +296,8 @@ export default {
       }
       this.localeName = cldrLoad.getLocaleName(this.locale);
       this.loadingMessage = `Loading ${this.localeName} dashboard at ${this.level} level`;
-      cldrDash.doFetch(this.setData);
-      this.fetchErr = cldrDash.getFetchError();
+      cldrDashData.doFetch(this.setData);
+      this.fetchErr = cldrDashData.getFetchError();
     },
 
     setData(data) {
@@ -326,7 +319,7 @@ export default {
     },
 
     downloadXlsx() {
-      cldrDash
+      cldrDashData
         .downloadXlsx(
           this.data,
           this.locale,
@@ -348,7 +341,7 @@ export default {
      * @param json - the response to a request by cldrTable.refreshSingleRow
      */
     updatePath(json) {
-      cldrDash.updatePath(this.data, json);
+      cldrDashData.updatePath(this.data, json);
       this.filterEntries();
     },
 
@@ -366,7 +359,7 @@ export default {
     },
 
     closeDashboard() {
-      cldrGui.hideDashboard();
+      cldrDashContext.hide();
     },
 
     abbreviate(category) {
@@ -422,7 +415,7 @@ export default {
     },
 
     entryCheckmarkChanged(event, entry) {
-      cldrDash.saveEntryCheckmark(event.target.checked, entry, this.locale);
+      cldrDashData.saveEntryCheckmark(event.target.checked, entry, this.locale);
     },
 
     catCheckmarkChanged(event, category) {
@@ -441,20 +434,13 @@ export default {
       // NOTE: this complication may be unnecessary now that DashboardScroller is in use.
       this.catCheckboxIsUnchecked[category] = !event.target.checked; // redundant?
       const USE_NEXT_TICK = true;
-      this.console.log(
-        "Starting catCheckmarkChanged; USE_NEXT_TICK = " + USE_NEXT_TICK
-      );
       this.updatingVisibility = true;
-      this.console.log("updatingVisibility = true");
       if (USE_NEXT_TICK) {
         nextTick().then(() => {
           this.updateVisibility(event.target.checked, category);
         });
       } else {
         const DELAY_FOR_VISIBILITY_UPDATE = 100; // milliseconds
-        this.console.log(
-          "DELAY_FOR_VISIBILITY_UPDATE = " + DELAY_FOR_VISIBILITY_UPDATE
-        );
         setTimeout(
           () => this.updateVisibility(event.target.checked, category),
           DELAY_FOR_VISIBILITY_UPDATE
@@ -463,12 +449,9 @@ export default {
     },
 
     updateVisibility(checked, category) {
-      this.console.log("Starting updateVisibility");
       this.catIsHidden[category] = !checked;
       this.filterEntries();
       this.updatingVisibility = false;
-      this.console.log("updatingVisibility = false");
-      this.console.log("Ending updateVisibility");
     },
 
     hideCheckedChanged() {

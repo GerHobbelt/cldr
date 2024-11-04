@@ -324,7 +324,6 @@ Apple	;	bg	;	modern
 Apple	;	bn	;	modern
 Apple	;	ca	;	modern
 Apple	;	cs	;	modern
-Apple	;	cv	;	basic
 Apple	;	da	;	modern
 Apple	;	de	;	modern
 Apple	;	el	;	modern
@@ -554,7 +553,6 @@ Cldr	;	de_CH	;	modern	; TR High German (Switzerland)
 #Cldr	other (from Apple)
 #Cldr    ;   fo  ;   modern
 #Cldr    ;   to  ;   moderate	# maybe different level from Apple's
-Cldr  ; cv  ; basic
 Cldr	;	en_AU	;	modern
 Cldr	;	es_MX	;	modern
 Cldr	;	fr_CA	;	modern
@@ -630,7 +628,7 @@ Cldr  ; ia  ; basic ; Interlingua
 Cldr  ; kea ; basic ; Kabuverdianu
 Cldr  ; rm  ; basic ; Romansh
 Cldr	;	tg	;	moderate ; Tajik
-Cldr	;	ti	;	modern ; Tigrinya
+Cldr	;	ti	;	moderate ; Tigrinya
 Cldr	;	tt	;	moderate ; Tatar
 Cldr  ; uz_Cyrl ; basic ; Uzbek (Cyrillic)
 Cldr	;	wo	;	moderate ; Wolof
@@ -772,7 +770,7 @@ Microsoft	;	ta	;	modern	;	Tamil
 Microsoft	;	te	;	modern	;	Telugu
 Microsoft	;	tg	;	moderate	;	Tajik
 Microsoft	;	th	;	modern	;	Thai
-Microsoft	;	ti	;	modern	;	Tigrinya
+Microsoft	;	ti	;	moderate	;	Tigrinya
 Microsoft	;	tr	;	modern	;	Turkish
 Microsoft	;	tk	;	modern	;	Turkmen
 Microsoft	;	uk	;	modern	;	Ukrainian
@@ -986,6 +984,7 @@ special	;	ast	;	moderate	;	Asturian
 special ;	br	;	moderate	;	Breton
 special ; bs_Cyrl ; basic ; Bosnian (Cyrillic)
 special ;	chr	;	modern	;	Cherokee
+special ; cv  ; moderate ; Chuvash
 special ;	dsb	;	modern	;	Lower Sorbian
 special ;	ff	;	basic	;	Fulah
 special ;	ff_Adlm	;	moderate	;	Fulah (Adlam)
