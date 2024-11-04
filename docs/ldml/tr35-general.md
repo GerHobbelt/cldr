@@ -2,7 +2,7 @@
 
 # Unicode Locale Data Markup Language (LDML)<br/>Part 2: General
 
-|Version|46 (draft)           |
+|Version|47 (draft)           |
 |-------|---------------------|
 |Editors|Yoshito Umaoka (<a href="mailto:yoshito_umaoka@us.ibm.com">yoshito_umaoka@us.ibm.com</a>) and <a href="tr35.md#Acknowledgments">other CLDR committee members|
 
@@ -13,11 +13,6 @@ For the full header, summary, and status, see [Part 1: Core](tr35.md).
 This document describes parts of an XML format (_vocabulary_) for the exchange of structured locale data. This format is used in the [Unicode Common Locale Data Repository](https://www.unicode.org/cldr/).
 
 This is a partial document, describing general parts of the LDML: display names & transforms, etc. For the other parts of the LDML see the [main LDML document](tr35.md) and the links above.
-
-_Note:_
-Some links may lead to in-development or older
-versions of the data files.
-See <https://cldr.unicode.org> for up-to-date CLDR release data.
 
 ### _Status_
 
@@ -30,7 +25,11 @@ This is a stable document and may be used as reference material or cited as a no
 
 > _**A Unicode Technical Standard (UTS)** is an independent specification. Conformance to the Unicode Standard does not imply conformance to any UTS._
 
-_Please submit corrigenda and other comments with the CLDR bug reporting form [[Bugs](tr35.md#Bugs)]. Related information that is useful in understanding this document is found in the [References](tr35.md#References). For the latest version of the Unicode Standard see [[Unicode](tr35.md#Unicode)]. For a list of current Unicode Technical Reports see [[Reports](tr35.md#Reports)]. For more information about versions of the Unicode Standard, see [[Versions](tr35.md#Versions)]._
+_Please submit corrigenda and other comments with the CLDR bug reporting form [[Bugs](https://cldr.unicode.org/index/bug-reports)].
+Related information that is useful in understanding this document is found in the [References](#References).
+For the latest version of the Unicode Standard see [[Unicode](https://www.unicode.org/versions/latest/)].
+For more information see [About Unicode Technical Reports](https://www.unicode.org/reports/about-reports.html) and the [Specifications FAQ](https://www.unicode.org/faq/specifications.html).
+Unicode Technical Reports are governed by the Unicode [Terms of Use](https://www.unicode.org/copyright.html)._
 
 ## <a name="Parts" href="#Parts">Parts</a>
 
@@ -592,11 +591,11 @@ The ordering of the characters in the set is irrelevant, but for readability in 
 
 ### ~~<a name="Character_Mapping" href="#Character_Mapping">Mapping</a>~~
 
-**This element has been deprecated.** For information on its structure and how it was intended to specify locale-specific preferred encodings for various purposes (e-mail, web), see the [Mapping](https://www.unicode.org/reports/tr35/tr35-39/tr35-general.html#Character_Mapping) section from the CLDR 27 version of the LDML Specification.
+**This element has been deprecated.** For information on its structure and how it was intended to specify locale-specific preferred encodings for various purposes (e-mail, web), see the [Mapping](tr35-general.md#Character_Mapping) section from the CLDR 27 version of the LDML Specification.
 
 ### ~~<a name="IndexLabels" href="#IndexLabels">Index Labels</a>~~
 
-**This element and its subelements have been deprecated.** For information on its structure and how it was intended to provide data for a compressed display of index exemplar characters where space is limited, see the [Index Labels](https://www.unicode.org/reports/tr35/tr35-39/tr35-general.html#IndexLabels) section from the CLDR 27 version of the LDML Specification.
+**This element and its subelements have been deprecated.** For information on its structure and how it was intended to provide data for a compressed display of index exemplar characters where space is limited, see the [Index Labels](tr35-general.md#IndexLabels) section from the CLDR 27 version of the LDML Specification.
 
 ```xml
 <!ELEMENT indexLabels (indexSeparator*, compressedIndexSeparator*, indexRangePattern*, indexLabelBefore*, indexLabelAfter*, indexLabel*) >
@@ -911,12 +910,12 @@ Some of the constraints reference data from the unitIdComponents in [Unit_Conver
 <!-- HTML: no header -->
 
 <table><tbody>
-<tr><td><a name='unit_identifier' href='unit_identifier'>unit_identifier</a></td><td>:=</td>
+<tr><td><a name='unit_identifier' href='#unit_identifier'>unit_identifier</a></td><td>:=</td>
     <td>core_unit_identifier<br/>
         | mixed_unit_identifier<br/>
         | long_unit_identifier</td></tr>
 
-<tr><td><a name='core_unit_identifier' href='core_unit_identifier'>core_unit_identifier</a></td><td>:=</td>
+<tr><td><a name='core_unit_identifier' href='#core_unit_identifier'>core_unit_identifier</a></td><td>:=</td>
     <td>product_unit ("-" per "-" product_unit)*<br/>
         | per "-" product_unit ("-" per "-" product_unit)*
         <ul><li><em>Examples:</em>
@@ -932,37 +931,39 @@ Some of the constraints reference data from the unitIdComponents in [Unit_Conver
 			<li><em>Constraint:</em> The token 'per' is the single value in &lt;unitIdComponent type="per"&gt;</li>
 		</ul></td></tr>
 
-<tr><td><a name='product_unit' href='product_unit'>product_unit</a></td><td>:=</td>
+<tr><td><a name='product_unit' href='#product_unit'>product_unit</a></td><td>:=</td>
         <td>single_unit ("-" single_unit)* ("-" pu_single_unit)*<br/>
             | pu_single_unit ("-" pu_single_unit)*
             <ul><li><em>Example:</em> foot-pound-force</li>
                 <li><em>Constraint:</em> No pu_single_unit may precede a single unit</li>
             </ul></td></tr>
 
-<tr><td><a name='single_unit' href='single_unit'>single_unit</a></td><td>:=</td>
+<tr><td><a name='single_unit' href='#single_unit'>single_unit</a></td><td>:=</td>
     <td>dimensionality_prefix? simple_unit | unit_constant
         <ul><li><em>Examples: </em>square-kilometer, or 100</li></ul></td></tr>
 
-<tr><td>pu_single_unit</td><td>:=</td>
+<tr><td><a name='pu_single_unit' href='#pu_single_unit'>pu_single_unit</a></td><td>:=</td>
     <td>"xxx-" single_unit | "x-" single_unit
     <ul><li><em>Example:</em> xxx-square-knuts (a Harry Potter unit)</li>
         <li><em>Note:</em> "x-" is only for backwards compatibility</li>
         <li>See <a href="#Private_Use_Units">Private-Use Units</a></li>
     </ul></td></tr>
 
-<tr><td><a name='unit_constant' href='unit_constant'>unit_constant</a></td><td>:=</td>
-    <td>("1"[0-9]+ | [2-9][0-9]*)("e" ("1"[0-9]+ | [2-9][0-9]*))?
+<tr><td><a name='unit_constant' href='#unit_constant'>unit_constant</a></td><td>:=</td>
+    <td>[1-9][0-9]* ("e" [1-9][0-9]*)?
         <ul><li><em>Examples:</em>
             <ul><li>kilowatt-hour-per-100-kilometer</li>
                 <li>gallon-per-100-mile</li>
                 <li>per-200-pound</li>
                 <li>per-12</li>
             </ul></li>
-            <li><em>Note:</em> The number is an integer greater than one.</li>
+            <li><em>Constraint:</em> The numeric value of the unit constant must be an integer greater than one.</li>
+            <li><em>Note:</em> The normal interpretation of <code>e</code> is used, where 2e6 = 2×10⁶.</li>
             <li><em>Note:</em> The <code>e</code> notation is optional: per-100-kilometer and per-1e2-kilometer are equivalent unit_identifiers.</li>
+            <li><em>Note:</em> When constructing identifiers, exponents should be greater than 3 and multiples of 3, even though parsers must accept the wider range.</li>
         </ul></td></tr>
 
-<tr><td><a name='dimensionality_prefix' href='dimensionality_prefix'>dimensionality_prefix</a></td><td>:=</td>
+<tr><td><a name='dimensionality_prefix' href='#dimensionality_prefix'>dimensionality_prefix</a></td><td>:=</td>
     <td>"square-"<p>| "cubic-"<p>| "pow" ([2-9]|1[0-5]) "-"
         <ul>
 			<li><em>Constraint:</em> must be value in: &lt;unitIdComponent type="power"&gt;.</li>
@@ -970,7 +971,7 @@ Some of the constraints reference data from the unitIdComponents in [Unit_Conver
 			<li><em>Note:</em> These are values in &lt;unitIdComponent type="power"&gt;</li>
 		</ul></td></tr>
 
-<tr><td><a name='simple_unit' href='simple_unit'>simple_unit</a></td><td>:=</td>
+<tr><td><a name='simple_unit' href='#simple_unit'>simple_unit</a></td><td>:=</td>
     <td>(prefix_component "-")* (prefixed_unit | base_component) ("-" suffix_component)*<br/>
 		|  currency_unit<br/>
 		| "em" | "g" | "us" | "hg" | "of"
@@ -980,27 +981,27 @@ Some of the constraints reference data from the unitIdComponents in [Unit_Conver
 			We will likely deprecate those and add conformant aliases in the future: the "hg" and "of" are already only in deprecated simple_units.</li>
         </ul></td></tr>
 
-<tr><td>prefixed_unit</td><td></td>
+<tr><td><a name='prefixed_unit' href='#prefixed_unit'>prefixed_unit</a></td><td></td>
     <td>prefix base_component<ul><li><em>Example: </em>kilometer</li></ul></td></tr>
 
-<tr><td><a name='prefix' href='prefix'>prefix</a></td><td></td>
+<tr><td><a name='prefix' href='#prefix'>prefix</a></td><td></td>
     <td>si_prefix | binary_prefix</td></tr>
 
-<tr><td>si_prefix</td><td>:=</td>
+<tr><td><a name='si_prefix' href='#si_prefix'>si_prefix</a></td><td>:=</td>
     <td>"deka" | "hecto" | "kilo", …
         <ul><li><em>Constraint:</em> Must be an attribute value of the <code>type</code> in: &lt;unitPrefix type='…' … power10='…'&gt;. 
 			See also <a href="https://www.nist.gov/pml/special-publication-811">NIST special publication 811</a></li></ul></td></tr>
 
-<tr><td>binary_prefix</td><td>:=</td>
+<tr><td><a name='binary_prefix' href='#binary_prefix'>binary_prefix</a></td><td>:=</td>
     <td>"kibi", "mebi", …
         <ul><li><em>Constraint:</em> Must be an attribute value of the <code>type</code> in: &lt;unitPrefix type='…' … power2='…'&gt;. 
 			See also <a href="https://physics.nist.gov/cuu/Units/binary.html">Prefixes for binary multiples</a></li></ul></td></tr>
 
-<tr><td>prefix_component</td><td>:=</td>
+<tr><td><a name='prefix_component' href='#prefix_component'>prefix_component</a></td><td>:=</td>
     <td>[a-z]{3,∞}
         <ul><li><em>Constraint:</em> must be value in: &lt;unitIdComponent type="prefix"&gt;.</li></ul></td></tr>
 
-<tr><td>base_component</td><td>:=</td>
+<tr><td><a name='base_component' href='#base_component'>base_component</a></td><td>:=</td>
     <td>[a-z]{3,∞}
         <ul><li><em>Constraint:</em> must not be a value in any of the following:<br>
 			&lt;unitIdComponent type="prefix"&gt;<br>
@@ -1016,13 +1017,13 @@ Some of the constraints reference data from the unitIdComponents in [Unit_Conver
 		</ul>
 	</td></tr>
 
-<tr><td>suffix_component</td><td>:=</td>
+<tr><td><a name='suffix_component' href='#suffix_component'>suffix_component</a></td><td>:=</td>
     <td>[a-z]{3,∞}
         <ul>
 			<li><em>Constraint:</em> must be value in: &lt;unitIdComponent type="suffix"&gt;</li>
 		</ul></td></tr>
 
-<tr><td><a name='mixed_unit_identifier' href='mixed_unit_identifier'></a></td><td>:=</td>
+<tr><td><a name='mixed_unit_identifier' href='#mixed_unit_identifier'></a></td><td>:=</td>
     <td>(single_unit | pu_single_unit) ("-" and "-" (single_unit | pu_single_unit ))*
         <ul><li><em>Example: foot-and-inch</em></li>
 		</ul></td></tr>
@@ -1033,13 +1034,13 @@ Some of the constraints reference data from the unitIdComponents in [Unit_Conver
 			<li><em>Constraint:</em> The token 'and' is the single value in &lt;unitIdComponent type="and"&gt;</li>
 		</ul></td></tr>
 
-<tr><td>long_unit_identifier</td><td>:=</td>
+<tr><td><a name='long_unit_identifier' href='#long_unit_identifier'>long_unit_identifier</a></td><td>:=</td>
     <td>grouping "-" core_unit_identifier</td></tr>
 
 <tr><td>grouping</td><td>:=</td>
     <td>[a-z]{3,∞}</td></tr>
 
-<tr><td><a name='currency_unit' href='currency_unit'>currency_unit</a></td><td>:=</td>
+<tr><td><a name='currency_unit' href='#currency_unit'>currency_unit</a></td><td>:=</td>
     <td>"curr-" [a-z]{3}
         <ul>
 			<li><em>Constraint:</em> The first part of the currency_unit is a standard prefix; the second part of the currency unit must be a valid <a href="tr35.md#UnicodeCurrencyIdentifier">Unicode currency identifier</a>.</li>
@@ -2436,7 +2437,7 @@ More sophisticated implementations can customize the process to improve the resu
                     <li><i>10 <b>o</b> 111,</i> not <i>10 <b>u</b> 111</i></li></ol>
             </li></ol></td></tr>
 
-<tr><td colspan="2">See <a href="https://www.rae.es/espanol-al-dia/cambio-de-la-y-copulativa-en-e-0">Cambio de la y copulativa en e</a><br><b>Note: </b>more advanced implementations may also consider the pronunciation, such as foreign words where the ‘h’ is not mute.</td></tr>
+<tr><td colspan="2">See <a href="http://web.archive.org/web/20240525091135/https://www.rae.es/espanol-al-dia/cambio-de-la-y-copulativa-en-e-0" title="Archived from https://www.rae.es/espanol-al-dia/cambio-de-la-y-copulativa-en-e-0">Cambio de la y copulativa en e</a><br><b>Note: </b>more advanced implementations may also consider the pronunciation, such as foreign words where the ‘h’ is not mute.</td></tr>
 
 <tr><td rowspan="2">Hebrew</td><td>AND</td>
     <td>Use ‘-ו’ instead of ‘ו’ in the listPatternPart for "end" and "2" in the following case:
@@ -2687,7 +2688,7 @@ All such characters should be removed before looking up any short names and keyw
 
 ### <a name="SynthesizingNames" href="#SynthesizingNames">Synthesizing Sequence Names</a>
 
-Many emoji are represented by sequences of characters. When there are no `annotation` elements for that string, the short name can be synthesized as follows. **Note:** The process details may change after the release of this specification, and may further change in the future if other sequences are added. Please see the [Known Issues](https://cldr.unicode.org/index/downloads/cldr-41#h.qa3jolg7zi2s) section of the CLDR download page for any updates.
+Many emoji are represented by sequences of characters. When there are no `annotation` elements for that string, the short name can be synthesized as follows. **Note:** The process details may change after the release of this specification, and may further change in the future if other sequences are added.
 
 1.  If **sequence** is an **emoji flag sequence**, look up the territory name in CLDR for the corresponding ASCII characters and return as the short name. For example, the regional indicator symbols P+F would map to “Französisch-Polynesien” in German.
 2.  If **sequence** is an **emoji tag sequence**, look up the subdivision name in CLDR for the corresponding ASCII characters and return as the short name. For example, the TAG characters gbsct would map to “Schottland” in German.
@@ -3130,6 +3131,16 @@ For example, for gram-per-meter, the first line above means:
 
 * * *
 
-Copyright © 2001–2024 Unicode, Inc. All Rights Reserved. The Unicode Consortium makes no expressed or implied warranty of any kind, and assumes no liability for errors or omissions. No liability is assumed for incidental and consequential damages in connection with or arising out of the use of the information or programs contained or accompanying this technical report. The Unicode [Terms of Use](https://www.unicode.org/copyright.html) apply.
+© 2024–2024 Unicode, Inc.
+This publication is protected by copyright, and permission must be obtained from Unicode, Inc.
+prior to any reproduction, modification, or other use not permitted by the [Terms of Use](https://www.unicode.org/copyright.html).
+Specifically, you may make copies of this publication and may annotate and translate it solely for personal or internal business purposes and not for public distribution,
+provided that any such permitted copies and modifications fully reproduce all copyright and other legal notices contained in the original.
+You may not make copies of or modifications to this publication for public distribution, or incorporate it in whole or in part into any product or publication without the express written permission of Unicode.
 
-Unicode and the Unicode logo are trademarks of Unicode, Inc., and are registered in some jurisdictions.
+Use of all Unicode Products, including this publication, is governed by the Unicode [Terms of Use](https://www.unicode.org/copyright.html).
+The authors, contributors, and publishers have taken care in the preparation of this publication,
+but make no express or implied representation or warranty of any kind and assume no responsibility or liability for errors or omissions or for consequential or incidental damages that may arise therefrom.
+This publication is provided “AS-IS” without charge as a convenience to users.
+
+Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the United States and other countries.

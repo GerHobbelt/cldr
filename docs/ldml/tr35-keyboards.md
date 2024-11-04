@@ -1,8 +1,8 @@
-## Unicode Technical Standard #35 Tech Preview
+## Unicode Technical Standard #35
 
 # Unicode Locale Data Markup Language (LDML)<br/>Part 7: Keyboards
 
-|Version|46 (draft)   |
+|Version|47 (draft)   |
 |-------|-------------|
 |Editors|Steven Loomis (<a href="mailto:srloomis@unicode.org">srloomis@unicode.org</a>) and <a href="tr35.md#Acknowledgments">other CLDR committee members</a>|
 
@@ -13,11 +13,6 @@ For the full header, summary, and status, see [Part 1: Core](tr35.md).
 This document describes parts of an XML format (_vocabulary_) for the exchange of structured locale data. This format is used in the [Unicode Common Locale Data Repository](https://www.unicode.org/cldr/).
 
 This is a partial document, describing keyboards. For the other parts of the LDML see the [main LDML document](tr35.md) and the links above.
-
-_Note:_
-Some links may lead to in-development or older
-versions of the data files.
-See <https://cldr.unicode.org> for up-to-date CLDR release data.
 
 ### _Status_
 
@@ -30,8 +25,11 @@ This is a stable document and may be used as reference material or cited as a no
 
 > _**A Unicode Technical Standard (UTS)** is an independent specification. Conformance to the Unicode Standard does not imply conformance to any UTS._
 
-_Please submit corrigenda and other comments with the CLDR bug reporting form [[Bugs](tr35.md#Bugs)]. Related information that is useful in understanding this document is found in the [References](tr35.md#References). For the latest version of the Unicode Standard see [[Unicode](tr35.md#Unicode)]. For a list of current Unicode Technical Reports see [[Reports](tr35.md#Reports)]. For more information about versions of the Unicode Standard, see [[Versions](tr35.md#Versions)]._
-
+_Please submit corrigenda and other comments with the CLDR bug reporting form [[Bugs](https://cldr.unicode.org/index/bug-reports)].
+Related information that is useful in understanding this document is found in the [References](#References).
+For the latest version of the Unicode Standard see [[Unicode](https://www.unicode.org/versions/latest/)].
+For more information see [About Unicode Technical Reports](https://www.unicode.org/reports/about-reports.html) and the [Specifications FAQ](https://www.unicode.org/faq/specifications.html).
+Unicode Technical Reports are governed by the Unicode [Terms of Use](https://www.unicode.org/copyright.html)._
 
 See also [Compatibility Notice](#compatibility-notice).
 
@@ -512,7 +510,7 @@ See [UAX #15](https://www.unicode.org/reports/tr15/#Description_Norm) for an ove
 
 #### Example Normalization with Markers
 
-**Example 1**
+**Example 1a**
 
 Consider this example, without markers:
 
@@ -521,7 +519,7 @@ Consider this example, without markers:
 
 The combining marks are reordered.
 
-**Example 2**
+**Example 1b**
 
 If we add markers:
 
@@ -626,10 +624,13 @@ This is the top level element. All other elements defined below are under this e
 
 _Attribute:_ `conformsTo` (required)
 
-This attribute value distinguishes the keyboard from prior versions,
-and it also specifies the minimum CLDR major version required.
+This attribute value specifies the minimum supported CLDR major version required to properly interpret this keyboard.
 
-This attribute value must be a whole number of `45` or greater. See [`cldrVersion`](tr35-info.md#version-information)
+The value must be a whole number of `45` or greater. See [`cldrVersion`](tr35-info.md#version-information)
+
+CLDR's stability policy is such that keyboards which conform to a CLDR version automatically are conformant to all future versions. In other words, a layout with `conformsTo="45"` could be changed to `conformsTo="46"` with no other changes and the layout would remain conformant.
+
+To promote wider interchange, authors and tooling should use the minimum `conformsTo` value necessary to support the keyboard.
 
 ```xml
 <keyboard3 … conformsTo="45"/>
@@ -1806,10 +1807,10 @@ _Attribute:_ `value` (required)
 <variables>
     <string id="cluster_hi" value="हि" /> <!-- a string -->
     <string id="zwnj" value="\u{200C}"/> <!-- single codepoint -->
-    <string id="acute" value="\m{acute}"/> <!-- refer to a marker -->
+    <string id="grave" value="\m{grave}"/> <!-- refer to a marker -->
     <string id="backquote" value="`"/>
-    <string id="zwnj_acute" value="${zwnj}${acute}"  /> <!-- Combine two variables -->
-    <string id="zwnj_sp_acute" value="${zwnj}\u{0020}${acute}"  /> <!-- Combine two variables -->
+    <string id="zwnj_grave" value="${zwnj}${grave}"  /> <!-- Combine two variables -->
+    <string id="zwnj_sp_grave" value="${zwnj}\u{0020}${grave}"  /> <!-- Combine two variables -->
 </variables>
 ```
 
@@ -1822,10 +1823,10 @@ These may be then used in multiple contexts:
 …
 <!-- as part of a key bag  -->
 <key id="hi_key" output="${cluster_hi}" />
-<key id="acute_key" output="${acute}" />
+<key id="grave_key" output="${grave}" />
 …
-<!-- Display ´ instead of the non-displayable marker -->
-<display output="${acute}" display="${backquote}" />
+<!-- Display ` instead of the non-displayable marker -->
+<display output="${grave}" display="${backquote}" />
 ```
 
 * * *
@@ -2393,7 +2394,7 @@ Used in the `to=`
 
     - The `from=` and `to=` sides of the pattern must both be using `set` variables. There is no way to insert a set literal on either side and avoid using a variable.
 
-    - The two variables (here `upper` and `lower`) must have exactly the same number of whitespace-separated items. Leading and trailing space (such as at the end of `lower`) is ignored. A variable without any spaces is considered to be a set variable of exactly one item.
+    - The two variables (here `upper` and `lower`) must have exactly the same number of whitespace-separated items. Leading and trailing space is ignored. A variable without any spaces is considered to be a set variable of exactly one item.
 
     - As described in [Additional Features](#additional-features), the `upper` set variable as used here matches as if it is `((?:A|B|CC|D|E|FF|G))`, showing the enclosing capturing group. When text from the input context matches this expression, and all above conditions are met, the mapping proceeds as follows:
 
@@ -2704,7 +2705,7 @@ Keyboarding applications typically work, but are not required to, in one of two 
 
 **_text editing_**
 
-> text editing happens when a user moves the cursor into some previously entered text which may have been entered by someone else. As such, there is no way to know in which order things were typed, but a user will still want appropriate behaviour when they press backspace. This may involve deleting more than one character or replacing a sequence of characters with a different sequence.
+> text editing happens when a user moves the cursor into some previously entered text which may have been entered by someone else. As such, there is no way to know in which order things were typed, but a user will still want appropriate behavior when they press backspace. This may involve deleting more than one character or replacing a sequence of characters with a different sequence.
 
 In text editing mode, different keyboard layouts may behave differently in the same textual context. The backspace transform allows the keyboard layout to specify the effect of pressing backspace in a particular textual context. This is done by specifying a set of backspace rules that match a string before the cursor and replace it with another string. The rules are expressed within a `transforms type="backspace"` element.
 
@@ -2872,9 +2873,16 @@ The following are the design principles for the IDs.
 
 * * *
 
-Copyright © 2001–2024 Unicode, Inc. All Rights Reserved. The Unicode Consortium makes no expressed or implied warranty of any kind, and assumes no liability for errors or omissions. No liability is assumed for incidental and consequential damages in connection with or arising out of the use of the information or programs contained or accompanying this technical report. The Unicode [Terms of Use](https://www.unicode.org/copyright.html) apply.
+© 2024–2024 Unicode, Inc.
+This publication is protected by copyright, and permission must be obtained from Unicode, Inc.
+prior to any reproduction, modification, or other use not permitted by the [Terms of Use](https://www.unicode.org/copyright.html).
+Specifically, you may make copies of this publication and may annotate and translate it solely for personal or internal business purposes and not for public distribution,
+provided that any such permitted copies and modifications fully reproduce all copyright and other legal notices contained in the original.
+You may not make copies of or modifications to this publication for public distribution, or incorporate it in whole or in part into any product or publication without the express written permission of Unicode.
 
-Unicode and the Unicode logo are trademarks of Unicode, Inc., and are registered in some jurisdictions.
+Use of all Unicode Products, including this publication, is governed by the Unicode [Terms of Use](https://www.unicode.org/copyright.html).
+The authors, contributors, and publishers have taken care in the preparation of this publication,
+but make no express or implied representation or warranty of any kind and assume no responsibility or liability for errors or omissions or for consequential or incidental damages that may arise therefrom.
+This publication is provided “AS-IS” without charge as a convenience to users.
 
-
-[keyboard-workgroup]: https://cldr.unicode.org/index/keyboard-workgroup
+Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the United States and other countries.
