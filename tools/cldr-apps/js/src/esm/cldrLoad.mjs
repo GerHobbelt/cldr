@@ -598,7 +598,11 @@ function shower(itemLoadInfo) {
   cldrSurvey.showLoader(cldrText.get("loading"));
   const curSpecial = cldrStatus.getCurrentSpecial();
   cldrGui.setToptitleVisibility(curSpecial !== "menu");
-  specialLoad(itemLoadInfo, curSpecial, theDiv);
+  try {
+    specialLoad(itemLoadInfo, curSpecial, theDiv);
+  } catch (e) {
+    cldrNotify.exception(e, `Showing SurveyTool page ${curSpecial || ""}`);
+  }
 }
 
 function specialLoad(itemLoadInfo, curSpecial, theDiv) {
@@ -1045,10 +1049,30 @@ function getLocaleDir(locale) {
   return localeDir;
 }
 
-function setTheLocaleMap(lm) {
-  locmap = lm;
+/** @returns true if locmap has been loaded from data */
+function localeMapReady() {
+  return !!locmap.locmap;
 }
 
+/** event ID for localeMap changes */
+const LOCALEMAP_EVENT = "localeMapReady";
+
+/**
+ * Calls the callback when the localeMap is ready (with real data).
+ * Calls right away if the localeMap was already loaded.
+ */
+function onLocaleMapReady(callback) {
+  if (localeMapReady()) {
+    callback();
+  } else {
+    cldrStatus.on(LOCALEMAP_EVENT, callback);
+  }
+}
+
+function setTheLocaleMap(lm) {
+  locmap = lm;
+  cldrStatus.dispatchEvent(new Event(LOCALEMAP_EVENT));
+}
 /**
  * Convenience for calling getTheLocaleMap().getLocaleName(loc)
  * @param {String} loc
@@ -1056,6 +1080,10 @@ function setTheLocaleMap(lm) {
  */
 function getLocaleName(loc) {
   return locmap.getLocaleName(loc);
+}
+
+function getLocaleInfo(loc) {
+  return locmap.getLocaleInfo(loc);
 }
 
 /**
@@ -1141,6 +1169,7 @@ export {
   flipToOtherDiv,
   getHash,
   getLocaleDir,
+  getLocaleInfo,
   getLocaleName,
   getTheLocaleMap,
   handleCoverageChanged,
@@ -1148,6 +1177,7 @@ export {
   linkToLocale,
   localeSpecialNote,
   myLoad,
+  onLocaleMapReady,
   parseHashAndUpdate,
   reloadV,
   replaceHash,

@@ -2,6 +2,7 @@
  * cldrDash: encapsulate dashboard data.
  */
 import * as cldrAjax from "./cldrAjax.mjs";
+import * as cldrClient from "./cldrClient.mjs";
 import * as cldrCoverage from "./cldrCoverage.mjs";
 import * as cldrNotify from "./cldrNotify.mjs";
 import * as cldrProgress from "./cldrProgress.mjs";
@@ -391,16 +392,27 @@ function getCheckmarkUrl(entry, locale) {
 async function downloadXlsx(data, locale, cb) {
   const xpathMap = cldrSurvey.getXpathMap();
   const { coverageLevel, entries } = data;
+  const coverageLevelName = (coverageLevel || "default").toLowerCase();
+  const xlsSheetName = `${locale}.${coverageLevelName}`;
+  const xlsFileName = `Dash_${locale}_${coverageLevelName}.xlsx`;
 
   // Fetch all XPaths in parallel since it'll take a while
-  cb(`Loading…`);
+  cb(`Loading rows…`);
   const allXpaths = [];
   for (let dashEntry of entries) {
     if (dashEntry.section === "Reports") {
       continue; // skip this
     }
     allXpaths.push(dashEntry.xpstrid);
+    try {
+      await xpathMap.get(dashEntry.xpstrid);
+    } catch (e) {
+      throw Error(
+        `${e}:  Could not load XPath for ${JSON.stringify(dashEntry)}`
+      );
+    }
   }
+  cb(`Loading xpaths…`);
   await Promise.all(allXpaths.map((x) => xpathMap.get(x)));
   cb(`Calculating…`);
 
@@ -424,11 +436,19 @@ async function downloadXlsx(data, locale, cb) {
   ];
 
   for (let e of entries) {
-    const xpath =
-      section === "Reports" ? "-" : (await xpathMap.get(xpstrid)).path;
+    async function getXpath() {
+      if (e.section === "Reports") return "-";
+      try {
+        return (await xpathMap.get(e.xpstrid)).path;
+      } catch (ex) {
+        throw Error(`${e}: Could not get xpath of ${JSON.stringify(e)}`);
+      }
+    }
+    const xpath = await getXpath();
     const url = `https://st.unicode.org/cldr-apps/v#/${e.locale}/${e.page}/${e.xpstrid}`;
+    const cats = Array.from(e.cats).join(", ");
     ws_data.push([
-      e.cat,
+      cats,
       e.header,
       e.page,
       e.section,
@@ -445,21 +465,27 @@ async function downloadXlsx(data, locale, cb) {
   const ws = XLSX.utils.aoa_to_sheet(ws_data);
   // cldrXlsx.pushComment(ws, "C1", `As of ${new Date().toISOString()}`);
   const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(
-    wb,
-    ws,
-    `${locale}.${coverageLevel.toLowerCase()}`
-  );
+  XLSX.utils.book_append_sheet(wb, ws, xlsSheetName);
   cb(`Writing…`);
-  XLSX.writeFile(wb, `Dash_${locale}_${coverageLevel.toLowerCase()}.xlsx`);
+  XLSX.writeFile(wb, xlsFileName);
   cb(null);
+}
+
+/**
+ * @param {string} locale locale to list for
+ * @returns {Array<CheckStatusSummary>}
+ */
+async function getLocaleErrors(locale) {
+  const client = cldrClient.getClient();
+  return await client.apis.voting.getLocaleErrors({ locale });
 }
 
 export {
   doFetch,
+  downloadXlsx,
   getFetchError,
+  getLocaleErrors,
   saveEntryCheckmark,
   setData,
   updatePath,
-  downloadXlsx,
 };

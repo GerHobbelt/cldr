@@ -360,9 +360,11 @@ const strings = {
   forum_remember_vote:
     "⚠️ Please remember to vote – submitting a forum post does NOT cause any actual vote to be made.",
 
-  forum_path_has_posts: "This item has forum posts, ",
+  forum_path_has_posts: "This item has one or more forum posts, ",
   forum_path_has_open_posts: "some of which are open",
   forum_path_has_only_closed_posts: "all of which are closed",
+  forum_path_has_open_posts_icon: "👁️‍🗨️",
+  forum_path_has_only_closed_posts_icon: "💬",
 
   generic_nolocale: "No locale chosen.",
   defaultContent_msg:
@@ -469,6 +471,14 @@ const strings = {
   report_notAcceptable: "Not Acceptable",
   report_missing: "Missing",
 
+  // for approval status, see VoteResolver.Status
+  status_approved: "✅\uFE0F",
+  status_contributed: "☑️",
+  status_provisional: "✖️",
+  status_unconfirmed: "❌\uFE0F",
+  status_missing: "🕳️",
+  status_inherited: "⬆️",
+
   special_about: "About Survey Tool",
   special_announcements: "Announcements",
   special_account: "Account Settings",
@@ -490,7 +500,7 @@ const strings = {
   special_locales: "Locale List",
   special_lock_account: "Lock (Disable) My Account",
   special_lookup: "Look up a code or xpath",
-  special_mail: "Notifications (SMOKETEST ONLY)",
+  special_mail: "Simulate Email Notifications (SMOKETEST ONLY)",
   special_menu: "☰",
   special_oldvotes: "Import Old Votes",
   special_upload: "Upload (Bulk Import)",
@@ -528,6 +538,8 @@ const strings = {
   lock_account_err_reason: "The reason for the request must be filled in.",
   lock_account_success:
     "The account has been locked successfully. Thank you for using the Survey Tool. If you have difficulty still, contact the person who set up your account.",
+
+  mail_noMail: "No simulated notification emails.",
 
   notification_category_abstained:
     "You have abstained, or not yet voted for any value.",
