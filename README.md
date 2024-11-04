@@ -10,14 +10,14 @@ For current CLDR release information, see [cldr.unicode.org](https://cldr.unicod
 
 ## Status
 
-Update: 2023-09-28
+Update: 2024-01-08
 
 <!-- [inapplicable lines are commented out.]-->
-<!--**Note:**  CLDR 44 is in development and not recommended for use at this stage.-->
-<!--**Note:**  This is the milestone 1 version of CLDR 44, intended for those wishing to do pre-release testing. It is not recommended for production use.-->
-<!--**Note:** This is a preliminary version of CLDR 44, intended for those wishing to do pre-release testing. It is not recommended for production use.-->
-**Note:**  This is a pre-release candidate version of CLDR 44, intended for testing. It is not recommended for production use.
-<!--This is the final release version of CLDR 44.-->
+**Note:**  CLDR 45 is in development and not recommended for use at this stage.
+<!--**Note:**  This is the milestone 1 version of CLDR 45, intended for those wishing to do pre-release testing. It is not recommended for production use.-->
+<!--**Note:** This is a preliminary version of CLDR 45, intended for those wishing to do pre-release testing. It is not recommended for production use.-->
+<!--**Note:**  This is a pre-release candidate version of CLDR 45, intended for testing. It is not recommended for production use.-->
+<!--This is the final release version of CLDR 45.-->
 
 ### What is CLDR?
 The Unicode CLDR provides key building blocks for software to support the world's languages, with the largest and most extensive standard repository of locale data available. This data is used by a wide spectrum of companies for their software internationalization and localization, adapting software to the conventions of different languages for such common software tasks.
@@ -45,7 +45,7 @@ A source formatter is now used, please see [spotless](./tools/README.md#spotless
 
 ### Copyright & Licenses
 
-Copyright © 2004-2023 Unicode, Inc. Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the United States and other countries.
+Copyright © 2004-2024 Unicode, Inc. Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the United States and other countries.
 
 The project is released under [LICENSE](./LICENSE).
 

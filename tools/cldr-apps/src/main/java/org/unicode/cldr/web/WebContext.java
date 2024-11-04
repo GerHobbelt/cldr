@@ -27,8 +27,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.unicode.cldr.test.CheckCLDR;
 import org.unicode.cldr.test.DisplayAndInputProcessor;
+import org.unicode.cldr.util.CLDRConfig;
 import org.unicode.cldr.util.CLDRLocale;
 import org.unicode.cldr.util.Level;
 import org.unicode.cldr.util.PathHeader;
@@ -60,7 +60,6 @@ public class WebContext implements Cloneable, Appendable {
     public static final String CLDR_WEBCONTEXT = "cldr_webcontext";
 
     public static final String TARGET_ZOOMED = "CLDR-ST-ZOOMED";
-    public static final String TARGET_EXAMPLE = "CLDR-ST-EXAMPLE";
     public static final String TARGET_DOCS = "CLDR-ST-DOCS";
 
     private static final String LOGIN_FAILED = "login failed";
@@ -94,6 +93,7 @@ public class WebContext implements Cloneable, Appendable {
      * Return the parameter map of the underlying request.
      *
      * @return {@link ServletRequest#getParameterMap()}
+     *     <p>WARNING: this is accessed by st_footer.jsp
      */
     public Map<?, ?> getParameterMap() {
         return request.getParameterMap();
@@ -117,10 +117,8 @@ public class WebContext implements Cloneable, Appendable {
      *
      * @param irq
      * @param irs
-     * @throws IOException
      */
-    protected void setRequestResponse(HttpServletRequest irq, HttpServletResponse irs)
-            throws IOException {
+    protected void setRequestResponse(HttpServletRequest irq, HttpServletResponse irs) {
         request = irq;
         response = irs;
         // register us - only if another webcontext is not already registered.
@@ -156,10 +154,10 @@ public class WebContext implements Cloneable, Appendable {
      * @param response
      * @param out
      * @return the new WebContext, which was cloned from the one posted to the Request
-     * @throws IOException
+     *     <p>WARNING: this is accessed by stcontext.jspf
      */
     public static JspWebContext fromRequest(
-            ServletRequest request, ServletResponse response, Writer out) throws IOException {
+            ServletRequest request, ServletResponse response, Writer out) {
         WebContext ctx = (WebContext) request.getAttribute(CLDR_WEBCONTEXT);
         if (ctx == null) {
             throw new InternalError(
@@ -203,16 +201,6 @@ public class WebContext implements Cloneable, Appendable {
         } else {
             return def;
         }
-    }
-
-    /**
-     * get a field's value as an integer, or -1 if not found
-     *
-     * @param x field name
-     * @return the field's value as an integer, or -1 if it was not found
-     */
-    public final int fieldInt(String x) {
-        return fieldInt(x, -1);
     }
 
     /**
@@ -329,7 +317,7 @@ public class WebContext implements Cloneable, Appendable {
         if (ret != null) {
             session.prefPut(x, ret);
         }
-        if ((ret == null) || (ret.length() <= 0)) {
+        if ((ret == null) || (ret.length() == 0)) {
             ret = def;
         }
         return ret;
@@ -347,16 +335,6 @@ public class WebContext implements Cloneable, Appendable {
         } else {
             return "target='" + t + "' ";
         }
-    }
-
-    /**
-     * Get the target keyword and value for an 'a href' HTML tag on TARGET_ZOOMED
-     *
-     * @return the 'target=...' string - may be blank if the user has requested no popups
-     * @see #TARGET_ZOOMED
-     */
-    public String atarget() {
-        return atarget(TARGET_ZOOMED);
     }
 
     /**
@@ -410,6 +388,7 @@ public class WebContext implements Cloneable, Appendable {
      *
      * @param k
      * @param v
+     *     <p>WARNING: this is accessed by debug_jsp.jspf and report.jspf
      */
     public void setQuery(String k, int v) {
         setQuery(k, Integer.toString(v));
@@ -478,7 +457,7 @@ public class WebContext implements Cloneable, Appendable {
         }
     }
 
-    // caution: maybe used by *.jsp
+    // WARNING: this is accessed by st_top.jsp
     public String vurl(CLDRLocale loc) {
         return vurl(loc, null, null, null);
     }
@@ -605,21 +584,6 @@ public class WebContext implements Cloneable, Appendable {
                 + ((outQuery != null)
                         ? ("&amp;" + outQuery)
                         : ((session != null) ? ("&amp;s=" + session.id) : ""));
-    }
-
-    /**
-     * Get a link (Text URL) to a JSP
-     *
-     * @param s resource to link to
-     * @return the URL suitable for Text
-     */
-    public String jspUrl(String s) {
-        return context(s)
-                + "?a="
-                + base()
-                + ((outQuery != null)
-                        ? ("&" + outQuery)
-                        : ((session != null) ? ("&s=" + session.id) : ""));
     }
 
     /**
@@ -751,12 +715,19 @@ public class WebContext implements Cloneable, Appendable {
     /**
      * Send the user to another URL. Won't work if there was already some output.
      *
-     * @param where
+     * @param where the URL for redirection, such as "/cldr-apps/v#//"
      * @see HttpServletResponse#sendRedirect(String)
      */
     void redirect(String where) {
         try {
-            response.sendRedirect(where);
+            String port = getRedirectPort();
+            if (port != null) {
+                String url =
+                        request.getScheme() + "://" + request.getServerName() + ":" + port + where;
+                response.sendRedirect(url);
+            } else {
+                response.sendRedirect(where);
+            }
             out.close();
             close();
         } catch (IOException ioe) {
@@ -764,11 +735,25 @@ public class WebContext implements Cloneable, Appendable {
         }
     }
 
+    private static final String PORT_NUMBER_NOT_INITIALIZED = "?";
+
     /**
-     * Close the stream. Normally not called directly, except in outermost processor.
-     *
-     * @throws IOException
+     * On first access, this becomes either null (for default port number 80) or a port number such
+     * as "8888". Ordinarily Survey Tool uses nginx as a load-balancing server, running on the
+     * default port (80). For development it may be useful to have it on a different port. This can
+     * be enabled by a line such as this in cldr.properties: CLDR_REDIRECT_PORT=8888
      */
+    private static String webContextRedirectPort = PORT_NUMBER_NOT_INITIALIZED;
+
+    private String getRedirectPort() {
+        if (PORT_NUMBER_NOT_INITIALIZED.equals(webContextRedirectPort)) {
+            webContextRedirectPort =
+                    CLDRConfig.getInstance().getProperty("CLDR_REDIRECT_PORT", null);
+        }
+        return webContextRedirectPort; // default null
+    }
+
+    /** Close the stream. Normally not called directly, except in outermost processor. */
     void close() throws IOException {
         if (!dontCloseMe) {
             out.close();
@@ -840,27 +825,7 @@ public class WebContext implements Cloneable, Appendable {
         return locale.toString();
     }
 
-    /** Print the coverage level for a certain locale. */
-    public void showCoverageLevel() {
-        String itsLevel = getEffectiveCoverageLevel();
-        String recLevel = getRecommendedCoverageLevel();
-        String def = getRequiredCoverageLevel();
-        if (def.equals(COVLEV_RECOMMENDED)) {
-            print("Coverage Level: <tt class='codebox'>" + itsLevel + "</tt><br>");
-        } else {
-            print(
-                    "Coverage Level: <tt class='codebox'>"
-                            + def
-                            + "</tt>  (overriding <tt>"
-                            + itsLevel
-                            + "</tt>)<br>");
-        }
-        print("Recommended level: <tt class='codebox'>" + recLevel + "</tt><br>");
-        print("<ul><li>To change your default coverage level, see ");
-        SurveyMain.printMenu(this, "", "options", "My Options", SurveyMain.QUERY_DO);
-        println("</li></ul>");
-    }
-
+    // WARNING: this is accessed by menu_top.jsp and possibleProblems.jsp
     public String getEffectiveCoverageLevel(CLDRLocale locale) {
         return getEffectiveCoverageLevel(locale.getBaseName());
     }
@@ -872,24 +837,6 @@ public class WebContext implements Cloneable, Appendable {
             level = session.getOrgCoverageLevel(locale);
         }
         return level;
-    }
-
-    public String getRecommendedCoverageLevel() {
-        String myOrg = session.getUserOrg();
-        if (!isCoverageOrganization(myOrg)) {
-            return COVLEV_DEFAULT_RECOMMENDED_STRING;
-        } else {
-            CLDRLocale loc = getLocale();
-            if (loc != null) {
-                Level lev = StandardCodes.make().getLocaleCoverageLevel(myOrg, loc.toString());
-                if (lev == Level.UNDETERMINED) {
-                    lev = COVLEVEL_DEFAULT_RECOMMENDED;
-                }
-                return lev.toString();
-            } else {
-                return COVLEVEL_DEFAULT_RECOMMENDED.toString();
-            }
-        }
     }
 
     public static final String COVLEV_RECOMMENDED = "default";
@@ -920,21 +867,7 @@ public class WebContext implements Cloneable, Appendable {
                         .contains(org.toLowerCase()));
     }
 
-    /**
-     * Append the WebContext Options map to the specified map
-     *
-     * @return the map
-     */
-    public CheckCLDR.Options getOptionsMap() {
-        String def = getRequiredCoverageLevel();
-        String org = getEffectiveCoverageLevel();
-
-        return new CheckCLDR.Options(getLocale(), SurveyMain.getTestPhase(), def, org);
-    }
-
-    /**
-     * @return
-     */
+    // WARNING: this is accessed by possibleProblems.jsp
     public String getEffectiveCoverageLevel() {
         return getEffectiveCoverageLevel(getLocale().toString());
     }
@@ -946,10 +879,11 @@ public class WebContext implements Cloneable, Appendable {
     // Internal Utils
 
     public static final String CAN_MODIFY = "canModify";
-    public static final String DATA_PAGE = "DataPage";
-    public static final String ZOOMED_IN = "zoomedIn";
-    public static final String DATA_ROW = "DataRow";
-    public static final String BASE_EXAMPLE = "baseExample";
+    public static final String DATA_PAGE =
+            "DataPage"; // WARNING: this is accessed by stcontext.jspf
+    public static final String ZOOMED_IN =
+            "zoomedIn"; // WARNING: this is accessed by stcontext.jspf
+    public static final String DATA_ROW = "DataRow"; // WARNING: this is accessed by stcontext.jspf
 
     /**
      * Print a link to help with a specified title
@@ -958,36 +892,9 @@ public class WebContext implements Cloneable, Appendable {
      * @param title the title of the help
      */
     public void printHelpLink(String what, String title) {
-        printHelpLink(what, title, true);
-    }
-
-    /**
-     * @param what
-     * @param title
-     * @param doEdit
-     * @deprecated editing is deprecated
-     */
-    @Deprecated
-    public void printHelpLink(String what, String title, boolean doEdit) {
-        printHelpLink(what, title, doEdit, true);
-    }
-
-    /**
-     * @deprecated editing is deprecated
-     * @param what
-     * @param title
-     * @param doEdit
-     * @param parens
-     */
-    @Deprecated
-    private void printHelpLink(String what, String title, boolean doEdit, boolean parens) {
-        if (parens) {
-            print("(");
-        }
+        print("(");
         print("<a href=\"" + (SurveyMain.CLDR_HELP_LINK) + what + "\">" + title + "</a>");
-        if (parens) {
-            println(")");
-        }
+        println(")");
     }
 
     /**
@@ -1090,8 +997,6 @@ public class WebContext implements Cloneable, Appendable {
      * @param request
      * @param response
      * @param filename
-     * @throws ServletException
-     * @throws IOException , NullPointerException
      */
     public static void includeFragment(
             HttpServletRequest request, HttpServletResponse response, String filename)
@@ -1199,7 +1104,7 @@ public class WebContext implements Cloneable, Appendable {
     public SurveyMain.UserLocaleStuff getUserFile() {
         SurveyMain.UserLocaleStuff uf = peekUserFile();
         if (uf == null) {
-            uf = sm.getUserFile(getLocale());
+            uf = sm.getUserFile();
             put("UserFile", uf);
         }
         return uf;
@@ -1254,7 +1159,7 @@ public class WebContext implements Cloneable, Appendable {
      * Get a certain cookie
      *
      * @param id
-     * @return
+     * @return WARNING: this is accessed by usermenu.jsp
      */
     public Cookie getCookie(String id) {
         return getCookie(request, id);
@@ -1296,23 +1201,11 @@ public class WebContext implements Cloneable, Appendable {
         return null;
     }
 
-    /**
-     * Set a cookie
-     *
-     * @param id
-     * @param value
-     * @param expiry
-     */
-    Cookie addCookie(String id, String value, int expiry) {
-        return addCookie(response, id, value, expiry);
-    }
-
-    static Cookie addCookie(HttpServletResponse response, String id, String value, int expiry) {
+    static void addCookie(HttpServletResponse response, String id, String value, int expiry) {
         Cookie c = new Cookie(id, value);
         c.setMaxAge(expiry);
         c.setPath("/");
         response.addCookie(c);
-        return c;
     }
 
     /**
@@ -1390,6 +1283,7 @@ public class WebContext implements Cloneable, Appendable {
         return vurl(locale, null, null, null);
     }
 
+    // WARNING: this is accessed by generalinfo.jsp and st_top.jsp
     public String getLocaleDisplayName(String loc) {
         return getLocaleDisplayName(CLDRLocale.getInstance(loc));
     }
@@ -1462,11 +1356,18 @@ public class WebContext implements Cloneable, Appendable {
             if (jwt != null && !jwt.isBlank()) {
                 final String jwtId = CookieSession.sm.klm.getSubject(jwt);
                 if (jwtId != null && !jwtId.isBlank()) {
-                    User jwtInfo = CookieSession.sm.reg.getInfo(Integer.parseInt(jwtId));
-                    if (jwtInfo != null) {
-                        user = jwtInfo;
-                        logger.fine(
-                                "Logged in " + jwtInfo.toString() + " #" + jwtId + " using JWT");
+                    if (!email.isEmpty() && !password.isEmpty()) {
+                        // If the user was already logged in as Admin/TC/Manager, then used a URL
+                        // with explicit email/password to log in as a different user, the old
+                        // cookies (especially JWT) must be removed to prevent staying logged
+                        // in as the first user
+                        removeLoginCookies(request, response);
+                    } else {
+                        User jwtInfo = CookieSession.sm.reg.getInfo(Integer.parseInt(jwtId));
+                        if (jwtInfo != null) {
+                            user = jwtInfo;
+                            logger.fine("Logged in " + jwtInfo + " #" + jwtId + " using JWT");
+                        }
                     }
                 }
             }
@@ -1538,43 +1439,43 @@ public class WebContext implements Cloneable, Appendable {
 
         logger.fine("Session Now=" + session + ", user=" + user);
 
-        // guest?
-        if (UserRegistry.userIsTC(user)) {
-            // allow in administrator or TC.
-        } else if ((user != null) && (session == null)) { // user trying to log in-
-            if (CookieSession.tooManyUsers()) {
-                System.err.println(
-                        "Refused login for "
-                                + email
-                                + " from "
-                                + userIP()
-                                + " - too many users ( "
-                                + CookieSession.getUserCount()
-                                + ")");
-                setSessionMessage(
-                        "We are swamped with about "
-                                + CookieSession.getUserCount()
-                                + " people using the SurveyTool right now! Please try back in a little while.");
-                return;
-            }
-        } else if (session == null || (session.user == null)) { // guest user
-            if (CookieSession.tooManyObservers()) {
-                if (session != null) {
+        // allow in administrator or TC.
+        if (!UserRegistry.userIsTC(user)) {
+            if ((user != null) && (session == null)) { // user trying to log in-
+                if (CookieSession.tooManyUsers()) {
                     System.err.println(
-                            "Logged-out observer  "
-                                    + session.id
+                            "Refused login for "
+                                    + email
                                     + " from "
                                     + userIP()
                                     + " - too many users ( "
                                     + CookieSession.getUserCount()
                                     + ")");
-                    session.remove(); // remove observers at this point
-                    session = null;
+                    setSessionMessage(
+                            "We are swamped with about "
+                                    + CookieSession.getUserCount()
+                                    + " people using the SurveyTool right now! Please try back in a little while.");
+                    return;
                 }
-                logout(); // clear session cookie
-                setSessionMessage(
-                        "We have too many people browsing the CLDR Data on the Survey Tool. Please try again later when the load has gone down.");
-                return;
+            } else if (session == null || (session.user == null)) { // guest user
+                if (CookieSession.tooManyObservers()) {
+                    if (session != null) {
+                        System.err.println(
+                                "Logged-out observer  "
+                                        + session.id
+                                        + " from "
+                                        + userIP()
+                                        + " - too many users ( "
+                                        + CookieSession.getUserCount()
+                                        + ")");
+                        session.remove(); // remove observers at this point
+                        session = null;
+                    }
+                    logout(); // clear session cookie
+                    setSessionMessage(
+                            "We have too many people browsing the CLDR Data on the Survey Tool. Please try again later when the load has gone down.");
+                    return;
+                }
             }
         }
 
