@@ -15,6 +15,7 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.TreeMultimap;
 import com.ibm.icu.impl.Row.R2;
 import com.ibm.icu.lang.UCharacter;
+import com.ibm.icu.number.UnlocalizedNumberFormatter;
 import com.ibm.icu.text.PluralRules;
 import com.ibm.icu.util.Freezable;
 import com.ibm.icu.util.Output;
@@ -51,7 +52,7 @@ import org.unicode.cldr.util.SupplementalDataInfo.PluralInfo;
 
 public class UnitConverter implements Freezable<UnitConverter> {
     public static boolean DEBUG = false;
-    public static final Integer INTEGER_ONE = Integer.valueOf(1);
+    public static final Integer INTEGER_ONE = 1;
 
     static final Splitter BAR_SPLITTER = Splitter.on('-');
     static final Splitter SPACE_SPLITTER = Splitter.on(' ').trimResults().omitEmptyStrings();
@@ -798,6 +799,14 @@ public class UnitConverter implements Freezable<UnitConverter> {
      */
     public ConversionInfo parseUnitId(
             String derivedUnit, Output<String> metricUnit, boolean showYourWork) {
+        // First check whether we are dealing with a special mapping
+        Output<String> testBaseUnit = new Output<>();
+        ConversionInfo testInfo = getUnitInfo(derivedUnit, testBaseUnit);
+        if (testInfo != null && testInfo.special != null) {
+            metricUnit.value = testBaseUnit.value;
+            return new ConversionInfo(testInfo.special, testInfo.specialInverse);
+        }
+        // Not a special mapping, proceed as usual
         metricUnit.value = null;
 
         UnitId outputUnit = new UnitId(UNIT_COMPARATOR);
@@ -891,8 +900,6 @@ public class UnitConverter implements Freezable<UnitConverter> {
                     unit = baseUnit;
                 }
                 for (int p = 1; p <= power; ++p) {
-                    // TODO CLDR-16329 additional PR or follow-on ticket, how to handle special
-                    // here?
                     String title = "";
                     if (value.equals(Rational.ONE)) {
                         if (showYourWork) System.out.println("\t(already base unit)");
@@ -913,12 +920,10 @@ public class UnitConverter implements Freezable<UnitConverter> {
                                         + numerator.divide(denominator).doubleValue());
                 }
                 // create cleaned up target unitid
-                // TODO CLDR-16329 additional PR or follow-on ticket, how to handle special here?
                 outputUnit.add(continuations, unit, inNumerator, power);
                 power = 1;
             }
         }
-        // TODO CLDR-16329 additional PR or follow-on ticket, how to handle special here?
         metricUnit.value = outputUnit.toString();
         return new ConversionInfo(numerator.divide(denominator), offset);
     }
@@ -1694,7 +1699,7 @@ public class UnitConverter implements Freezable<UnitConverter> {
 
     public static String stripPrefixPower(String unit, Output<Integer> deprefix) {
         if (deprefix != null) {
-            deprefix.value = Integer.valueOf(1);
+            deprefix.value = 1;
         }
         return stripPrefixCommon(unit, deprefix, PREFIX_POWERS);
     }
@@ -1824,19 +1829,27 @@ public class UnitConverter implements Freezable<UnitConverter> {
         UnitId id = createUnitId(unit);
 
         // we walk through all the units in the numerator and denominator, and keep the
-        // *intersection* of
-        // the units. So {ussystem} and {ussystem, uksystem} => ussystem
-        // Special case: {dmetric} intersect {metric} => {dmetric}. We do that by adding dmetric to
-        // any set with metric, then removing dmetric if there is a metric
+        // *intersection* of the units.
+        // So {ussystem} and {ussystem, uksystem} => ussystem
+        // Special case: {metric_adjacent} intersect {metric} => {metric_adjacent}.
+        // We do that by adding metric_adjacent to any set with metric,
+        // then removing metric_adjacent if there is a metric.
+        // Same for si_acceptable.
         main:
         for (Map<String, Integer> unitsToPowers :
                 Arrays.asList(id.denUnitsToPowers, id.numUnitsToPowers)) {
             for (String subunit : unitsToPowers.keySet()) {
                 subunit = UnitConverter.stripPrefix(subunit, null);
                 Set<UnitSystem> systems = new TreeSet<>(sourceToSystems.get(subunit));
+                if (systems.contains(UnitSystem.metric)) {
+                    systems.add(UnitSystem.metric_adjacent);
+                }
+                if (systems.contains(UnitSystem.si)) {
+                    systems.add(UnitSystem.si_acceptable);
+                }
 
                 if (result == null) {
-                    result = systems;
+                    result = systems; // first setting
                 } else {
                     result.retainAll(systems);
                 }
@@ -1845,9 +1858,17 @@ public class UnitConverter implements Freezable<UnitConverter> {
                 }
             }
         }
-        return result == null || result.isEmpty()
-                ? ImmutableSet.of(UnitSystem.other)
-                : ImmutableSet.copyOf(EnumSet.copyOf(result));
+        if (result == null || result.isEmpty()) {
+            return ImmutableSet.of(UnitSystem.other);
+        }
+        if (result.contains(UnitSystem.metric)) {
+            result.remove(UnitSystem.metric_adjacent);
+        }
+        if (result.contains(UnitSystem.si)) {
+            result.remove(UnitSystem.si_acceptable);
+        }
+
+        return ImmutableSet.copyOf(EnumSet.copyOf(result)); // the enum is to sort
     }
 
     //    private void addSystems(Set<String> result, String subunit) {
@@ -2235,5 +2256,31 @@ public class UnitConverter implements Freezable<UnitConverter> {
         }
         String resolved = unitId.resolve().toString();
         return getStandardUnit(resolved.isBlank() ? unit : resolved);
+    }
+
+    public String format(
+            final String languageTag,
+            Rational outputAmount,
+            final String unit,
+            UnlocalizedNumberFormatter nf3) {
+        final CLDRConfig config = CLDRConfig.getInstance();
+        Factory factory = config.getCldrFactory();
+        int pos = languageTag.indexOf("-u");
+        String localeBase =
+                (pos < 0 ? languageTag : languageTag.substring(0, pos)).replace('-', '_');
+        CLDRFile localeFile = factory.make(localeBase, true);
+        PluralRules pluralRules =
+                config.getSupplementalDataInfo()
+                        .getPluralRules(
+                                localeBase, com.ibm.icu.text.PluralRules.PluralType.CARDINAL);
+        String pluralCategory = pluralRules.select(outputAmount.doubleValue());
+        String path =
+                UnitPathType.unit.getTranslationPath(
+                        localeFile, "long", unit, pluralCategory, "nominative", "neuter");
+        String pattern = localeFile.getStringValue(path);
+        final ULocale uLocale = ULocale.forLanguageTag(languageTag);
+        String cldrFormattedNumber =
+                nf3.locale(uLocale).format(outputAmount.doubleValue()).toString();
+        return com.ibm.icu.text.MessageFormat.format(pattern, cldrFormattedNumber);
     }
 }

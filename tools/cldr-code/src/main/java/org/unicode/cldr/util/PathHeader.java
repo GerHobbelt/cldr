@@ -231,10 +231,8 @@ public class PathHeader implements Comparable<PathHeader> {
         Graphics(SectionId.Units),
         Length(SectionId.Units),
         Area(SectionId.Units),
-        Volume(SectionId.Units),
-        // TODO: enable splitting Volume into Volume/Volume2
-        // Reference: https://unicode-org.atlassian.net/browse/CLDR-11155
-        // Volume2(SectionId.Units),
+        Volume_Metric(SectionId.Units, "Volume Metric"),
+        Volume_Other(SectionId.Units, "Volume Other"),
         SpeedAcceleration(SectionId.Units, "Speed and Acceleration"),
         MassWeight(SectionId.Units, "Mass and Weight"),
         EnergyPower(SectionId.Units, "Energy and Power"),
@@ -721,20 +719,7 @@ public class PathHeader implements Comparable<PathHeader> {
                     samples.put(data, cleanPath);
                 }
                 try {
-                    PathHeader result =
-                            new PathHeader(
-                                    SectionId.forString(fix(data.section, 0)),
-                                    PageId.forString(fix(data.page, 0)),
-                                    fix(data.header, data.headerOrder),
-                                    (int) order, // only valid after call to fix. TODO, make
-                                    // this cleaner
-                                    fix(
-                                            data.code + (alt == null ? "" : ("-" + alt)),
-                                            data.codeOrder),
-                                    order, // only valid after call to fix
-                                    suborder,
-                                    data.status,
-                                    path);
+                    PathHeader result = makePathHeader(data, path, alt);
                     synchronized (cache) {
                         PathHeader old = cache.get(path);
                         if (old == null) {
@@ -764,6 +749,28 @@ public class PathHeader implements Comparable<PathHeader> {
                             e);
                 }
             }
+        }
+
+        private PathHeader makePathHeader(RawData data, String path, String alt) {
+            // Caution: each call to PathHeader.Factory.fix changes the value of
+            // PathHeader.Factory.order
+            SectionId newSectionId = SectionId.forString(fix(data.section, 0));
+            PageId newPageId = PageId.forString(fix(data.page, 0));
+            String newHeader = fix(data.header, data.headerOrder);
+            int newHeaderOrder = (int) order;
+            String codeDashAlt = data.code + (alt == null ? "" : ("-" + alt));
+            String newCode = fix(codeDashAlt, data.codeOrder);
+            long newCodeOrder = order;
+            return new PathHeader(
+                    newSectionId,
+                    newPageId,
+                    newHeader,
+                    newHeaderOrder,
+                    newCode,
+                    newCodeOrder,
+                    suborder,
+                    data.status,
+                    path);
         }
 
         private static class SectionPage implements Comparable<SectionPage> {
@@ -1473,7 +1480,7 @@ public class PathHeader implements Comparable<PathHeader> {
                             try {
                                 if (specialRegions.contains(theTerritory)
                                         || theTerritory.charAt(0) < 'A'
-                                                && Integer.valueOf(theTerritory) > 0) {
+                                                && Integer.parseInt(theTerritory) > 0) {
                                     return "Geographic Regions";
                                 }
                             } catch (NumberFormatException ex) {
@@ -1546,7 +1553,7 @@ public class PathHeader implements Comparable<PathHeader> {
                             String theContinent = Containment.getContinent(theTerritory);
                             final String subcontinent = Containment.getSubcontinent(theTerritory);
                             String theSubContinent;
-                            switch (Integer.valueOf(theContinent)) {
+                            switch (Integer.parseInt(theContinent)) {
                                 case 9: // Oceania - For the timeZonePage, we group Australasia on
                                     // one page, and the rest of Oceania on the other.
                                     try {
@@ -1562,7 +1569,7 @@ public class PathHeader implements Comparable<PathHeader> {
                                 case 19: // Americas - For the timeZonePage, we just group North
                                     // America & South America
                                     theSubContinent =
-                                            Integer.valueOf(subcontinent) == 5 ? "005" : "003";
+                                            Integer.parseInt(subcontinent) == 5 ? "005" : "003";
                                     return englishFile.getName(
                                             CLDRFile.TERRITORY_NAME, theSubContinent);
                                 case 142: // Asia
@@ -1653,7 +1660,7 @@ public class PathHeader implements Comparable<PathHeader> {
                         // Probably only works well for small values, like -5 through +4.
                         @Override
                         public String transform(String source) {
-                            Integer pos = Integer.valueOf(source) + 5;
+                            Integer pos = Integer.parseInt(source) + 5;
                             suborder = new SubstringOrder(pos.toString());
                             return source;
                         }
@@ -2232,6 +2239,9 @@ public class PathHeader implements Comparable<PathHeader> {
             while (true) {
                 int functionStart = input.indexOf('&', pos);
                 if (functionStart < 0) {
+                    if ("Volume".equals(input)) {
+                        return getVolumePageId(args.value[0] /* path */).toString();
+                    }
                     return input;
                 }
                 int functionEnd = input.indexOf('(', functionStart);
@@ -2249,6 +2259,28 @@ public class PathHeader implements Comparable<PathHeader> {
                 }
                 input = input.substring(0, functionStart) + temp + input.substring(argEnd + 1);
                 pos = functionStart + temp.length();
+            }
+        }
+
+        private static Set<UnitConverter.UnitSystem> METRIC =
+                Set.of(UnitConverter.UnitSystem.metric, UnitConverter.UnitSystem.metric_adjacent);
+
+        private static PageId getVolumePageId(String path) {
+            // Extract the unit from the path. For example, if path is
+            // //ldml/units/unitLength[@type="narrow"]/unit[@type="volume-cubic-kilometer"]/displayName
+            // then extract "volume-cubic-kilometer" which is the long unit id
+            final String longUnitId =
+                    XPathParts.getFrozenInstance(path).findAttributeValue("unit", "type");
+            if (longUnitId == null) {
+                throw new InternalCldrException("Missing unit in path " + path);
+            }
+            final UnitConverter uc = supplementalDataInfo.getUnitConverter();
+            // Convert, for example, "volume-cubic-kilometer" to "cubic-kilometer"
+            final String shortUnitId = uc.getShortId(longUnitId);
+            if (!Collections.disjoint(METRIC, uc.getSystemsEnum(shortUnitId))) {
+                return PageId.Volume_Metric;
+            } else {
+                return PageId.Volume_Other;
             }
         }
 
@@ -2476,8 +2508,6 @@ public class PathHeader implements Comparable<PathHeader> {
         if (pageId == null) {
             throw new InternalCldrException("Failure getting character page id");
         }
-        // TODO: enable splitting Volume into Volume/Volume2, starting Volume2 at "acre-foot"
-        // Reference: https://unicode-org.atlassian.net/browse/CLDR-11155
         return pageId;
     }
 

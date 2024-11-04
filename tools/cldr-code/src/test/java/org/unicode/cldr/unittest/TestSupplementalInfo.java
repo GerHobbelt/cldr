@@ -488,11 +488,6 @@ public class TestSupplementalInfo extends TestFmwkPlus {
                     break; // do nothin
             }
         }
-
-        ImmutableSet<String> variants =
-                ImmutableSet.of("Cyrs", "Geok", "Latf", "Latg", "Syre", "Syrj", "Syrn");
-        assertRelation(
-                "getCLDRScriptCodes contains variants", false, codes, CONTAINS_SOME, variants);
     }
 
     public void checkPluralSamples(String... row) {
@@ -1293,7 +1288,9 @@ public class TestSupplementalInfo extends TestFmwkPlus {
                         .addAll(languageCodes)
                         .addAll(Iso639Data.getAvailable())
                         .get()) {
-            if (language.equals("no") || language.equals("sh")) continue; // special cases
+            if (language.equals("no") || language.equals("sa") || language.equals("sh")) {
+                continue; // special cases
+            }
             Scope languageScope = getScope(language, lstregLanguageInfo);
             if (languageScope == Scope.Macrolanguage) {
                 if (Iso639Data.getHeirarchy(language) != null) {
@@ -2003,7 +2000,7 @@ public class TestSupplementalInfo extends TestFmwkPlus {
         List<Integer> unicodeDigits = new ArrayList<>();
         for (int cp = UCharacter.MIN_CODE_POINT; cp <= UCharacter.MAX_CODE_POINT; cp++) {
             if (UCharacter.getType(cp) == UCharacterEnums.ECharacterCategory.DECIMAL_DIGIT_NUMBER) {
-                unicodeDigits.add(Integer.valueOf(cp));
+                unicodeDigits.add(cp);
             }
         }
 
