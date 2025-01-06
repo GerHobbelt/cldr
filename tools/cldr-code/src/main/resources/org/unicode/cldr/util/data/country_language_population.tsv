@@ -614,6 +614,7 @@ India	IN	"1,296,834,042"	63%	"9,474,000,000,000"		Waddar	wbq	"2,320,000"
 India	IN	"1,296,834,042"	63%	"9,474,000,000,000"		Wagdi	wbr	"1,940,000"
 Indonesia	ID	"262,787,403"	93%	"3,250,000,000,000"		Achinese	ace	"3,620,000"
 Indonesia	ID	"262,787,403"	93%	"3,250,000,000,000"		Balinese	ban	"4,700,000"	10%		http://yamiproject.cs.pu.edu.tw/yami/conference/paper/015.pdf http://www.statemaster.com/encyclopedia/Balinese-language widely used; taught in school as a main lang
+Indonesia	ID	"262,787,403"	93%	"3,250,000,000,000"		Balinese	ban_Bali	2			Precise data not available, added so Balinese script defaults to Balinese
 Indonesia	ID	"262,787,403"	93%	"3,250,000,000,000"		Banjar	bjn	"3,870,000"	10%
 Indonesia	ID	"262,787,403"	93%	"3,250,000,000,000"		Batak Toba	bbc	"2,410,000"
 Indonesia	ID	"262,787,403"	93%	"3,250,000,000,000"		Betawi	bew	"5,540,000"
@@ -623,6 +624,7 @@ Indonesia	ID	"262,787,403"	93%	"3,250,000,000,000"		Gayo	gay	"311,000"
 Indonesia	ID	"262,787,403"	93%	"3,250,000,000,000"		Gorontalo	gor	"1,090,000"
 Indonesia	ID	"262,787,403"	93%	"3,250,000,000,000"	official	Indonesian	id	64%
 Indonesia	ID	"262,787,403"	93%	"3,250,000,000,000"		Javanese	jv	34%	10%		Indonesia high literacy; low written use of local languages
+Indonesia	ID	"262,787,403"	93%	"3,250,000,000,000"		Kawi	kaw	1			Precise data not available
 Indonesia	ID	"262,787,403"	93%	"3,250,000,000,000"		Kerinci	kvr	"362,000"
 Indonesia	ID	"262,787,403"	93%	"3,250,000,000,000"		Komering	kge	"844,000"
 Indonesia	ID	"262,787,403"	93%	"3,250,000,000,000"		Lampung Api	ljp	"1,810,000"
@@ -795,10 +797,13 @@ Luxembourg	LU	"605,764"	100%	"62,110,000,000"	official	French	fr	92%			https://o
 Luxembourg	LU	"605,764"	100%	"62,110,000,000"	official	German	de	63%
 Luxembourg	LU	"605,764"	100%	"62,110,000,000"	official	Luxembourgish	lb	67%	5%		"http://www.ethnologue.com/show_language.asp?code=ltz Some 99% of users are literate in French or German. For languages not customarily written, the writing population is artificially set to 5% in the absence of better information."
 Luxembourg	LU	"605,764"	100%	"62,110,000,000"		Portuguese	pt	16%			https://en.wikipedia.org/wiki/Portuguese_Luxembourger
-Macao SAR China	MO	"606,340"	96%	"71,820,000,000"		Chinese	zh	5%			Hans literacy is unknown; set to 5% artificially pending better or official figures.
-Macao SAR China	MO	"606,340"	96%	"71,820,000,000"	official	Chinese (Traditional)	zh_Hant	98%
-Macao SAR China	MO	"606,340"	96%	"71,820,000,000"		English	en	"13,900"			https://www.cia.gov/library/publications/the-world-factbook/geos/mc.html and https://en.wikipedia.org/wiki/Macau
-Macao SAR China	MO	"606,340"	96%	"71,820,000,000"	official	Portuguese	pt	5%			http://en.wikipedia.org/wiki/Geographic_distribution_of_Portuguese Macao reported 5% native Portuguese speakers.
+Macao SAR China	MO	"682,070"	96%	"71,820,000,000"		Chinese	zh	5%			Hans literacy is unknown; set to 5% artificially pending better or official figures.
+Macao SAR China	MO	"682,070"	96%	"71,820,000,000"	official	Chinese (Traditional)	zh_Hant	98%
+Macao SAR China	MO	"682,070"	96%	"71,820,000,000"		English	en	22.7%			https://www.dsec.gov.mo/getAttachment/6cb29f2f-524a-488f-aed3-4d7207bb109e/E_CEN_PUB_2021_Y.aspx 2021 Census, counting people who are fluent in the language
+Macao SAR China	MO	"682,070"	96%	"71,820,000,000"	official	Portuguese	pt	2.3%			https://www.dsec.gov.mo/getAttachment/6cb29f2f-524a-488f-aed3-4d7207bb109e/E_CEN_PUB_2021_Y.aspx 2021 Census, counting people who are fluent in the language
+Macao SAR China	MO	"682,070"	96%	"71,820,000,000"	de_facto_official	Cantonese	yue	86.2%			https://www.dsec.gov.mo/getAttachment/6cb29f2f-524a-488f-aed3-4d7207bb109e/E_CEN_PUB_2021_Y.aspx 2021 Census, counting people who are fluent in the language
+Macao SAR China	MO	"682,070"	96%	"71,820,000,000"		Filipino	fil	"20,879"			https://www.dsec.gov.mo/getAttachment/6cb29f2f-524a-488f-aed3-4d7207bb109e/E_CEN_PUB_2021_Y.aspx 2021 Census, counting people who are fluent in the language
+Macao SAR China	MO	"682,070"	96%	"71,820,000,000"		Hokkien	nan	3.7%			https://www.dsec.gov.mo/getAttachment/7a3b17c2-22cc-4197-9bd5-ccc6eec388a2/E_CEN_PUB_2011_Y.aspx 2011 Census -- the language is not distinguished in the 2021 census
 Madagascar	MG	"25,683,610"	65%	"39,850,000,000"	official	English	en	18%			No literacy figure available for English in Madagascar; newly adopted official language; 5% is an estimate.
 Madagascar	MG	"25,683,610"	65%	"39,850,000,000"	official	French	fr	26.5%			https://observatoire.francophonie.org//wp-content/uploads/2022/03/odsef-lfdm-2022.pdf Organisation internationale de la Francophonie Meta-study. Data from 2018 census
 Madagascar	MG	"25,683,610"	65%	"39,850,000,000"	official	Malagasy	mg	90%			http://www.wildmadagascar.org/overview/loc/27-minorities.html
@@ -864,7 +869,7 @@ Mexico	MX	"125,959,205"	94%	"2,463,000,000,000"		Seri	sei	900
 Mexico	MX	"125,959,205"	94%	"2,463,000,000,000"	de_facto_official	Spanish	es	83%
 Mexico	MX	"125,959,205"	94%	"2,463,000,000,000"		Western Huasteca Nahuatl	nhw	"485,000"
 Mexico	MX	"125,959,205"	94%	"2,463,000,000,000"		Yucateco	yua	"848,000"
-Mexico	MX	"125,959,205"	94%	"2,463,000,000,000"	official_regional	Venetian	vec	"2,500"			https://en.wikipedia.org/wiki/Chipilo_Venetian_dialect
+Mexico	MX	"125,959,205"	94%	"2,463,000,000,000"		Venetian	vec	"2,500"			https://en.wikipedia.org/wiki/Chipilo_Venetian_dialect
 Micronesia	FM	"103,643"	89%	"348,000,000"		Chuukese	chk	30%
 Micronesia	FM	"103,643"	89%	"348,000,000"	official	English	en	57%
 Micronesia	FM	"103,643"	89%	"348,000,000"		Kosraean	kos	"8,000"
