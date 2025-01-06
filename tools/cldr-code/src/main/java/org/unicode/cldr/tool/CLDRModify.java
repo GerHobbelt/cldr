@@ -55,6 +55,7 @@ import org.unicode.cldr.util.CLDRLocale;
 import org.unicode.cldr.util.CLDRPaths;
 import org.unicode.cldr.util.CLDRTool;
 import org.unicode.cldr.util.CldrUtility;
+import org.unicode.cldr.util.CollatorHelper;
 import org.unicode.cldr.util.DateTimeCanonicalizer;
 import org.unicode.cldr.util.DateTimeCanonicalizer.DateTimePatternType;
 import org.unicode.cldr.util.DowngradePaths;
@@ -2101,7 +2102,7 @@ public class CLDRModify {
                 "add annotation names to keywords",
                 new CLDRFilter() {
                     Set<String> available = Annotations.getAllAvailable();
-                    TreeSet<String> sorted = new TreeSet<>(Collator.getInstance(ULocale.ROOT));
+                    TreeSet<String> sorted = new TreeSet<>(CollatorHelper.ROOT_COLLATOR);
                     CLDRFile resolved;
                     Set<String> handledCharacters = new HashSet<>();
                     boolean isTop;
@@ -3309,8 +3310,7 @@ public class CLDRModify {
 
     /** Internal */
     public static void testJavaSemantics() {
-        Collator caseInsensitive = Collator.getInstance(ULocale.ROOT);
-        caseInsensitive.setStrength(Collator.SECONDARY);
+        Collator caseInsensitive = CollatorHelper.ROOT_SECONDARY;
         Set<String> setWithCaseInsensitive = new TreeSet<>(caseInsensitive);
         setWithCaseInsensitive.addAll(Arrays.asList(new String[] {"a", "b", "c"}));
         Set<String> plainSet = new TreeSet<>();

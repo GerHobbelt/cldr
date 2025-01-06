@@ -20,6 +20,7 @@ import org.unicode.cldr.util.CLDRFile;
 import org.unicode.cldr.util.CLDRFile.WinningChoice;
 import org.unicode.cldr.util.CLDRPaths;
 import org.unicode.cldr.util.CldrUtility;
+import org.unicode.cldr.util.CollatorHelper;
 import org.unicode.cldr.util.Factory;
 import org.unicode.cldr.util.Pair;
 import org.unicode.cldr.util.PathUtilities;
@@ -205,11 +206,7 @@ class ExtractMessages {
         }
     }
 
-    public static Collator col = Collator.getInstance(ULocale.ENGLISH);
-
-    static {
-        col.setStrength(Collator.SECONDARY);
-    }
+    public static Collator col = CollatorHelper.ROOT_SECONDARY;
 
     private static OtherHandler otherHandler = new OtherHandler();
 
