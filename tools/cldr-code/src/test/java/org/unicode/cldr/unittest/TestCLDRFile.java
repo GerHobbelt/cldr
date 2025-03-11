@@ -195,6 +195,7 @@ public class TestCLDRFile extends TestFmwk {
                                     || path.startsWith("//ldml/localeDisplayNames/scripts/script")
                                     || path.startsWith(
                                             "//ldml/localeDisplayNames/territories/territory")
+                                    || path.startsWith("//ldml/localeDisplayNames/variants/variant")
                                     || path.startsWith("//ldml/numbers/currencies/currency")
                                     || path.startsWith("//ldml/personNames/sampleName")
                                     || path.contains("/availableFormats")
@@ -1000,6 +1001,38 @@ public class TestCLDRFile extends TestFmwk {
                 }
                 System.out.println(
                         String.format("%s\t%s\t%s", path, status.pathWhereFound, localeWhereFound));
+            }
+        }
+    }
+
+    public void TestInheritedIdentity() {
+        final Map<String, Set<String>> elementToPaths = new TreeMap<>();
+
+        final CLDRFile f = CLDRConfig.getInstance().getCLDRFile("hi_Latn_IN", true);
+        for (final String s : f.fullIterable()) {
+            if (s.startsWith("//ldml/identity")) {
+                final String element = XPathParts.getFrozenInstance(s).getElement(-1);
+                final Set<String> setForElement =
+                        elementToPaths.computeIfAbsent(element, (ignored) -> new TreeSet<>());
+                assertTrue(
+                        "Duplicate XPath: " + s + " in " + f.getLocaleID(), setForElement.add(s));
+                if (!f.isHere(s)) {
+                    // this path should not be inherited
+                    if (!logKnownIssue("CLDR-17790", "//ldml/identity has inherited paths")) {
+                        errln("Inherited path " + s + " in " + f.getLocaleID());
+                    }
+                }
+            }
+        }
+        for (final Set<String> set : elementToPaths.values()) {
+            if (set.size() > 1) {
+                if (!logKnownIssue(
+                        "CLDR-17790",
+                        "//ldml/identity has duplicate resolved paths for elements")) {
+                    errln(
+                            "Duplicate //ldml/identity paths: "
+                                    + String.join(" ", set.toArray(new String[0])));
+                }
             }
         }
     }
