@@ -4,6 +4,30 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const path = require("path");
 const markedAlert = require("marked-alert");
+const matter = require("gray-matter");
+const AnchorJS = require("anchor-js");
+
+// this one is closer to GitHub, it seems.
+const amh = require("anchor-markdown-header");
+
+// array of elements to put anhors on
+const ELEMENTS = "h2 h3 h4 h5 h6 caption dfn".split(" ");
+
+// Not great, but do this so AnchorJS will work
+global.document = new jsdom.JSDOM(`...`).window.document;
+const anchorjs = new AnchorJS();
+
+/** give the anchor as Anchor.js would do it */
+function anchorurlify(t) {
+  // undocumented
+  return anchorjs.urlify(t);
+}
+
+/** give the anchor as GFM probably would do it */
+function gfmurlify(t) {
+  const md = amh(t); // '[message.abnf](#messageabnf)'
+  return /.*\(#([^)]+)\)/.exec(md)[1];
+}
 
 // Setup some options for our markdown renderer
 marked.setOptions({
@@ -34,9 +58,13 @@ marked.use(markedAlert());
 async function renderit(infile) {
   const gtag = (await fs.readFile("gtag.html", "utf-8")).trim();
   console.log(`Reading ${infile}`);
-  basename = path.basename(infile, ".md");
+  const basename = path.basename(infile, ".md");
   const outfile = path.join(path.dirname(infile), `${basename}.html`);
   let f1 = await fs.readFile(infile, "utf-8");
+  // any metadata on the file?
+  const { data, content } = matter(f1);
+
+  f1 = content; // skip the frontmatter (YAML block within ---)
 
   // oh the irony of removing a BOM before posting to unicode.org
   if (f1.charCodeAt(0) == 0xfeff) {
@@ -163,7 +191,7 @@ async function renderit(infile) {
   body.appendChild(
     getScript({
       // This invokes anchor.js
-      code: `anchors.add('h1, h2, h3, h4, h5, h6, caption, dfn');`,
+      code: `anchors.add('${ELEMENTS.join(", ")}');`,
     })
   );
   body.appendChild(document.createTextNode("\n"));
@@ -215,6 +243,32 @@ async function renderit(infile) {
     a.setAttribute("name", parid);
   }
 
+  // If the document requests it, linkify terms
+  if (data.linkify) {
+    linkify(dom.window.document);
+  }
+
+  // find any link ids that are likely to be mismatches with GFM
+  // Workaround: https://github.com/bryanbraun/anchorjs/issues/197
+  for (const tag of ELEMENTS) {
+    for (const e of dom.window.document.getElementsByTagName(tag)) {
+      const id = e.getAttribute("id");
+      if (id) continue; // skip elements that already have an id
+      const txt = e.textContent.trim();
+      const anchor_id = anchorurlify(txt);
+      const gfm_id = gfmurlify(txt);
+      if (anchor_id !== gfm_id) {
+        // emit fixups
+        console.log({ txt, gfm_id, anchor_id });
+        if (dom.window.document.getElementById(gfm_id)) {
+          console.error(`${basename}: duplicate id ${gfm_id}`);
+        } else {
+          e.setAttribute("id", gfm_id);
+        }
+      }
+    }
+  }
+
   // OK, done munging the DOM, write it out.
   console.log(`Writing ${outfile}`);
 
@@ -246,3 +300,70 @@ fixall().then(
     process.exitCode = 1;
   }
 );
+
+function linkify(document) {
+  const terms = findTerms(document);
+  const missing = new Set();
+  const used = new Set();
+  const links = document.querySelectorAll("em");
+
+  links.forEach((item) => {
+    const target = generateId(item.textContent);
+    if (terms.has(target)) {
+      const el = item.lastElementChild ?? item;
+      el.innerHTML = `<a href="#${target}">${item.textContent}</a>`;
+
+      used.add(target);
+    } else {
+      missing.add(target);
+    }
+  });
+
+  if (missing.size > 0) {
+    console.log("Potentially missing definitions:");
+    Array.from(missing)
+      .sort()
+      .forEach((item) => {
+        console.log(item);
+      });
+  }
+
+  if (terms.size === used.size) return;
+  console.log("Some definitions were not used:");
+  Array.from(terms).forEach((item) => {
+    if (!used.has(item)) {
+      console.log(item);
+    }
+  });
+}
+
+function findTerms(document) {
+  const terms = new Set();
+  let duplicateCount = 0;
+  document.querySelectorAll("dfn").forEach((item) => {
+    const term = generateId(item.textContent);
+    if (term.length === 0) return; // skip empty terms
+    if (terms.has(term)) {
+      console.log(`Duplicate term: ${term}`);
+      duplicateCount++;
+    }
+    terms.add(term);
+    item.setAttribute("id", term);
+  });
+
+  if (duplicateCount > 0) {
+    console.log("Duplicate Terms: " + duplicateCount);
+  }
+  return terms;
+}
+
+function generateId(term) {
+  const id = term.toLowerCase().replace(/\s+/g, "-"); // Replaces spaces safely
+  // TODO: do better than hardcoding the one case in message-format
+  if (id.endsWith("rategies")) {
+    return id.slice(0, -3) + "y";
+  } else if (id.endsWith("s") && id !== "status") {
+    return id.slice(0, -1);
+  }
+  return id;
+}
