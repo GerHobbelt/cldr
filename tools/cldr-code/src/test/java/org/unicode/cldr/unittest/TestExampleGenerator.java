@@ -4,6 +4,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
@@ -33,9 +34,11 @@ import org.unicode.cldr.test.ExampleGenerator.UnitLength;
 import org.unicode.cldr.unittest.TestCheckCLDR.DummyPathValueInfo;
 import org.unicode.cldr.util.CLDRConfig;
 import org.unicode.cldr.util.CLDRFile;
+import org.unicode.cldr.util.CLDRFileOverride;
 import org.unicode.cldr.util.CLDRInfo.UserInfo;
 import org.unicode.cldr.util.CLDRLocale;
 import org.unicode.cldr.util.CldrUtility;
+import org.unicode.cldr.util.CodePointEscaper;
 import org.unicode.cldr.util.Counter;
 import org.unicode.cldr.util.DtdData;
 import org.unicode.cldr.util.DtdType;
@@ -165,7 +168,9 @@ public class TestExampleGenerator extends TestFmwk {
                     "//ldml/dates/calendars/calendar[@type=\"([^\"]*+)\"]/cyclicNameSets/cyclicNameSet[@type=\"([^\"]*+)\"]/cyclicNameContext[@type=\"([^\"]*+)\"]/cyclicNameWidth[@type=\"([^\"]*+)\"]/cyclicName[@type=\"([^\"]*+)\"]",
                     "//ldml/numbers/minimalPairs/pluralMinimalPairs[@count=\"([^\"]*+)\"]",
                     "//ldml/numbers/minimalPairs/ordinalMinimalPairs[@ordinal=\"([^\"]*+)\"]",
-                    "//ldml/characters/parseLenients[@scope=\"([^\"]*+)\"][@level=\"([^\"]*+)\"]/parseLenient[@sample=\"([^\"]*+)\"]");
+                    "//ldml/characters/parseLenients[@scope=\"([^\"]*+)\"][@level=\"([^\"]*+)\"]/parseLenient[@sample=\"([^\"]*+)\"]",
+                    "//ldml/numbers/rationalFormats/rationalUsage",
+                    "//ldml/numbers/rationalFormats[@numberSystem=\"([^\"]*+)\"]/rationalUsage");
 
     // Only add to above if the example should NEVER appear.
 
@@ -1736,7 +1741,7 @@ public class TestExampleGenerator extends TestFmwk {
         Relation<String, String> keyToSubtypes = SupplementalDataInfo.getInstance().getBcp47Keys();
         Set<String> calendars = keyToSubtypes.get("ca"); // gets calendar codes
         Map<String, String> codeToType =
-                new HashMap<String, String>() {
+                new HashMap<>() {
                     { // calendars where code != type
                         put("gregory", "gregorian");
                         put("iso8601", "gregorian");
@@ -1752,7 +1757,7 @@ public class TestExampleGenerator extends TestFmwk {
             if (codeToType.containsKey(id)) {
                 id = codeToType.get(id);
             }
-            Map<String, List<Date>> calendarMap = exampleGenerator.CALENDAR_ERAS;
+            Map<String, List<Date>> calendarMap = ExampleGenerator.CALENDAR_ERAS;
             assertTrue(
                     "CALENDAR_ERAS map contains calendar type \"" + id + "\"",
                     calendarMap.containsKey(id));
@@ -1871,6 +1876,9 @@ public class TestExampleGenerator extends TestFmwk {
     }
 
     public void TestForMissing() {
+
+        // IF this fails for items that don't need examples, look at HANDLE_MISSING
+
         Factory factory = info.getCldrFactory(); // don't worry about examples for annotations
         DtdData dtdData = DtdData.getInstance(DtdType.ldml);
         PathHeader.Factory phf = PathHeader.getFactory();
@@ -2053,6 +2061,62 @@ public class TestExampleGenerator extends TestFmwk {
         }
     }
 
+    public void testLightSpeed() {
+        String[][] tests = {
+            {
+                "cs",
+                "//ldml/units/unitLength[@type=\"long\"]/unit[@type=\"speed-light-speed\"]/unitPattern[@count=\"one\"]",
+                "{0} světlo",
+                "〖Used as a fallback in the following:〗〖❬1❭ světlo⋅sekunda〗〖❬1❭ světlo⋅minuta〗〖❬1❭ světlo⋅hodina〗〖❬1❭ světlo⋅den〗〖❬1❭ světlo⋅týden〗〖❬1❭ světlo⋅měsíc〗〖Compare with:〗〖❬1❭ světelný rok〗"
+            },
+            {
+                "fr",
+                "//ldml/units/unitLength[@type=\"long\"]/unit[@type=\"speed-light-speed\"]/unitPattern[@count=\"one\"]",
+                "lumière {0}",
+                "〖Used as a fallback in the following:〗〖❬1,5❭ lumière-seconde〗〖❬1,5❭ lumière-minute〗〖❬1,5❭ lumière-heure〗〖❬1,5❭ lumière-jour〗〖❬1,5❭ lumière-semaine〗〖❬1,5❭ lumière-mois〗〖Compare with:〗〖❬1,5❭ année-lumière〗"
+            },
+            {
+                "en",
+                "//ldml/units/unitLength[@type=\"long\"]/unit[@type=\"speed-light-speed\"]/unitPattern[@count=\"one\"]",
+                "{0} LIGHT",
+                "〖Used as a fallback in the following:〗〖❬1❭ LIGHT-second〗〖❬1❭ LIGHT-minute〗〖❬1❭ LIGHT-hour〗〖❬1❭ LIGHT-day〗〖❬1❭ LIGHT-week〗〖❬1❭ LIGHT-month〗〖Compare with:〗〖❬1❭ light year〗"
+            },
+            {
+                "nl",
+                "//ldml/units/unitLength[@type=\"long\"]/unit[@type=\"speed-light-speed\"]/unitPattern[@count=\"one\"]",
+                "{0} licht",
+                "〖Used as a fallback in the following:〗〖❬1❭ licht⋅seconde〗〖❬1❭ licht⋅minuut〗〖❬1❭ licht⋅uur〗〖❬1❭ licht⋅dag〗〖❬1❭ licht⋅week〗〖❬1❭ licht⋅maand〗〖Compare with:〗〖❬1❭ lichtjaar〗"
+            },
+        };
+        String lastLocale = "";
+        CLDRFile baseCldrFile = null;
+        Map<String, String> map;
+        ExampleGenerator exampleGenerator;
+
+        for (String[] test : tests) {
+            String locale = test[0];
+            String path = test[1];
+            String value = test[2];
+            String expected = test[3];
+            if (!locale.equals(lastLocale)) {
+                baseCldrFile = info.getCldrFactory().make(locale, true);
+                lastLocale = locale;
+            }
+            // reset the locale
+            if (value
+                    == null) { // Note that we can start with a null value, then replace it with the
+                // current actual value, for stability in the future.
+                value = baseCldrFile.getStringValue(path);
+                exampleGenerator = new ExampleGenerator(baseCldrFile);
+            } else {
+                map = ImmutableMap.of(path, value);
+                exampleGenerator = new ExampleGenerator(new CLDRFileOverride(baseCldrFile, map));
+            }
+            String actual = ExampleGenerator.simplify(exampleGenerator.getExampleHtml(path, value));
+            assertEquals(locale + " " + path + " " + value, expected, actual);
+        }
+    }
+
     /**
      * This is a mechanism for TestMissing exceptions: a) skipping the items where there are no
      * reasonable examples b) logging known issues where we know what to do, and have filed tickets
@@ -2073,6 +2137,7 @@ public class TestExampleGenerator extends TestFmwk {
         String[][] data = {
             // mul➔«Multiple languages»; zxx➔«No linguistic content»
             {SKIP, "//ldml/localeDisplayNames/languages/language[@type=\"*\"]", "mul", "zxx"},
+            {SKIP, "//ldml/numbers/rationalFormats[@numberSystem=\"*\"]/rationalUsage", "*"},
             {
                 SKIP,
                 "//ldml/characters/moreInformation"
@@ -2232,5 +2297,70 @@ public class TestExampleGenerator extends TestFmwk {
 
     public String sampleAttrAndValue(PathStarrer ps, final String separator, String value) {
         return ps.getAttributesString(separator) + "➔«" + value + "»";
+    }
+
+    public void testRationals() {
+
+        //        <rationalPattern>{0}⁄{1}</rationalPattern>
+        //        <integerAndRationalPattern>{0} {1}</integerAndRationalPattern>
+        //        <integerAndRationalPattern alt="superSub">{0}​{1}</integerAndRationalPattern>
+        //        <rationalUsage>used</rationalUsage> <!-- unknown vs unused vs used -->
+
+        String[][] tests = {
+            {
+                "en",
+                "//ldml/numbers/rationalFormats[@numberSystem=\"latn\"]/rationalPattern",
+                "〖❬1❭❰ZWNJ❱⁄❰ZWNJ❱❬2❭〗〖❬1❭⁄❬2❭〗〖❬<sup>1</sup>❭⁄❬<sub>2</sub>❭〗〖❬¹❭⁄❬₂❭〗"
+            },
+            {
+                "en",
+                "//ldml/numbers/rationalFormats[@numberSystem=\"latn\"]/integerAndRationalPattern",
+                "〖❬3❭❰NBTSP❱❬1❰ZWNJ❱⁄❰ZWNJ❱2❭〗〖❬3❭❰NBTSP❱❬½❭〗〖❬3❭❰NBTSP❱❬<sup>1</sup>⁄<sub>2</sub>❭〗"
+            },
+            {
+                "en",
+                "//ldml/numbers/rationalFormats[@numberSystem=\"latn\"]/integerAndRationalPattern[@alt=\"superSub\"]",
+                "〖❬3❭❰WNJ❱❬½❭〗〖❬3❭❰WNJ❱❬<sup>1</sup>⁄<sub>2</sub>❭〗"
+            },
+            {"en", "//ldml/numbers/rationalFormats[@numberSystem=\"latn\"]/rationalUsage", null},
+            {
+                "hi",
+                "//ldml/numbers/rationalFormats[@numberSystem=\"deva\"]/rationalPattern",
+                "〖❬१❭❰ZWNJ❱⁄❰ZWNJ❱❬२❭〗〖❬१❭⁄❬२❭〗〖❬<sup>१</sup>❭⁄❬<sub>२</sub>❭〗"
+            },
+            {
+                "hi",
+                "//ldml/numbers/rationalFormats[@numberSystem=\"deva\"]/integerAndRationalPattern",
+                "〖❬३❭❰NBTSP❱❬१❰ZWNJ❱⁄❰ZWNJ❱२❭〗〖❬३❭❰NBTSP❱❬<sup>१</sup>⁄<sub>२</sub>❭〗"
+            },
+            {
+                "hi",
+                "//ldml/numbers/rationalFormats[@numberSystem=\"deva\"]/integerAndRationalPattern[@alt=\"superSub\"]",
+                "〖❬३❭❰WNJ❱❬<sup>१</sup>⁄<sub>२</sub>❭〗"
+            },
+            {"hi", "//ldml/numbers/rationalFormats[@numberSystem=\"deva\"]/rationalUsage", null},
+        };
+        CLDRFile cldrFile = null;
+        ExampleGenerator eg = null;
+        String oldLocale = "";
+        for (String[] test : tests) {
+            String locale = test[0];
+            if (!Objects.equal(oldLocale, locale)) {
+                cldrFile = CLDRConfig.getInstance().getCldrFactory().make(locale, true);
+                eg = getExampleGenerator("en");
+            }
+            String path = test[1];
+            String expected = test[2];
+            String stringValue = cldrFile.getStringValue(path);
+            String exampleHtml = eg.getExampleHtml(path, stringValue);
+            String actual =
+                    exampleHtml == null
+                            ? null
+                            : CodePointEscaper.toEscaped(ExampleGenerator.simplify(exampleHtml));
+            assertEquals(
+                    locale + path + " " + CodePointEscaper.toEscaped(stringValue),
+                    expected,
+                    actual);
+        }
     }
 }

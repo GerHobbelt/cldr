@@ -56,7 +56,7 @@ import org.unicode.cldr.util.ZoneParser.RuleLine;
 import org.unicode.cldr.util.ZoneParser.ZoneLine;
 
 /** Grab-bag set of tools that needs to be rationalized. */
-public class Misc {
+public class MiscTools {
     static Factory cldrFactory;
     static CLDRFile english;
     static CLDRFile resolvedRoot;
@@ -151,7 +151,7 @@ public class Misc {
             UOption.parseArgs(args, options);
             if (options[HELP1].doesOccur || options[HELP1].doesOccur) {
                 System.out.println(HELP_TEXT);
-                CldrUtility.showMethods(Misc.class);
+                CldrUtility.showMethods(MiscTools.class);
                 return;
             }
             cldrFactory = Factory.make(options[SOURCEDIR].value + "/main/", options[MATCH].value);
@@ -204,7 +204,7 @@ public class Misc {
             if (options[FUNCTION].doesOccur) {
                 String function = options[FUNCTION].value;
 
-                CldrUtility.callMethod(function, Misc.class);
+                CldrUtility.callMethod(function, MiscTools.class);
             }
 
             // getZoneData();
@@ -1128,16 +1128,14 @@ public class Misc {
         CLDRFile english = cldrFactory.make("en", true);
         Collator col = Collator.getInstance(new ULocale(locale));
         CLDRFile supp = cldrFactory.make(CLDRFile.SUPPLEMENTAL_NAME, false);
-        for (Iterator<String> it = supp.iterator(); it.hasNext(); ) {
-            String path = it.next();
+        for (String path : supp) {
             XPathParts parts = XPathParts.getFrozenInstance(supp.getFullXPath(path));
             Map<String, String> m = parts.findAttributes("language");
         }
 
         // territories
         Map<String, Collection<String>> groups = new TreeMap<>();
-        for (Iterator<String> it = supp.iterator(); it.hasNext(); ) {
-            String path = it.next();
+        for (String path : supp) {
             XPathParts parts = XPathParts.getFrozenInstance(supp.getFullXPath(path));
             Map<String, String> m = parts.findAttributes("territoryContainment");
             if (m == null) continue;
