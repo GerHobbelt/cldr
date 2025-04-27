@@ -332,7 +332,11 @@ public class GenerateLikelySubtags {
                             "no_Latn_NO",
                             "tok_Latn_001",
                             "prg_Latn_PL",
-                            "ie_Latn_EE");
+                            "ie_Latn_EE",
+                            // kyw=Kurmali: Devanagari not Chis=Chisoi
+                            "kyw_Deva_IN",
+                            // tyj=Tai Yo: Latin not Tayo=Tai Yo
+                            "tyj_Latn_VN");
 
     /**
      * The following overrides do MASH the final values, so they may not result in consistent
@@ -499,6 +503,9 @@ public class GenerateLikelySubtags {
                                 // Temporary additions to fix bad script mappings
                                 // See https://unicode-org.atlassian.net/browse/CLDR-18121
                                 {"sga", "sga_Latn_IE"},
+
+                                // Perserve data now that dek has been merged with sqm
+                                {"sqm", "sqm_Latn_CF"},
                             });
 
     /**
