@@ -15,6 +15,8 @@
 #include <stdlib.h>
 #include "unicode/ustring.h"
 
+using Formattable = icu::Formattable;
+
 #define MAX_DIGITS 10
 #ifndef GENLDML_NOSETAPPDATA
 /*
@@ -92,7 +94,7 @@ UBool ignoreLayout = FALSE;
 UBool isDraft = FALSE;
 UBool onlySpecials = FALSE;
 
-int main (int32_t argc, const char* argv[]) {
+int main (int32_t argc, const char** argv) {
 	const char* srcDir =NULL;
 	const char* destDir = NULL;
 	const char* packageName=NULL;
@@ -2468,7 +2470,7 @@ caseFirst 	    upper               [caseFirst off] 	            caseFirst = "off
                 lower
                 off 
                 
-hiraganaQ 	    on                  [hiraganaQ on] 	                hiragana­Quarternary = "on" 
+hiraganaQ 	    on                  [hiraganaQ on] 	                hiraganaÂ­Quarternary = "on" 
                 off 	        	
 
 numeric 	    on                  [numeric on] 	                numeric = "on"

@@ -38,6 +38,16 @@
 
 #include <stdio.h>
 
+#ifndef FALSE
+#define FALSE 0
+#endif
+#ifndef TRUE
+#define TRUE 1
+#endif
+
+using UnicodeString = ::icu::UnicodeString;
+using ResourceBundle = ::icu::ResourceBundle;
+
 class GenerateXML {
 private:
 	/*
@@ -71,7 +81,7 @@ private:
 	UErrorCode mError;
 
 	/* locale */
-	Locale mLocale;
+	icu::Locale mLocale;
 
 	/* indenting string */
 	UnicodeString indentOffset;
@@ -85,7 +95,7 @@ private:
 	GenerateXML();
 
 	/*overloaded utility function with 3 args for formatting the string*/
-	UnicodeString formatString(UnicodeString& str, const Formattable* args, int32_t num,UnicodeString& result);
+	UnicodeString formatString(UnicodeString& str, const icu::Formattable* args, int32_t num,UnicodeString& result);
 
 	/*overloaded utility function with 2 args for formatting the string*/
 	UnicodeString formatString(UnicodeString& str,UnicodeString& argument, UnicodeString& result);
@@ -199,7 +209,7 @@ private:
 
 	void writeCollations();
 
-	void writeCollation(ResourceBundle& bundle, UnicodeString& xmlString,UnicodeString* collKey=NULL);
+	void writeCollation(ResourceBundle& bundle, UnicodeString& xmlString,UnicodeString* collKey=nullptr);
     
     void writeCollation(UnicodeString& src, UnicodeString &xmlString, uint32_t prevStrength, const char* keyName);
 
