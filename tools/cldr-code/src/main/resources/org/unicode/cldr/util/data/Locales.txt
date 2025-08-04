@@ -660,6 +660,8 @@ Cherokee	;	chr	;	modern	;	Cherokee
 
 Choctaw	;	cho	;	modern	;	Choctaw
 
+cihan_uni	;	ckb ; 	modern
+
 Gnome	;	lt	;	modern	;	Lithuanian
 Gnome	;	ar	;	modern	;	Arabic
 Gnome ; fa ; modern ;
@@ -822,10 +824,10 @@ longnow	;	fr	;	modern	;	French
 mayan_lpp ; kek ; modern ; Q'eqchi'
 mayan_lpp ; quc ; modern ; K'iche'
 mayan_lpp ; mam ; modern ; Mam
-mayan_lpp ; cak ; modern ; Kaqchikel (CAK), 
+mayan_lpp ; cak ; modern ; Kaqchikel (CAK),
 mayan_lpp ; ixl ; modern ; Ixil
-mayan_lpp ; cac ; modern ; Chuj (CAC), 
-mayan_lpp ; kjb ; modern ; Q'anjob'al (KJB), 
+mayan_lpp ; cac ; modern ; Chuj (CAC),
+mayan_lpp ; kjb ; modern ; Q'anjob'al (KJB),
 mayan_lpp ; poc ; modern ; Poqomam
 mayan_lpp ; knj ; modern ; Acateco
 
@@ -916,6 +918,7 @@ Meta	;	vi	;	modern	;	Vietnamese
 Meta	;	zh	;	modern	;	Simplified Chinese
 Meta	;	zh_Hant	;	modern	;	Traditional Chinese
 Meta	;	zh_Hant_HK	;	modern	;	Traditional Chinese (Hong Kong)
+Meta	; *	; moderate ; All Others, provisionally
 
 Mozilla	;	mul	;	modern
 # ^no votes in 30…40 for this org
@@ -925,6 +928,17 @@ Rodakych ; pcm ; modern ; Nigerian Pidgin
 rohingyazuban	;	rhg	;	modern
 
 Sardware	;	sc	;	modern
+
+shan_iit ; shn ; modern
+
+sicilian_cademia ; scn ; modern
+
+sitelen_pona ; tok ; modern
+
+sunuwar_ws ; suz ; modern
+sunuwar_ws ; suz_Sunu ; modern
+
+unibz ; lld ; modern ; Ladin
 
 venetian ; vec ; modern
 

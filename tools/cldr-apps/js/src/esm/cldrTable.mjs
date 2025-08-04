@@ -399,10 +399,16 @@ function getSingleRowUrl(theRow) {
 
 function getPageUrl(curLocale, curPage, curId) {
   let p = null;
-  if (curId && !curPage) {
+  if (curId) {
+    if (!curPage) {
+      curPage = "auto";
+    }
+    // xpstrid is normally only used on the server if page is "auto". However, sometimes a row is bookmarked
+    // and the page name changes, but xpstrid is still valid, and the bookmark can still be used. In that
+    // case the server will treat the obsolete page name the same as "auto", and use xpstrid to determine
+    // the correct current page name.
     p = new URLSearchParams();
     p.append("xpstrid", curId);
-    curPage = "auto";
   }
   const api = "voting/" + curLocale + "/page/" + curPage;
   return cldrAjax.makeApiUrl(api, p);
@@ -763,6 +769,10 @@ function updateRowEnglishComparisonCell(tr, theRow, cell) {
     cell.appendChild(
       cldrDom.createChunk(theRow.displayName, "span", "subSpan")
     );
+    // add possible <LRM>, etc escaped text to English
+    if (!theRow.noEscaping) {
+      checkLRmarker(cell, theRow.displayName);
+    }
   } else {
     cell.appendChild(document.createTextNode(""));
     if (!trHint) {
@@ -921,7 +931,9 @@ function addVitem(td, tr, theRow, item, newButton) {
       cldrText.get("voteInfo_baseline_desc")
     );
   }
-  checkLRmarker(choiceField, item.value);
+  if (!theRow.noEscaping) {
+    checkLRmarker(choiceField, displayValue);
+  }
   if (item.votes && !isWinner) {
     if (
       item.valueHash == theRow.voteVhash &&
@@ -1015,7 +1027,17 @@ function checkLRmarker(field, value) {
     if (escapedValue) {
       const lrm = document.createElement("div");
       lrm.className = "lrmarker-container";
-      lrm.innerHTML = escapedValue;
+      const lrmtext = document.createElement("div");
+      lrmtext.innerHTML = escapedValue;
+      lrmtext.className = "lrmarker-text";
+      lrm.appendChild(lrmtext);
+      const moreInfo = cldrDom.createChunk("ⓘ", "a", "hiddenMoreInfo");
+      moreInfo.setAttribute(
+        "href",
+        "https://cldr.unicode.org/translation/getting-started/guide#special-characters"
+      );
+      lrm.appendChild(moreInfo);
+      lrm.setAttribute("title", "Special characters, click ⓘ for details.");
       field.appendChild(lrm);
     }
   }

@@ -125,7 +125,7 @@ public class VoteAPI {
                     @PathParam("page")
                     String page,
             @QueryParam("xpstrid")
-                    @Schema(description = "Xpath string ID if page is auto")
+                    @Schema(description = "Xpath string ID if page is auto or invalid")
                     @DefaultValue("")
                     String xpstrid,
             @HeaderParam(Auth.SESSION_HEADER) String session) {
@@ -137,6 +137,9 @@ public class VoteAPI {
          *    https://cldr-smoke.unicode.org/cldr-apps/v#/zh_Hant//2703e9d07ab2ef3a
          * can be used instead of
          *    https://cldr-smoke.unicode.org/cldr-apps/v#/zh_Hant/Alphabetic_Information/2703e9d07ab2ef3a
+         *
+         * It also enables determining the correct page name if the given page name is invalid or
+         * obsolete but xpstrid is still valid, as sometimes happens with an old bookmarked URL.
          */
         return VoteAPIHelper.handleGetOnePage(loc, session, page, xpstrid);
     }
@@ -162,7 +165,7 @@ public class VoteAPI {
         public List<CheckStatusSummary> tests = new ArrayList<>();
 
         // we only want to store one example for each subtype.
-        private Set<CheckStatus.Subtype> allSubtypes = new HashSet<>();
+        private final Set<CheckStatus.Subtype> allSubtypes = new HashSet<>();
 
         boolean isEmpty() {
             return tests.isEmpty();
@@ -241,6 +244,9 @@ public class VoteAPI {
             public String xpath;
             public int xpathId;
             public String xpstrid;
+
+            @Schema(description = "inhibit codepoint escaping of values")
+            public boolean noEscaping;
 
             @Schema(description = "prose description of voting outcome")
             public String voteTranscript;
@@ -447,5 +453,53 @@ public class VoteAPI {
                     @PathParam("locale")
                     String loc) {
         return VoteAPIHelper.handleGetLocaleErrors(loc);
+    }
+
+    @GET
+    @Path("/oldimport/status")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get status of current old import")
+    @APIResponses(
+            value = {
+                @APIResponse(
+                        responseCode = "403",
+                        description = "Forbidden, no access to this data"),
+                @APIResponse(responseCode = "204", description = "Nothing in progress"),
+                @APIResponse(
+                        responseCode = "200",
+                        description = "Results",
+                        content =
+                                @Content(
+                                        mediaType = "application/json",
+                                        schema =
+                                                @Schema(
+                                                        implementation =
+                                                                OldVoteImportStatus.class)))
+            })
+    public Response getOldImportStatus(@HeaderParam(Auth.SESSION_HEADER) String session) {
+        final CookieSession mySession = Auth.getSession(session);
+        if (mySession == null) {
+            return Auth.noSessionResponse();
+        }
+        final OldVoteImportStatus s = (OldVoteImportStatus) mySession.get(OldVoteImportStatus.KEY);
+        if (s == null) {
+            return Response.noContent().build();
+        }
+        return Response.ok(s).build();
+    }
+
+    public static final class OldVoteImportStatus {
+        public static final String KEY = OldVoteImportStatus.class.getName();
+        public int remaining;
+        public int imported;
+        public int versionsTotal;
+        public int versionsDone;
+
+        public OldVoteImportStatus(int count) {
+            this.remaining = 0;
+            this.imported = 0;
+            this.versionsDone = 0;
+            this.versionsTotal = count;
+        }
     }
 }
