@@ -116,7 +116,9 @@ defineExpose({
             <td v-for="(cell, index) of row" :key="cell">
               <div v-if="accountColumnIndex == index">
                 <a-tooltip title="Show recent activity ↗">
-                  <a :href="accountRecentActivityLink(cell)" target="_blank">{{ cell }}</a>
+                  <a :href="accountRecentActivityLink(cell)" target="_blank">{{
+                    cell
+                  }}</a>
                 </a-tooltip>
               </div>
               <div v-else>
