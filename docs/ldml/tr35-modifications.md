@@ -48,32 +48,82 @@ The LDML specification is divided into the following parts:
 ## <a name="Contents" href="#Contents">Contents of Appendix A, Modifications</a>
 
 * [Modifications](#modifications)
+  * [Locale Identifiers](#locale-identifiers)
   * [DateTime formats](#datetime-formats)
   * [Modifications section](#modifications-section)
+  * [Keyboards](#keyboards)
 
 ## Modifications
 
 **Changes in LDML Version 48 (Differences from Version 47)**
 
+### Locale Identifiers
+* [Special Script Codes](tr35.md#special-script-codes) Added the `Hntl` compound script. (This is also reflected in the `<scriptData>` elements in supplementalData.xml.)
+  
+### Misc.
+* [Character Elements](tr35-general.md#character-elements) Added new exemplar types.
+* [DTD Annotations](tr35.md#dtd_annotations) Added the @CDATA annotation, to indicate which elements are generated with @CDATA format
+* [Person Name Validation](tr35-personNames.md#person-name-validation) Added guidance for validating person names.
+
 ### DateTime formats
 
-* In [Element dateTimeFormat](tr35-dates.md#dateTimeFormat), added a new type `relative` and updated the
-guidelines on how to use the different `dateTimeFormat` types.
-* In [Using Time Zone Names](tr35-dates.md#Using_Time_Zone_Names), the "specific location format" was removed
+* [Element dateTimeFormat](tr35-dates.md#dateTimeFormat) Added a new type `relative` for relative date/times, such as "tomorrow at 10:00",
+and updated the guidelines for using the different `dateTimeFormat` types.
+* [Using Time Zone Names](tr35-dates.md#using-time-zone-names) Removed the "specific location format".
+* [timeZoneNames Elements Used for Fallback](tr35-dates.md#timeZoneNames-elements-used-for-fallback) Added the `gmtUnknownFormat`, to indicate when the timezone is unknown.
+* [Metazone Names](tr35-dates.md#metazone-names) Added `usesMetazone`, to specify which offset is considered standard time, and which offset is considered daylight.
+* [Time Zone Format Terminology](tr35-dates.md#time-zone-format-terminology) Added the **Localized GMT format** (replacing the **Specific location format**).
+This affects the behavior of the `z` timezone format symbol.
+There is also now a mechanism for finding the region code from short timezone identifier, which is used for the _non-location formats (generic or specific)_
+
+### Numbers
+* [Plural rules syntax](tr35-numbers.md#plural-rules-syntax) Added substantial clarifications and new examples.
+The order of execution is also clearly specified.
+* [Rule-Based Number Formatting]() Added a full specification.
+The rules have been converted to a “flat” format, which is easier for clients to handle (the old format will be retained for one more release).
+
+### Units of Measurement
+* [Unit Syntax](tr35-general.md#unit-syntax) Simplified the EBNF `product_unit` and added an additional well-formedness constraint for mixed units.
+* [Unit Identifier Normalization](#tr35-general.md) Modified the normalization process
+* [Mixed Units](tr35-general.md#mixed-units) Modified the guidance for handling precision.
+
+### Collation
+* [Collation](tr35-collation.md) Added the new `FractionalUCA_blanked.txt` to the root collation data files.
+
+### MessageFormat
+#### Normative changes to Stable parts of the specification:
+* Syntax and data model errors now must be prioritized over other errors ([\#1011](https://github.com/unicode-org/message-format-wg/pull/1011))  
+* The Default Bidi Strategy is now required and default ([\#1066](https://github.com/unicode-org/message-format-wg/pull/1066))  
+* The `:offset` function (previously named `:math`) is now available as Stable ([\#1073](https://github.com/unicode-org/message-format-wg/pull/1073))
+
+#### Normative changes to Draft parts of the specification:
+* The `:datetime`, `:date`, and `:time` functions are updated to build on top of semantic skeletons ([\#1078](https://github.com/unicode-org/message-format-wg/pull/1078), [\#1083](https://github.com/unicode-org/message-format-wg/pull/1083))  
+* `:percent` is added as a new Draft function ([\#1094](https://github.com/unicode-org/message-format-wg/pull/1094))
+
+#### Editorial changes:
+* The format is more clearly rebranded as "Unicode MessageFormat" ([\#1064](https://github.com/unicode-org/message-format-wg/pull/1064))  
+* The pattern selection definition is refactored to be easier to understand without changing its meaning ([\#1080](https://github.com/unicode-org/message-format-wg/pull/1080))
+
+### Keyboards
+__TBD Needs some cleanup for consistency__
+* A sentence was struck under the documentation of the [display](tr35-keyboards.md#element-display) element.
+A key without output may be indicated by means of the `keyId=` attribute on the display, which see.
+* A sentence was added under the [layer](tr35-keyboards.md#element-layer) element in the definition of the `modifiers=` attribute about hardware layouts being used as touch layouts.
+
+### Message Format
+* __TBD__
+
+### Modifications section
+
+* The Modifications section was split out to its own file, [Appendix A, Modifications](tr35-modifications.md)
+
+### Acknowledgments section
+
+* The Acknowledgments section was split out to its own file, [Acknowledgments](tr35-acknowledgments.md#acknowledgments)
 
 Note that small changes such as typos and link fixes are not listed above.
 Modifications in previous versions are listed in those respective versions.
 Click on **Previous Version** in the header until you get to the desired version.
-
-### Modifications section
-
-* This Modifications section was split out to its own part, [Appendix A, Modifications](tr35-modifications.md)
-
-### Keyboards
-
-* A sentence was struck under the documentation of the [display](./tr35-keyboards.md#element-display) element. A key without output may be indicated by means of the `keyId=` attribute on the display, which see.
-
-* A sentence was added under the [layer](./tr35-keyboards.md#element-layer) element, in the definition of the `modifiers=` attribute about hardware layouts being used as touch layouts.
 
 * * *
 

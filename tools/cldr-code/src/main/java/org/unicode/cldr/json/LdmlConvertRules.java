@@ -37,6 +37,7 @@ class LdmlConvertRules {
                     "currency:displayName:count",
                     "numbers:symbols:numberSystem",
                     "numbers:decimalFormats:numberSystem",
+                    "numbers:rationalFormats:numberSystem",
                     "numbers:currencyFormats:numberSystem",
                     "numbers:percentFormats:numberSystem",
                     "numbers:scientificFormats:numberSystem",
@@ -424,7 +425,7 @@ class LdmlConvertRules {
 
     public static final Pattern NUMBERING_SYSTEM_PATTERN =
             Pattern.compile(
-                    "//ldml/numbers/(symbols|miscPatterns|(decimal|percent|scientific|currency)Formats)\\[@numberSystem=\"([^\"]++)\"\\]/.*");
+                    "//ldml/numbers/(symbols|miscPatterns|(decimal|percent|scientific|currency|rational)Formats)\\[@numberSystem=\"([^\"]++)\"\\]/.*");
     public static final String[] ACTIVE_NUMBERING_SYSTEM_XPATHS = {
         "//ldml/numbers/defaultNumberingSystem",
         "//ldml/numbers/otherNumberingSystems/native",

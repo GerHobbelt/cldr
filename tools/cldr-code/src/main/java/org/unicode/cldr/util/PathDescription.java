@@ -53,19 +53,12 @@ public class PathDescription {
     private static final Map<String, String> ZONE2COUNTRY =
             STANDARD_CODES.zoneParser.getZoneToCountry();
 
-    /** <Description, Markdown> */
-    private static final PathDescriptionParser parser = new PathDescriptionParser();
+    private static RegexLookup<Pair<String, String>> pathHandling = null;
 
-    private static final PathDescriptionParser hintsParser = new PathDescriptionParser();
+    private static RegexLookup<Pair<String, String>> pathHintsHandling = null;
 
-    private static final RegexLookup<Pair<String, String>> pathHandling =
-            parser.parse(pathDescriptionString);
-
-    private static final RegexLookup<Pair<String, String>> pathHintsHandling =
-            hintsParser.parse(pathDescriptionHintsString);
-
-    /** markdown to append */
-    private static final String references = parser.getReferences();
+    /** Markdown to append from PathDescriptions.md. Initialized in getPathHandling */
+    private static String references = null;
 
     /** for tests, returns the big string */
     static String getBigString(String fileName) {
@@ -79,9 +72,24 @@ public class PathDescription {
         }
     }
 
-    /** for tests */
-    static RegexLookup<Pair<String, String>> getPathHandling() {
+    /** Public for tests */
+    public static RegexLookup<Pair<String, String>> getPathHandling() {
+        if (pathHandling == null) {
+            PathDescriptionParser parser = new PathDescriptionParser();
+            pathHandling = parser.parse(pathDescriptionFileName);
+            references = parser.getReferences();
+        }
         return pathHandling;
+    }
+
+    private static RegexLookup<Pair<String, String>> getPathHintsHandling() {
+        if (pathHintsHandling == null) {
+            PathDescriptionParser hintsParser = new PathDescriptionParser();
+            pathHintsHandling = hintsParser.parse(pathDescriptionHintsFileName);
+            // Note: Hints currently use no references. If they did, they could be
+            // initialized here by hintReferences = hintsParser.getReferences()
+        }
+        return pathHintsHandling;
     }
 
     // set in construction
@@ -127,7 +135,7 @@ public class PathDescription {
 
     public String getRawDescription(String path, Object context) {
         status.clear();
-        final Pair<String, String> entry = pathHandling.get(path, context, pathArguments);
+        final Pair<String, String> entry = getPathHandling().get(path, context, pathArguments);
         if (entry == null) {
             return null;
         }
@@ -136,7 +144,7 @@ public class PathDescription {
 
     public String getHintRawDescription(String path, Object context) {
         status.clear();
-        final Pair<String, String> entry = pathHintsHandling.get(path, context, pathArguments);
+        final Pair<String, String> entry = getPathHintsHandling().get(path, context, pathArguments);
         if (entry == null) {
             return null;
         }
@@ -147,7 +155,7 @@ public class PathDescription {
             String path, Object context, Output<Finder> matcherFound, Set<String> failures) {
         status.clear();
         final Pair<String, String> entry =
-                pathHandling.get(path, context, pathArguments, matcherFound, failures);
+                getPathHandling().get(path, context, pathArguments, matcherFound, failures);
         if (entry == null) {
             return null;
         }
@@ -157,7 +165,7 @@ public class PathDescription {
     public String getDescription(String path, String value, Object context) {
         status.clear();
 
-        final Pair<String, String> entry = pathHandling.get(path, context, pathArguments);
+        final Pair<String, String> entry = getPathHandling().get(path, context, pathArguments);
         String description;
         String markdown;
         if (entry == null) {
