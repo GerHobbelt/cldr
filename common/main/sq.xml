@@ -1313,7 +1313,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="EBhms">E, h:mm:ss B</dateFormatItem>
 						<dateFormatItem id="Ed">E, d</dateFormatItem>
 						<dateFormatItem id="Eh">E, h a</dateFormatItem>
-						<dateFormatItem id="EH">E, HH</dateFormatItem>
 						<dateFormatItem id="Ehm">E, h:mm a</dateFormatItem>
 						<dateFormatItem id="EHm">E, HH:mm</dateFormatItem>
 						<dateFormatItem id="Ehms">E, h:mm:ss a</dateFormatItem>
@@ -1910,7 +1909,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="EBhms">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ed">E, d</dateFormatItem>
 						<dateFormatItem id="Eh">E, h a</dateFormatItem>
-						<dateFormatItem id="EH">E, HH</dateFormatItem>
 						<dateFormatItem id="Ehm">E, h:mm a</dateFormatItem>
 						<dateFormatItem id="EHm">E, HH:mm</dateFormatItem>
 						<dateFormatItem id="Ehms">E, h:mm:ss a</dateFormatItem>
@@ -4612,16 +4610,16 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 					<standard>Ora e Guajanës</standard>
 				</long>
 			</metazone>
+			<metazone type="Hawaii">
+				<long>
+					<standard>Ora standarde e Ishujve Hauai-Aleutian</standard>
+				</long>
+			</metazone>
 			<metazone type="Hawaii_Aleutian">
 				<long>
 					<generic>Ora e Ishujve Hauai-Aleutian</generic>
 					<standard>Ora standarde e Ishujve Hauai-Aleutian</standard>
 					<daylight>Ora verore e Ishujve Hauai-Aleutian</daylight>
-				</long>
-			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<standard>Ora standarde e Ishujve Hauai-Aleutian</standard>
 				</long>
 			</metazone>
 			<metazone type="Hong_Kong">

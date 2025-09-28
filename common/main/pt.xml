@@ -1868,7 +1868,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="EBhms">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ed">E, d</dateFormatItem>
 						<dateFormatItem id="Eh">E, h a</dateFormatItem>
-						<dateFormatItem id="EH">E, HH'h'</dateFormatItem>
 						<dateFormatItem id="Ehm">E h:mm a</dateFormatItem>
 						<dateFormatItem id="EHm">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ehms">E h:mm:ss a</dateFormatItem>
@@ -2454,7 +2453,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="EBhms">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ed">E, d</dateFormatItem>
 						<dateFormatItem id="Eh">E, h a</dateFormatItem>
-						<dateFormatItem id="EH">E, HH'h'</dateFormatItem>
 						<dateFormatItem id="Ehm">E, h:mm a</dateFormatItem>
 						<dateFormatItem id="EHm">E, HH:mm</dateFormatItem>
 						<dateFormatItem id="Ehms">E, h:mm:ss a</dateFormatItem>
@@ -5485,16 +5483,16 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 					<standard>Horário da Guiana</standard>
 				</long>
 			</metazone>
+			<metazone type="Hawaii">
+				<long>
+					<standard>Horário Padrão do Havaí e Ilhas Aleutas</standard>
+				</long>
+			</metazone>
 			<metazone type="Hawaii_Aleutian">
 				<long>
 					<generic>Horário do Havaí e Ilhas Aleutas</generic>
 					<standard>Horário Padrão do Havaí e Ilhas Aleutas</standard>
 					<daylight>Horário de Verão do Havaí e Ilhas Aleutas</daylight>
-				</long>
-			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<standard>Horário Padrão do Havaí e Ilhas Aleutas</standard>
 				</long>
 			</metazone>
 			<metazone type="Hong_Kong">

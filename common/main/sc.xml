@@ -4603,7 +4603,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<dateFormatItem id="EBhms">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ed">E d</dateFormatItem>
 						<dateFormatItem id="Eh">↑↑↑</dateFormatItem>
-						<dateFormatItem id="EH">E HH'o'</dateFormatItem>
 						<dateFormatItem id="Ehm">↑↑↑</dateFormatItem>
 						<dateFormatItem id="EHm">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ehms">↑↑↑</dateFormatItem>
@@ -5156,7 +5155,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<dateFormatItem id="EBhms">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ed">E d</dateFormatItem>
 						<dateFormatItem id="Eh">↑↑↑</dateFormatItem>
-						<dateFormatItem id="EH">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ehm">↑↑↑</dateFormatItem>
 						<dateFormatItem id="EHm">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ehms">↑↑↑</dateFormatItem>
@@ -10377,16 +10375,16 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 					<standard>Ora de sa Guyana</standard>
 				</long>
 			</metazone>
+			<metazone type="Hawaii">
+				<long>
+					<standard>Ora istandard de sas ìsulas Hawaii-Aleutinas</standard>
+				</long>
+			</metazone>
 			<metazone type="Hawaii_Aleutian">
 				<long>
 					<generic>Ora de sas ìsulas Hawaii-Aleutinas</generic>
 					<standard>Ora istandard de sas ìsulas Hawaii-Aleutinas</standard>
 					<daylight>Ora legale de sas ìsulas Hawaii-Aleutinas</daylight>
-				</long>
-			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<standard>Ora istandard de sas ìsulas Hawaii-Aleutinas</standard>
 				</long>
 			</metazone>
 			<metazone type="Hong_Kong">

@@ -1635,7 +1635,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="EBhms">E B h:mm:ss</dateFormatItem>
 						<dateFormatItem id="Ed">E d</dateFormatItem>
 						<dateFormatItem id="Eh">↑↑↑</dateFormatItem>
-						<dateFormatItem id="EH">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ehm">↑↑↑</dateFormatItem>
 						<dateFormatItem id="EHm">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ehms">↑↑↑</dateFormatItem>
@@ -2226,7 +2225,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="EBhms">E B h:mm:ss</dateFormatItem>
 						<dateFormatItem id="Ed">d E</dateFormatItem>
 						<dateFormatItem id="Eh">↑↑↑</dateFormatItem>
-						<dateFormatItem id="EH">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ehm">↑↑↑</dateFormatItem>
 						<dateFormatItem id="EHm">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ehms">↑↑↑</dateFormatItem>
@@ -5205,16 +5203,16 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 					<standard>गयाना वेळ</standard>
 				</long>
 			</metazone>
+			<metazone type="Hawaii">
+				<long>
+					<standard>हवाई-अलूशन प्रमाण वेळ</standard>
+				</long>
+			</metazone>
 			<metazone type="Hawaii_Aleutian">
 				<long>
 					<generic>हवाई-अलूशन वेळ</generic>
 					<standard>हवाई-अलूशन प्रमाण वेळ</standard>
 					<daylight>हवाई-अलूशन सूर्यप्रकाश वेळ</daylight>
-				</long>
-			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<standard>हवाई-अलूशन प्रमाण वेळ</standard>
 				</long>
 			</metazone>
 			<metazone type="Hong_Kong">

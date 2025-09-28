@@ -1,5 +1,5 @@
 # Fractional UCA Table, generated from the UCA DUCET
-# 2025-05-20 [MS]
+# 2025-08-04 [MS]
 # VERSION: UCA=17.0.0, UCD=17.0.0
 # © 2016 and later: Unicode, Inc. and others.
 # License & terms of use: http://www.unicode.org/copyright.html
@@ -165,7 +165,7 @@
 [radical 149=⾔言⻈讠:言訁𧥛𧥜讠𧥝-𧥟𰴧訂-計䚮-䚰𧥠𬢚𬢛𮗷𮗸𰴨𰴩𳁧计-讥𰵊訉-訚䚱䚲𧥡-𧥭𫌲𫌳𬢜-𬢞𮗹𮗺𲁡-𲁤𳁨𳁩讦-讱𫍙𬣙𬣚𰵋𰵌𲂂𲂃訛-訳䚳-䛃𧥮-𧦛𫌴𫌵𬢟𬢠𮗻-𮗾𰴪𲁥𲁦𳁪-𳁬讲-诀䜣𫍚𫍛𫟞𬣛-𬣟𰵍-𰵒𲂄𲂅訴-詠䛄-䛓𧦜-𧧂𫌶-𫌹𬢡𬢢𮗿-𮘇𰴫𰴬𳁭证-诒𧮪𫍜-𫍡𫟟𬣠-𬣧𰵓-𰵡𲂆𲂇𮷅-𮷇𳁼詡-誊誠鿁䛔-䛜𧧃-𧧳𧨜𫌺𫌻𬢣-𬢩𮘈-𮘎𰴭-𰴸𲁧-𲁩诓-诩䜤𫍢-𫍦𬣨-𬣳𰵢-𰵦𲂈-𲂊𳁽誋-誟誡-誮䛝-䛨𧧴-𧨛𧨝-𧨥𫌼-𫌾𬢪-𬢭𮘏-𮘖𰴹-𰴻𳁮诪-诶𫍧-𫍪𬣴-𬣼𮙉𰵧-𰵯𲂋-𲂍誯-諚諩䛩-䛸𧨦-𧩢𫌿𫍀𬢮-𬢳𮘗-𮘠𰴼𰴽𲁪-𲁭𳁯-𳁳请-谊䜥𫍫-𫍮𫟠𫟡𬣽-𬤆𰵰-𰵸𲂎𲂏𮷈𮷉諛-諨諪-謃䛹-䛽𧩣-𧪗𫍁-𫍅𬢴-𬢹𮘡-𮘪𰴾-𰵂𲁮-𲁱𳁴𳁵谋-谞𫍯-𫍴𬤇-𬤏𲂐-𲂒謄-謢䛾-䜂𠐜𧪘-𧫑𫍆-𫍈𬢺-𬣄𮘫-𮘯𰵃𰵄𲁲𲁳𳁶𳁷谟-谧䜦䜧𫍵-𫍸𫟢𬤐-𬤗𰵹-𰵿謣-謾䜃-䜊𧫒-𧫽𫍉-𫍌𬣅𮘰-𮘸𰵅𲁴𲁵𳁸谨-谬䜨𫍹𫍺𬤘-𬤜𰶀-𰶃𲂓𲂔謿-譌譎-譜龻䜋-䜑𧫾-𧬦𫍍-𫍏𬣆-𬣉𮘹-𮘽𰵆-𰵈𲁶-𲁹𳁹谭-谲𫍻𫍼𬤝-𬤥𮙊𰶄-𰶈𮷊譍譝-譲䜒-䜘𧬧-𧭁𫍐𫍑𬣊𬣋𮘾-𮙂𲁺𳁺谳-谵𫍽𬤦-𬤨𰶉-𰶋𲂕𲂖譳-譽䜙-䜞𧭂-𧭐𧭒-𧭛𫍒𬣌-𬣑𮙃𮙄𰵉𲁻-𲁽𫍾𬤩-𬤬𰶌-𰶎譾-讅䜟-䜡𧭑𧭜-𧭷𫟝𬣒-𬣔𮙅𮙆𲁾𫍿𬤭𮙋𲂗讆-讐䜢𧭸-𧮄𫍓𬣕𮙇𲁿䜩𬤮讑-讖𣌚𧮅-𧮐𫍔-𫍖𬣖𳁻谶𬤯𰶏讗-讙𧮑-𧮘𮙈𬤰𬤱讚讛𧮙-𧮝𫍗𲂀𲂁讜-讞𧮞-𧮤𧮦𧮧𫍘讟𧮨𬣗𬣘𧮩]
 [radical 150=⾕谷:谷𧮫䜪𫎀𰶐谸䜫𧮬-𧮮谹-谻𧮯-𧮲𫎁𮙌䜬䜭𧮳𧮴𬤲𰶑𰶒𳁾谼𧮵-𧮷𮙍𰶓谽䜮𧮸𧮹𮙎𲂘𲂙谾䜯𧮺-𧮿𫎂𬤳𮙏𰶔𧯀-𧯅𬤴𮙐𰶕𰶖谿-豁䜰𧯆-𧯉𬤵𳁿豂䜱𧯊豃𡓛𧯋-𧯒𮙑𲂚𲂛𧯓𧯔𲂜𧯕𧯖豄䜲𳂀豅𳂁𳂂𧯗-𧯙]
 [radical 151=⾖豆:豆䜳𰶗𧯚𮷋豇豈𧯛-𧯝豉䜴𧯞𧯟𬤶𰶘𳂃䜵𧯠-𧯤𮙒𰶙𰶚𲂝豊豋䜶𧯥𧯦𧯨𬤷𰶛鿲䜷-䜹𧯩-𧯬𮙓𮙔𰶜豌-豎䜺𧯭-𧯶𫎃𰶝䜻-䜿𧯷-𧯻𮙕𲂞𳂄𳂅豏䝀-䝂𧯼-𧰂𧰈𰶞豐𡕆𧰃-𧰇𫎄𮙖𰶟𧰉-𧰐𬤸𮙗𰶠𰶡𲂟豑𧰑-𧰖𬤹𰶢𲂠䝃𧰗𧰘𮙘𧰙-𧰜𮙙𧰝-𧰟𬤺𰶣𧰠豒䝄𧰡𧰢𳂆豓𧰣𧰤豔𧰥]
-[radical 152=⾗豕:豕𧰧𧰨豖𧰦𫎅𧰩𬤻𮙚𰶤𰶥豗䝅𧰪-𧰭豘-豝䝆䝇𧰮-𧰴𫎆𬤼𬤽𮙛豞-象䝈𧰵-𧰾𮙜-𮙞𰶦豢-豦䝉𧰿-𧱌𮙟𮙠𳂇豧-豪𧱍-𧱗𫎇𫎈𬤾-𬥀䝊-䝌𧱘-𧱧𬥁-𬥃𰶧-𰶩𳂈豫-豮䝍䝎𧱨-𧱱𫎉𮙡-𮙣𰶪-𰶭豯-豳𧱲-𧱺𬥄𬥅𰶮𲂡豴豵䝏𧱻-𧲁𮙤豷䝐䝑𧲂-𧲆豶𧲇-𧲋𬥆𰶯䝒𧲌-𧲏𬥇𲂢䝓𧲐-𧲓𧲗𧲔-𧲖𲂣𧲘𧲙䝔䝕𧲚-𧲞𰶰𧲟]
+[radical 152=⾗豕:豕𧰧𧰨豖𧰦𫎅𧰩𬤻𮙚𰶤𰶥豗䝅𧰪-𧰭豘-豝䝆-䝈𧰮-𧰴𫎆𬤼𬤽𮙛豞-象𧰵-𧰾𮙜-𮙞𰶦豢-豦䝉𧰿-𧱌𮙟𮙠𳂇豧-豪𧱍-𧱗𫎇𫎈𬤾-𬥀䝊-䝌𧱘-𧱧𬥁-𬥃𰶧-𰶩𳂈豫-豮䝍䝎𧱨-𧱱𫎉𮙡-𮙣𰶪-𰶭豯-豳𧱲-𧱺𬥄𬥅𰶮𲂡豴豵䝏𧱻-𧲁𮙤豷䝐䝑𧲂-𧲆豶𧲇-𧲋𬥆𰶯䝒𧲌-𧲏𬥇𲂢䝓𧲐-𧲓𧲗𧲔-𧲖𲂣𧲘𧲙䝔䝕𧲚-𧲞𰶰𧲟]
 [radical 153=⾘豸:豸𧲠𧲡𮙥豹-豻𧲢𧲣𫎊豼豽䝖-䝙𧲤-𧲫𮙦𮙧𳂉豾-貃䝚䝛𧲬-𧲽𮙨𮙩𲂤𲂥𳂊貄-貊𧲾-𧳉𫎋𬥈貋-貍䝜𧳊-𧳘𮙪𳂋貎貏䝝䝞𧳙-𧳥𧳱𬥉𲂦貐-貓䝟𧳦-𧳰𧳲-𧳴𫎌𮙫𳂌𳂍貔-貖䝠𧳵-𧴀𫎍貗-貙䝡䝢𧴁-𧴅𧴇-𧴋𬥊𬥋𳂎𳂏貚䝣-䝦𧴆𧴌-𧴏𧴑-𧴕𬥌𮙬𳂐𧴐𧴖-𧴟𬥍𲂧𧴠-𧴢貛貜𧴣]
 [radical 154=⾙貝⻉贝:貝贝𮷌貞-負𧴤-𧴩𫎎𬥎𮙭𰶱𳂑贞-贠財-貤𧴪-𧴲𫎏-𫎑𮙮-𮙱𰶲贡财𰷞-𰷠𲂺貥-貮䝧䝨𧴳-𧵈𫎒𫎓𬥏-𬥒𮙲-𮙸𰶳-𰶻𲂨𲂩𳂒𳂓责-贯𧹑𬥳𰷡𲂻-𲂽𳂫貯-賁䝩-䝯𧵉-𧵢𫎔𫎕𬥓𮙹-𮚀𰶼-𰶿𲂪-𲂬𳂔贰-贻𧹒𫎦𫎧𬥴-𬥶𰷢𲂾-𲃁𮷍賂-賎䝰-䝲𣣬𧵣-𧶄𫎖𬥔𬥕𮚁-𮚄𰷀-𰷄𲂭-𲂯𳂕-𳂘贼-赆䞌𬥷賏-賘㕢䝳-䝵𧶅-𧶚𫎗-𫎙𬥖-𬥚𮚅-𮚊𰷅𳂙赇-赊𧹓𫎨𬥸𮷎𮷏賙-賬䝶-䝿𧶛-𧶰𫎚𫎛𬥛-𬥟𮚋-𮚔𰷆-𰷈𲂰𲂱𳂚𳂛赋-赕䞍䞎𧹔-𧹖𫎩𬥹𰷣-𰷥𲃂𲃃賭-賵䞀-䞄𠠋𧶱-𧷄𧷆-𧷋𫎜-𫎞𬥠-𬥢𮚕-𮚙𰷉𲂲𲂳𳂜赖赗䞏䞐𫎪𬥺-𬥽𰷦𰷧𲃄𲃅𳂬賶-賽䞅䞆𧷌-𧷝𫎟𫎠𬥣-𬥥𮚚-𮚝𰷊-𰷌𲂴𲂵𳂝-𳂟赘-赛𬥾𰷨-𰷪𲃆𮷐賾-贀贂-贅䞇𧷞-𧷻𫎡𬥦𬥧𮚞-𮚠𰷍-𰷐𳂠𳂡赜𧹗贆-贌䞈𧷼-𧸕𫎢𬥨𮚡-𮚦𰷑-𰷗𳂢-𳂤赝-赠𫎫𰷫贍-贏䞉𧸖-𧸥𬥩𮚧𮚨赡赢𰷬贐-贔𧸦-𧸰𬥪𬥫𬥭𮚩-𮚫𰷘-𰷚𫎬𬥿𰷭贕-贘䞊𧸱-𧸼𧸿𫎣𫎤𬥮-𬥰𮚬𰷛𲂶𳂥𳂦贙贚䞋𧸽𧸾𧹀-𧹇𫎥𬥬𬥱𮚭𲂷𳂧𳂨𰷮贛𧹈-𧹋𲂸𳂩赣贜𧹌𧹍𰷜𰷝𳂪𧹎-𧹐𮚮-𮚰𬥲𬦀𲂹]
 [radical 155=⾚赤:赤𧹘-𧹚䞑赥赦𧹛𧹜𬦁𳂭赧𧹝-𧹟𫎭𳂮𳂯赨-赪䞒𧹠-𧹢𫎮𬦂𰷯赫䞓䞔𧹣-𧹦𮷑𧹧-𧹫𫎯𲃇赬-赮𧹬-𧹱𬦃𮚱𳂰赯𧹲-𧹷𫎰𧹸-𧹼𳂱𳂲𲃈䞕𧹽-𧺁𬦄𧺂-𧺅𰷰]
@@ -243,7 +243,7 @@
 [top_byte	09	SPACE PUNCTUATION ]
 [top_byte	0A	SPACE PUNCTUATION ]
 [top_byte	0B	SPACE PUNCTUATION ]
-[top_byte	0C	SYMBOL CURRENCY ]  # 7432 primary weights
+[top_byte	0C	SYMBOL CURRENCY ]  # 7431 primary weights
 [top_byte	0D	SYMBOL CURRENCY ]
 [top_byte	0E	SYMBOL CURRENCY ]
 [top_byte	0F	DIGIT ]  # 520 primary weights
@@ -337,7 +337,7 @@
 [top_byte	67	Arab	COMPRESS ]  # 242 primary weights
 [top_byte	68	Syrc Mand Thaa Nkoo Tfng Ethi	COMPRESS ]  # 689 primary weights
 [top_byte	69	Deva	COMPRESS ]  # 103 primary weights
-[top_byte	6A	Beng	COMPRESS ]  # 68 primary weights
+[top_byte	6A	Beng	COMPRESS ]  # 67 primary weights
 [top_byte	6B	Guru	COMPRESS ]  # 58 primary weights
 [top_byte	6C	Gujr	COMPRESS ]  # 70 primary weights
 [top_byte	6D	Orya	COMPRESS ]  # 68 primary weights
@@ -358,7 +358,7 @@
 [top_byte	7C	Hang	COMPRESS ]  # 358 primary weights
 [top_byte	7D	Hira Hrkt Kana	COMPRESS ]  # 339 primary weights
 [top_byte	7E	Bopo Yiii Lisu Plrd Wara	COMPRESS ]  # 1451 primary weights
-[top_byte	7F	Pauc Hmng Hmnp Toto Wcho Nagm Lyci Cari Lydi Sidt Ital Goth Dsrt Shaw Dupl Osma Elba Aghb Vith Todr Sora Mroo Tnsa Sunu Gukh Krai Chis Linb Lina Cprt Cpmn Sarb Narb Avst Palm Nbat Hatr Armi Prti Phli Phlp Elym Mani Sogo Sogd Ougr	COMPRESS ]  # 2340 primary weights
+[top_byte	7F	Pauc Hmng Hmnp Toto Wcho Nagm Lyci Cari Lydi Sidt Ital Goth Dsrt Shaw Dupl Osma Elba Aghb Vith Todr Sora Mroo Tnsa Sunu Gukh Krai Linb Lina Cprt Cpmn Sarb Narb Avst Palm Nbat Hatr Armi Prti Phli Phlp Elym Mani Sogo Sogd Ougr	COMPRESS ]  # 2310 primary weights
 [top_byte	80	Yezi Chrs Ugar Xpeo Xsux Egyp Merc Mero Hluw Tang Nshu Kits	COMPRESS ]  # 14876 primary weights
 [top_byte	81	Hani Hans Hant ]
 [top_byte	82	Hani Hans Hant ]
@@ -1501,8 +1501,6 @@ FFFB; [,,]	# Zyyy Cf	[0000.0000.0000]	* INTERLINEAR ANNOTATION TERMINATOR
 0487; [, ss, tt]	# Cyrl Mn	[0000.ssss.0002]	* COMBINING CYRILLIC POKRYTIE
 0741; [, ss, tt]	# Syrc Mn	[0000.ssss.0002]	* SYRIAC QUSHSHAYA
 0745; [, ss, tt]	# Syrc Mn	[0000.ssss.0002]	* SYRIAC THREE DOTS ABOVE
-0B53; [, ss, tt]	# Orya Mn	[0000.ssss.0002]	* ORIYA SIGN DOT ABOVE
-0B54; [, ss, tt]	# Orya Mn	[0000.ssss.0002]	* ORIYA SIGN DOUBLE DOT ABOVE
 0B55; [, ss, tt]	# Orya Mn	[0000.ssss.0002]	* ORIYA SIGN OVERLINE
 17CB; [, ss, tt]	# Khmr Mn	[0000.ssss.0002]	* KHMER SIGN BANTOC
 17CC; [, ss, tt]	# Khmr Mn	[0000.ssss.0002]	* KHMER SIGN ROBAT
@@ -1994,7 +1992,6 @@ A981; [, ss ss, tt]	# Java Mn	[0000.ssss.0002]	* JAVANESE SIGN CECAK
 11D95; [, ss ss, tt]	# Gong Mn	[0000.ssss.0002]	* GUNJALA GONDI SIGN ANUSVARA
 11F01; [, ss ss, tt]	# Kawi Mn	[0000.ssss.0002]	* KAWI SIGN ANUSVARA
 1612D; [, ss ss, tt]	# Gukh Mn	[0000.ssss.0002]	* GURUNG KHEMA SIGN ANUSVARA
-16D98; [, ss ss, tt]	# Chis Mn	[0000.ssss.0002]	* CHISOI SIGN ANUSVARA
 0903; [, ss ss, tt]	# Deva Mc	[0000.ssss.0002]	* DEVANAGARI SIGN VISARGA
 0983; [, ss ss, tt]	# Beng Mc	[0000.ssss.0002]	* BENGALI SIGN VISARGA
 0A03; [, ss ss, tt]	# Guru Mc	[0000.ssss.0002]	* GURMUKHI SIGN VISARGA
@@ -16163,8 +16160,6 @@ A4C6; [pp pp pp, ss, tt]	# Yiii So	[pppp.ssss.0002]	* YI RADICAL KE
 
 1FADC; [pp pp pp, ss, tt]	# Zyyy So	[pppp.ssss.0002]	* ROOT VEGETABLE
 
-1FADD; [pp pp pp, ss, tt]	# Zyyy So	[pppp.ssss.0002]	* APPLE CORE
-
 1FADF; [pp pp pp, ss, tt]	# Zyyy So	[pppp.ssss.0002]	* SPLATTER
 
 1FAE0; [pp pp pp, ss, tt]	# Zyyy So	[pppp.ssss.0002]	* MELTING FACE
@@ -18977,7 +18972,6 @@ ABF0; [pp, ss, tt]	# Mtei Nd	[pppp.ssss.0002]	* MEETEI MAYEK DIGIT ZERO
 16AC0; [pp, ss, tt]	# Tnsa Nd	[pppp.ssss.0002]	* TANGSA DIGIT ZERO
 16B50; [pp, ss, tt]	# Hmng Nd	[pppp.ssss.0002]	* PAHAWH HMONG DIGIT ZERO
 16D70; [pp, ss, tt]	# Krai Nd	[pppp.ssss.0002]	* KIRAT RAI DIGIT ZERO
-16DA0; [pp, ss, tt]	# Chis Nd	[pppp.ssss.0002]	* CHISOI DIGIT ZERO
 16E80; [pp, ss, tt]	# Medf No	[pppp.ssss.0002]	* MEDEFAIDRIN DIGIT ZERO
 1D2C0; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* KAKTOVIK NUMERAL ZERO
 1D2E0; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* MAYAN NUMERAL ZERO
@@ -19111,7 +19105,6 @@ ABF1; [pp, ss, tt]	# Mtei Nd	[pppp.ssss.0002]	* MEETEI MAYEK DIGIT ONE
 16AC1; [pp, ss, tt]	# Tnsa Nd	[pppp.ssss.0002]	* TANGSA DIGIT ONE
 16B51; [pp, ss, tt]	# Hmng Nd	[pppp.ssss.0002]	* PAHAWH HMONG DIGIT ONE
 16D71; [pp, ss, tt]	# Krai Nd	[pppp.ssss.0002]	* KIRAT RAI DIGIT ONE
-16DA1; [pp, ss, tt]	# Chis Nd	[pppp.ssss.0002]	* CHISOI DIGIT ONE
 16E81; [pp, ss, tt]	# Medf No	[pppp.ssss.0002]	* MEDEFAIDRIN DIGIT ONE
 1D2C1; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* KAKTOVIK NUMERAL ONE
 1D2E1; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* MAYAN NUMERAL ONE
@@ -19320,7 +19313,6 @@ ABF2; [pp, ss, tt]	# Mtei Nd	[pppp.ssss.0002]	* MEETEI MAYEK DIGIT TWO
 16AC2; [pp, ss, tt]	# Tnsa Nd	[pppp.ssss.0002]	* TANGSA DIGIT TWO
 16B52; [pp, ss, tt]	# Hmng Nd	[pppp.ssss.0002]	* PAHAWH HMONG DIGIT TWO
 16D72; [pp, ss, tt]	# Krai Nd	[pppp.ssss.0002]	* KIRAT RAI DIGIT TWO
-16DA2; [pp, ss, tt]	# Chis Nd	[pppp.ssss.0002]	* CHISOI DIGIT TWO
 16E82; [pp, ss, tt]	# Medf No	[pppp.ssss.0002]	* MEDEFAIDRIN DIGIT TWO
 1D2C2; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* KAKTOVIK NUMERAL TWO
 1D2E2; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* MAYAN NUMERAL TWO
@@ -19494,7 +19486,6 @@ ABF3; [pp, ss, tt]	# Mtei Nd	[pppp.ssss.0002]	* MEETEI MAYEK DIGIT THREE
 16AC3; [pp, ss, tt]	# Tnsa Nd	[pppp.ssss.0002]	* TANGSA DIGIT THREE
 16B53; [pp, ss, tt]	# Hmng Nd	[pppp.ssss.0002]	* PAHAWH HMONG DIGIT THREE
 16D73; [pp, ss, tt]	# Krai Nd	[pppp.ssss.0002]	* KIRAT RAI DIGIT THREE
-16DA3; [pp, ss, tt]	# Chis Nd	[pppp.ssss.0002]	* CHISOI DIGIT THREE
 16E83; [pp, ss, tt]	# Medf No	[pppp.ssss.0002]	* MEDEFAIDRIN DIGIT THREE
 1D2C3; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* KAKTOVIK NUMERAL THREE
 1D2E3; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* MAYAN NUMERAL THREE
@@ -19649,7 +19640,6 @@ ABF4; [pp, ss, tt]	# Mtei Nd	[pppp.ssss.0002]	* MEETEI MAYEK DIGIT FOUR
 16AC4; [pp, ss, tt]	# Tnsa Nd	[pppp.ssss.0002]	* TANGSA DIGIT FOUR
 16B54; [pp, ss, tt]	# Hmng Nd	[pppp.ssss.0002]	* PAHAWH HMONG DIGIT FOUR
 16D74; [pp, ss, tt]	# Krai Nd	[pppp.ssss.0002]	* KIRAT RAI DIGIT FOUR
-16DA4; [pp, ss, tt]	# Chis Nd	[pppp.ssss.0002]	* CHISOI DIGIT FOUR
 16E84; [pp, ss, tt]	# Medf No	[pppp.ssss.0002]	* MEDEFAIDRIN DIGIT FOUR
 1D2C4; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* KAKTOVIK NUMERAL FOUR
 1D2E4; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* MAYAN NUMERAL FOUR
@@ -19798,7 +19788,6 @@ ABF5; [pp, ss, tt]	# Mtei Nd	[pppp.ssss.0002]	* MEETEI MAYEK DIGIT FIVE
 16AC5; [pp, ss, tt]	# Tnsa Nd	[pppp.ssss.0002]	* TANGSA DIGIT FIVE
 16B55; [pp, ss, tt]	# Hmng Nd	[pppp.ssss.0002]	* PAHAWH HMONG DIGIT FIVE
 16D75; [pp, ss, tt]	# Krai Nd	[pppp.ssss.0002]	* KIRAT RAI DIGIT FIVE
-16DA5; [pp, ss, tt]	# Chis Nd	[pppp.ssss.0002]	* CHISOI DIGIT FIVE
 16E85; [pp, ss, tt]	# Medf No	[pppp.ssss.0002]	* MEDEFAIDRIN DIGIT FIVE
 1D2C5; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* KAKTOVIK NUMERAL FIVE
 1D2E5; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* MAYAN NUMERAL FIVE
@@ -19925,7 +19914,6 @@ ABF6; [pp, ss, tt]	# Mtei Nd	[pppp.ssss.0002]	* MEETEI MAYEK DIGIT SIX
 16AC6; [pp, ss, tt]	# Tnsa Nd	[pppp.ssss.0002]	* TANGSA DIGIT SIX
 16B56; [pp, ss, tt]	# Hmng Nd	[pppp.ssss.0002]	* PAHAWH HMONG DIGIT SIX
 16D76; [pp, ss, tt]	# Krai Nd	[pppp.ssss.0002]	* KIRAT RAI DIGIT SIX
-16DA6; [pp, ss, tt]	# Chis Nd	[pppp.ssss.0002]	* CHISOI DIGIT SIX
 16E86; [pp, ss, tt]	# Medf No	[pppp.ssss.0002]	* MEDEFAIDRIN DIGIT SIX
 1D2C6; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* KAKTOVIK NUMERAL SIX
 1D2E6; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* MAYAN NUMERAL SIX
@@ -20047,7 +20035,6 @@ ABF7; [pp, ss, tt]	# Mtei Nd	[pppp.ssss.0002]	* MEETEI MAYEK DIGIT SEVEN
 16AC7; [pp, ss, tt]	# Tnsa Nd	[pppp.ssss.0002]	* TANGSA DIGIT SEVEN
 16B57; [pp, ss, tt]	# Hmng Nd	[pppp.ssss.0002]	* PAHAWH HMONG DIGIT SEVEN
 16D77; [pp, ss, tt]	# Krai Nd	[pppp.ssss.0002]	* KIRAT RAI DIGIT SEVEN
-16DA7; [pp, ss, tt]	# Chis Nd	[pppp.ssss.0002]	* CHISOI DIGIT SEVEN
 16E87; [pp, ss, tt]	# Medf No	[pppp.ssss.0002]	* MEDEFAIDRIN DIGIT SEVEN
 1D2C7; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* KAKTOVIK NUMERAL SEVEN
 1D2E7; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* MAYAN NUMERAL SEVEN
@@ -20169,7 +20156,6 @@ ABF8; [pp, ss, tt]	# Mtei Nd	[pppp.ssss.0002]	* MEETEI MAYEK DIGIT EIGHT
 16AC8; [pp, ss, tt]	# Tnsa Nd	[pppp.ssss.0002]	* TANGSA DIGIT EIGHT
 16B58; [pp, ss, tt]	# Hmng Nd	[pppp.ssss.0002]	* PAHAWH HMONG DIGIT EIGHT
 16D78; [pp, ss, tt]	# Krai Nd	[pppp.ssss.0002]	* KIRAT RAI DIGIT EIGHT
-16DA8; [pp, ss, tt]	# Chis Nd	[pppp.ssss.0002]	* CHISOI DIGIT EIGHT
 16E88; [pp, ss, tt]	# Medf No	[pppp.ssss.0002]	* MEDEFAIDRIN DIGIT EIGHT
 1D2C8; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* KAKTOVIK NUMERAL EIGHT
 1D2E8; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* MAYAN NUMERAL EIGHT
@@ -20292,7 +20278,6 @@ ABF9; [pp, ss, tt]	# Mtei Nd	[pppp.ssss.0002]	* MEETEI MAYEK DIGIT NINE
 16AC9; [pp, ss, tt]	# Tnsa Nd	[pppp.ssss.0002]	* TANGSA DIGIT NINE
 16B59; [pp, ss, tt]	# Hmng Nd	[pppp.ssss.0002]	* PAHAWH HMONG DIGIT NINE
 16D79; [pp, ss, tt]	# Krai Nd	[pppp.ssss.0002]	* KIRAT RAI DIGIT NINE
-16DA9; [pp, ss, tt]	# Chis Nd	[pppp.ssss.0002]	* CHISOI DIGIT NINE
 16E89; [pp, ss, tt]	# Medf No	[pppp.ssss.0002]	* MEDEFAIDRIN DIGIT NINE
 1D2C9; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* KAKTOVIK NUMERAL NINE
 1D2E9; [pp, ss, tt]	# Zyyy No	[pppp.ssss.0002]	* MAYAN NUMERAL NINE
@@ -29792,8 +29777,6 @@ FDD1 0995;	[pp pp pp, ss, tt]	# BENGALI first primary starts new lead byte (comp
 09AB; [pp pp, ss, tt]	# Beng Lo	[pppp.ssss.0002]	* BENGALI LETTER PHA
 
 09AC; [pp pp, ss, tt]	# Beng Lo	[pppp.ssss.0002]	* BENGALI LETTER BA
-
-09FF; [pp pp, ss, tt]	# Beng Lo	[pppp.ssss.0002]	* BENGALI LETTER SANSKRIT BA
 
 09AD; [pp pp, ss, tt]	# Beng Lo	[pppp.ssss.0002]	* BENGALI LETTER BHA
 
@@ -51335,66 +51318,6 @@ FDD1 16D45;	[pp pp pp, ss, tt]	# Kirat_Rai first primary (compressible)
 16D6B; [pp pp pp, ss, tt]	# Krai Lm	[pppp.ssss.0002]	* KIRAT RAI SIGN VIRAMA
 
 16D6C; [pp pp pp, ss, tt]	# Krai Lm	[pppp.ssss.0002]	* KIRAT RAI SIGN SAAT
-
-FDD1 16D93;	[pp pp pp, ss, tt]	# Chisoi first primary (compressible)
-
-16D80; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER A
-
-16D81; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER BA
-
-16D82; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER AI
-
-16D83; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER AA
-
-16D84; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER GA
-
-16D85; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER TA
-
-16D86; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER E
-
-16D87; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER SA
-
-16D88; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER NA
-
-16D89; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER I
-
-16D8A; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER KA
-
-16D8B; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER RA
-
-16D8C; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER MA
-
-16D8D; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER HA
-
-16D8E; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER RRA
-
-16D8F; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER U
-
-16D90; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER DA
-
-16D91; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER LA
-
-16D92; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER O
-
-16D93; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER NYA
-
-16D94; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER NGA
-
-16D95; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER CA
-
-16D96; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER JA
-
-16D97; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER PA
-
-16D99; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER YA
-
-16D9A; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER DDA
-
-16D9B; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER TTA
-
-16D9C; [pp pp pp, ss, tt]	# Chis Lo	[pppp.ssss.0002]	* CHISOI LETTER JARAHA
-
-16D9D; [pp pp pp, ss, tt]	# Chis Mn	[pppp.ssss.0002]	* CHISOI SIGN SISO
 
 FDD1 10000;	[pp pp pp, ss, tt]	# LINEAR_B first primary (compressible)
 
@@ -77014,7 +76937,7 @@ FDD0 0052;	[, , tt tt]	# CONSTRUCTED FAKE SECONDARY-IGNORABLE
 [reorderingTokens	Bamu	7A=640 ]
 [reorderingTokens	Bass	7A=31 ]
 [reorderingTokens	Batk	77=39 ]
-[reorderingTokens	Beng	6A=57 ]
+[reorderingTokens	Beng	6A=56 ]
 [reorderingTokens	Berf	7B=51 ]
 [reorderingTokens	Bhks	73=48 ]
 [reorderingTokens	Bopo	7E=76 ]
@@ -77027,7 +76950,6 @@ FDD0 0052;	[, , tt tt]	# CONSTRUCTED FAKE SECONDARY-IGNORABLE
 [reorderingTokens	Cari	7F=50 ]
 [reorderingTokens	Cham	78=53 ]
 [reorderingTokens	Cher	78=173 ]
-[reorderingTokens	Chis	7F=29 ]
 [reorderingTokens	Chrs	80=22 ]
 [reorderingTokens	Copt	61=122 ]
 [reorderingTokens	Cpmn	7F=98 ]
@@ -77192,12 +77114,12 @@ FDD0 0052;	[, , tt tt]	# CONSTRUCTED FAKE SECONDARY-IGNORABLE
 
 # General Categories => Top Byte
 [categories	Cc	03{SPACE}=6 ]
-[categories	Lm	0C{SYMBOL}=37 0D{CURRENCY}=37 2A{Latn}=13 2B{Latn}=13 2C{Latn}=13 2D{Latn}=13 2E{Latn}=13 2F{Latn}=13 30{Latn}=13 31{Latn}=13 32{Latn}=13 33{Latn}=13 34{Latn}=13 35{Latn}=13 36{Latn}=13 37{Latn}=13 38{Latn}=13 39{Latn}=13 3A{Latn}=13 3B{Latn}=13 3C{Latn}=13 3D{Latn}=13 3E{Latn}=13 3F{Latn}=13 40{Latn}=13 41{Latn}=13 42{Latn}=13 43{Latn}=13 44{Latn}=13 45{Latn}=13 46{Latn}=13 47{Latn}=13 48{Latn}=13 49{Latn}=13 4A{Latn}=13 4B{Latn}=13 4C{Latn}=13 4D{Latn}=13 4E{Latn}=13 4F{Latn}=13 50{Latn}=13 51{Latn}=13 52{Latn}=13 53{Latn}=13 54{Latn}=13 55{Latn}=13 56{Latn}=13 57{Latn}=13 58{Latn}=13 59{Latn}=13 5A{Latn}=13 5B{Latn}=13 5C{Latn}=13 5D{Latn}=13 5E{Latn}=13 62{Cyrl}=2 65{Armn}=1 66{Hebr Phnx Samr}=1 67{Arab}=4 68{Syrc Mand Thaa Nkoo Tfng Ethi}=2 73{Newa Tirh Sidd Modi Takr Diak Nand Dogr Ahom Gonm Gong Tols Sund Brah Khar Bhks}=1 78{Tale Talu Lana Tayo Cham Bali Java Kawi Mong Olck Onao Cher Osge}=7 7A{Vaii Bamu Bass Mend Medf}=1 7B{Berf Gara Adlm}=2 7E{Bopo Yiii Lisu Plrd Wara}=20 7F{Pauc Hmng Hmnp Toto Wcho Nagm Lyci Cari Lydi Sidt Ital Goth Dsrt Shaw Dupl Osma Elba Aghb Vith Todr Sora Mroo Tnsa Sunu Gukh Krai Chis Linb Lina Cprt Cpmn Sarb Narb Avst Palm Nbat Hatr Armi Prti Phli Phlp Elym Mani Sogo Sogd Ougr}=13 ]
+[categories	Lm	0C{SYMBOL}=37 0D{CURRENCY}=37 2A{Latn}=13 2B{Latn}=13 2C{Latn}=13 2D{Latn}=13 2E{Latn}=13 2F{Latn}=13 30{Latn}=13 31{Latn}=13 32{Latn}=13 33{Latn}=13 34{Latn}=13 35{Latn}=13 36{Latn}=13 37{Latn}=13 38{Latn}=13 39{Latn}=13 3A{Latn}=13 3B{Latn}=13 3C{Latn}=13 3D{Latn}=13 3E{Latn}=13 3F{Latn}=13 40{Latn}=13 41{Latn}=13 42{Latn}=13 43{Latn}=13 44{Latn}=13 45{Latn}=13 46{Latn}=13 47{Latn}=13 48{Latn}=13 49{Latn}=13 4A{Latn}=13 4B{Latn}=13 4C{Latn}=13 4D{Latn}=13 4E{Latn}=13 4F{Latn}=13 50{Latn}=13 51{Latn}=13 52{Latn}=13 53{Latn}=13 54{Latn}=13 55{Latn}=13 56{Latn}=13 57{Latn}=13 58{Latn}=13 59{Latn}=13 5A{Latn}=13 5B{Latn}=13 5C{Latn}=13 5D{Latn}=13 5E{Latn}=13 62{Cyrl}=2 65{Armn}=1 66{Hebr Phnx Samr}=1 67{Arab}=4 68{Syrc Mand Thaa Nkoo Tfng Ethi}=2 73{Newa Tirh Sidd Modi Takr Diak Nand Dogr Ahom Gonm Gong Tols Sund Brah Khar Bhks}=1 78{Tale Talu Lana Tayo Cham Bali Java Kawi Mong Olck Onao Cher Osge}=7 7A{Vaii Bamu Bass Mend Medf}=1 7B{Berf Gara Adlm}=2 7E{Bopo Yiii Lisu Plrd Wara}=20 7F{Pauc Hmng Hmnp Toto Wcho Nagm Lyci Cari Lydi Sidt Ital Goth Dsrt Shaw Dupl Osma Elba Aghb Vith Todr Sora Mroo Tnsa Sunu Gukh Krai Linb Lina Cprt Cpmn Sarb Narb Avst Palm Nbat Hatr Armi Prti Phli Phlp Elym Mani Sogo Sogd Ougr}=13 ]
 [categories	Lo	69{Deva}=11 7D{Hira Hrkt Kana}=2 ]
-[categories	Mc	69{Deva}=10 6A{Beng}=10 6B{Guru}=3 6C{Gujr}=6 6D{Orya}=10 6E{Taml}=14 6F{Telu}=4 70{Knda}=7 71{Mlym}=13 72{Sinh Mtei Sylo Saur Kthi Mahj Shrd Khoj Sind Mult Gran Tutg}=98 73{Newa Tirh Sidd Modi Takr Diak Nand Dogr Ahom Gonm Gong Tols Sund Brah Khar Bhks}=70 76{Tibt Zanb Soyo}=2 77{Marc Lepc Phag Limb Tglg Hano Buhd Tagb Bugi Maka Batk Rjng Kali Mymr Rohg Cakm Khmr}=86 78{Tale Talu Lana Tayo Cham Bali Java Kawi Mong Olck Onao Cher Osge}=36 7E{Bopo Yiii Lisu Plrd Wara}=55 7F{Pauc Hmng Hmnp Toto Wcho Nagm Lyci Cari Lydi Sidt Ital Goth Dsrt Shaw Dupl Osma Elba Aghb Vith Todr Sora Mroo Tnsa Sunu Gukh Krai Chis Linb Lina Cprt Cpmn Sarb Narb Avst Palm Nbat Hatr Armi Prti Phli Phlp Elym Mani Sogo Sogd Ougr}=3 ]
-[categories	Mn	2A{Latn}=54 2B{Latn}=54 2C{Latn}=54 2D{Latn}=54 2E{Latn}=54 2F{Latn}=54 30{Latn}=54 31{Latn}=54 32{Latn}=54 33{Latn}=54 34{Latn}=54 35{Latn}=54 36{Latn}=54 37{Latn}=54 38{Latn}=54 39{Latn}=54 3A{Latn}=54 3B{Latn}=54 3C{Latn}=54 3D{Latn}=54 3E{Latn}=54 3F{Latn}=54 40{Latn}=54 41{Latn}=54 42{Latn}=54 43{Latn}=54 44{Latn}=54 45{Latn}=54 46{Latn}=54 47{Latn}=54 48{Latn}=54 49{Latn}=54 4A{Latn}=54 4B{Latn}=54 4C{Latn}=54 4D{Latn}=54 4E{Latn}=54 4F{Latn}=54 50{Latn}=54 51{Latn}=54 52{Latn}=54 53{Latn}=54 54{Latn}=54 55{Latn}=54 56{Latn}=54 57{Latn}=54 58{Latn}=54 59{Latn}=54 5A{Latn}=54 5B{Latn}=54 5C{Latn}=54 5D{Latn}=54 5E{Latn}=54 62{Cyrl}=43 63{Glag Perm}=43 66{Hebr Phnx Samr}=3 68{Syrc Mand Thaa Nkoo Tfng Ethi}=11 69{Deva}=16 6A{Beng}=7 6B{Guru}=9 6C{Gujr}=10 6D{Orya}=9 6E{Taml}=2 6F{Telu}=15 70{Knda}=17 71{Mlym}=9 72{Sinh Mtei Sylo Saur Kthi Mahj Shrd Khoj Sind Mult Gran Tutg}=57 73{Newa Tirh Sidd Modi Takr Diak Nand Dogr Ahom Gonm Gong Tols Sund Brah Khar Bhks}=131 74{Thai}=10 75{Laoo Tavt}=19 76{Tibt Zanb Soyo}=120 77{Marc Lepc Phag Limb Tglg Hano Buhd Tagb Bugi Maka Batk Rjng Kali Mymr Rohg Cakm Khmr}=133 78{Tale Talu Lana Tayo Cham Bali Java Kawi Mong Olck Onao Cher Osge}=65 7B{Berf Gara Adlm}=1 7E{Bopo Yiii Lisu Plrd Wara}=5 7F{Pauc Hmng Hmnp Toto Wcho Nagm Lyci Cari Lydi Sidt Ital Goth Dsrt Shaw Dupl Osma Elba Aghb Vith Todr Sora Mroo Tnsa Sunu Gukh Krai Chis Linb Lina Cprt Cpmn Sarb Narb Avst Palm Nbat Hatr Armi Prti Phli Phlp Elym Mani Sogo Sogd Ougr}=29 ]
-[categories	Nd	0F{DIGIT}=1 10{DIGIT}=1 12{DIGIT}=85 14{DIGIT}=139 16{DIGIT}=114 18{DIGIT}=101 1A{DIGIT}=97 1C{DIGIT}=89 1E{DIGIT}=86 20{DIGIT}=87 22{DIGIT}=86 24{DIGIT}=86 ]
-[categories	Nl	12{DIGIT}=1 14{DIGIT}=12 16{DIGIT}=16 18{DIGIT}=16 1A{DIGIT}=17 1C{DIGIT}=18 1E{DIGIT}=10 20{DIGIT}=10 22{DIGIT}=9 24{DIGIT}=11 25{DIGIT}=9 26{DIGIT}=43 27{DIGIT}=17 79{Cans Ogam Runr Hung Orkh}=3 7A{Vaii Bamu Bass Mend Medf}=10 7F{Pauc Hmng Hmnp Toto Wcho Nagm Lyci Cari Lydi Sidt Ital Goth Dsrt Shaw Dupl Osma Elba Aghb Vith Todr Sora Mroo Tnsa Sunu Gukh Krai Chis Linb Lina Cprt Cpmn Sarb Narb Avst Palm Nbat Hatr Armi Prti Phli Phlp Elym Mani Sogo Sogd Ougr}=2 ]
+[categories	Mc	69{Deva}=10 6A{Beng}=10 6B{Guru}=3 6C{Gujr}=6 6D{Orya}=10 6E{Taml}=14 6F{Telu}=4 70{Knda}=7 71{Mlym}=13 72{Sinh Mtei Sylo Saur Kthi Mahj Shrd Khoj Sind Mult Gran Tutg}=98 73{Newa Tirh Sidd Modi Takr Diak Nand Dogr Ahom Gonm Gong Tols Sund Brah Khar Bhks}=70 76{Tibt Zanb Soyo}=2 77{Marc Lepc Phag Limb Tglg Hano Buhd Tagb Bugi Maka Batk Rjng Kali Mymr Rohg Cakm Khmr}=86 78{Tale Talu Lana Tayo Cham Bali Java Kawi Mong Olck Onao Cher Osge}=36 7E{Bopo Yiii Lisu Plrd Wara}=55 7F{Pauc Hmng Hmnp Toto Wcho Nagm Lyci Cari Lydi Sidt Ital Goth Dsrt Shaw Dupl Osma Elba Aghb Vith Todr Sora Mroo Tnsa Sunu Gukh Krai Linb Lina Cprt Cpmn Sarb Narb Avst Palm Nbat Hatr Armi Prti Phli Phlp Elym Mani Sogo Sogd Ougr}=3 ]
+[categories	Mn	2A{Latn}=54 2B{Latn}=54 2C{Latn}=54 2D{Latn}=54 2E{Latn}=54 2F{Latn}=54 30{Latn}=54 31{Latn}=54 32{Latn}=54 33{Latn}=54 34{Latn}=54 35{Latn}=54 36{Latn}=54 37{Latn}=54 38{Latn}=54 39{Latn}=54 3A{Latn}=54 3B{Latn}=54 3C{Latn}=54 3D{Latn}=54 3E{Latn}=54 3F{Latn}=54 40{Latn}=54 41{Latn}=54 42{Latn}=54 43{Latn}=54 44{Latn}=54 45{Latn}=54 46{Latn}=54 47{Latn}=54 48{Latn}=54 49{Latn}=54 4A{Latn}=54 4B{Latn}=54 4C{Latn}=54 4D{Latn}=54 4E{Latn}=54 4F{Latn}=54 50{Latn}=54 51{Latn}=54 52{Latn}=54 53{Latn}=54 54{Latn}=54 55{Latn}=54 56{Latn}=54 57{Latn}=54 58{Latn}=54 59{Latn}=54 5A{Latn}=54 5B{Latn}=54 5C{Latn}=54 5D{Latn}=54 5E{Latn}=54 62{Cyrl}=43 63{Glag Perm}=43 66{Hebr Phnx Samr}=3 68{Syrc Mand Thaa Nkoo Tfng Ethi}=11 69{Deva}=16 6A{Beng}=7 6B{Guru}=9 6C{Gujr}=10 6D{Orya}=9 6E{Taml}=2 6F{Telu}=15 70{Knda}=17 71{Mlym}=9 72{Sinh Mtei Sylo Saur Kthi Mahj Shrd Khoj Sind Mult Gran Tutg}=57 73{Newa Tirh Sidd Modi Takr Diak Nand Dogr Ahom Gonm Gong Tols Sund Brah Khar Bhks}=131 74{Thai}=10 75{Laoo Tavt}=19 76{Tibt Zanb Soyo}=120 77{Marc Lepc Phag Limb Tglg Hano Buhd Tagb Bugi Maka Batk Rjng Kali Mymr Rohg Cakm Khmr}=133 78{Tale Talu Lana Tayo Cham Bali Java Kawi Mong Olck Onao Cher Osge}=65 7B{Berf Gara Adlm}=1 7E{Bopo Yiii Lisu Plrd Wara}=5 7F{Pauc Hmng Hmnp Toto Wcho Nagm Lyci Cari Lydi Sidt Ital Goth Dsrt Shaw Dupl Osma Elba Aghb Vith Todr Sora Mroo Tnsa Sunu Gukh Krai Linb Lina Cprt Cpmn Sarb Narb Avst Palm Nbat Hatr Armi Prti Phli Phlp Elym Mani Sogo Sogd Ougr}=28 ]
+[categories	Nd	0F{DIGIT}=1 10{DIGIT}=1 12{DIGIT}=84 14{DIGIT}=138 16{DIGIT}=113 18{DIGIT}=100 1A{DIGIT}=96 1C{DIGIT}=88 1E{DIGIT}=85 20{DIGIT}=86 22{DIGIT}=85 24{DIGIT}=85 ]
+[categories	Nl	12{DIGIT}=1 14{DIGIT}=12 16{DIGIT}=16 18{DIGIT}=16 1A{DIGIT}=17 1C{DIGIT}=18 1E{DIGIT}=10 20{DIGIT}=10 22{DIGIT}=9 24{DIGIT}=11 25{DIGIT}=9 26{DIGIT}=43 27{DIGIT}=17 79{Cans Ogam Runr Hung Orkh}=3 7A{Vaii Bamu Bass Mend Medf}=10 7F{Pauc Hmng Hmnp Toto Wcho Nagm Lyci Cari Lydi Sidt Ital Goth Dsrt Shaw Dupl Osma Elba Aghb Vith Todr Sora Mroo Tnsa Sunu Gukh Krai Linb Lina Cprt Cpmn Sarb Narb Avst Palm Nbat Hatr Armi Prti Phli Phlp Elym Mani Sogo Sogd Ougr}=2 ]
 [categories	No	12{DIGIT}=10 14{DIGIT}=60 16{DIGIT}=40 18{DIGIT}=38 1A{DIGIT}=34 1C{DIGIT}=33 1E{DIGIT}=24 20{DIGIT}=24 22{DIGIT}=24 24{DIGIT}=23 25{DIGIT}=122 26{DIGIT}=182 27{DIGIT}=135 ]
 [categories	Pc	05{PUNCTUATION}=7 0A{PUNCTUATION}=3 ]
 [categories	Pd	05{PUNCTUATION}=25 0A{PUNCTUATION}=1 0B{PUNCTUATION}=1 ]
@@ -77209,7 +77131,7 @@ FDD0 0052;	[, , tt tt]	# CONSTRUCTED FAKE SECONDARY-IGNORABLE
 [categories	Sc	0D{CURRENCY}=54 0E{CURRENCY}=8 2A{Latn}=1 2B{Latn}=1 2C{Latn}=1 2D{Latn}=1 2E{Latn}=1 2F{Latn}=1 30{Latn}=1 31{Latn}=1 32{Latn}=1 33{Latn}=1 34{Latn}=1 35{Latn}=1 36{Latn}=1 37{Latn}=1 38{Latn}=1 39{Latn}=1 3A{Latn}=1 3B{Latn}=1 3C{Latn}=1 3D{Latn}=1 3E{Latn}=1 3F{Latn}=1 40{Latn}=1 41{Latn}=1 42{Latn}=1 43{Latn}=1 44{Latn}=1 45{Latn}=1 46{Latn}=1 47{Latn}=1 48{Latn}=1 49{Latn}=1 4A{Latn}=1 4B{Latn}=1 4C{Latn}=1 4D{Latn}=1 4E{Latn}=1 4F{Latn}=1 50{Latn}=1 51{Latn}=1 52{Latn}=1 53{Latn}=1 54{Latn}=1 55{Latn}=1 56{Latn}=1 57{Latn}=1 58{Latn}=1 59{Latn}=1 5A{Latn}=1 5B{Latn}=1 5C{Latn}=1 5D{Latn}=1 5E{Latn}=1 ]
 [categories	Sk	0C{SYMBOL}=91 0D{CURRENCY}=5 ]
 [categories	Sm	0C{SYMBOL}=949 0D{CURRENCY}=10 ]
-[categories	So	0C{SYMBOL}=2588 0D{CURRENCY}=3760 14{DIGIT}=1 16{DIGIT}=3 18{DIGIT}=1 1A{DIGIT}=1 1C{DIGIT}=1 1E{DIGIT}=1 20{DIGIT}=1 22{DIGIT}=1 2A{Latn}=77 2B{Latn}=77 2C{Latn}=77 2D{Latn}=77 2E{Latn}=77 2F{Latn}=77 30{Latn}=77 31{Latn}=77 32{Latn}=77 33{Latn}=77 34{Latn}=77 35{Latn}=77 36{Latn}=77 37{Latn}=77 38{Latn}=77 39{Latn}=77 3A{Latn}=77 3B{Latn}=77 3C{Latn}=77 3D{Latn}=77 3E{Latn}=77 3F{Latn}=77 40{Latn}=77 41{Latn}=77 42{Latn}=77 43{Latn}=77 44{Latn}=77 45{Latn}=77 46{Latn}=77 47{Latn}=77 48{Latn}=77 49{Latn}=77 4A{Latn}=77 4B{Latn}=77 4C{Latn}=77 4D{Latn}=77 4E{Latn}=77 4F{Latn}=77 50{Latn}=77 51{Latn}=77 52{Latn}=77 53{Latn}=77 54{Latn}=77 55{Latn}=77 56{Latn}=77 57{Latn}=77 58{Latn}=77 59{Latn}=77 5A{Latn}=77 5B{Latn}=77 5C{Latn}=77 5D{Latn}=77 5E{Latn}=77 67{Arab}=2 78{Tale Talu Lana Tayo Cham Bali Java Kawi Mong Olck Onao Cher Osge}=2 7F{Pauc Hmng Hmnp Toto Wcho Nagm Lyci Cari Lydi Sidt Ital Goth Dsrt Shaw Dupl Osma Elba Aghb Vith Todr Sora Mroo Tnsa Sunu Gukh Krai Chis Linb Lina Cprt Cpmn Sarb Narb Avst Palm Nbat Hatr Armi Prti Phli Phlp Elym Mani Sogo Sogd Ougr}=1 E5{TRAILING}=1 E6{TRAILING}=1 E7{TRAILING}=1 E8{TRAILING}=1 E9{TRAILING}=1 EA{TRAILING}=1 EB{TRAILING}=1 EC{TRAILING}=1 ED{TRAILING}=1 EE{TRAILING}=1 EF{TRAILING}=1 ]
+[categories	So	0C{SYMBOL}=2588 0D{CURRENCY}=3759 14{DIGIT}=1 16{DIGIT}=3 18{DIGIT}=1 1A{DIGIT}=1 1C{DIGIT}=1 1E{DIGIT}=1 20{DIGIT}=1 22{DIGIT}=1 2A{Latn}=77 2B{Latn}=77 2C{Latn}=77 2D{Latn}=77 2E{Latn}=77 2F{Latn}=77 30{Latn}=77 31{Latn}=77 32{Latn}=77 33{Latn}=77 34{Latn}=77 35{Latn}=77 36{Latn}=77 37{Latn}=77 38{Latn}=77 39{Latn}=77 3A{Latn}=77 3B{Latn}=77 3C{Latn}=77 3D{Latn}=77 3E{Latn}=77 3F{Latn}=77 40{Latn}=77 41{Latn}=77 42{Latn}=77 43{Latn}=77 44{Latn}=77 45{Latn}=77 46{Latn}=77 47{Latn}=77 48{Latn}=77 49{Latn}=77 4A{Latn}=77 4B{Latn}=77 4C{Latn}=77 4D{Latn}=77 4E{Latn}=77 4F{Latn}=77 50{Latn}=77 51{Latn}=77 52{Latn}=77 53{Latn}=77 54{Latn}=77 55{Latn}=77 56{Latn}=77 57{Latn}=77 58{Latn}=77 59{Latn}=77 5A{Latn}=77 5B{Latn}=77 5C{Latn}=77 5D{Latn}=77 5E{Latn}=77 67{Arab}=2 78{Tale Talu Lana Tayo Cham Bali Java Kawi Mong Olck Onao Cher Osge}=2 7F{Pauc Hmng Hmnp Toto Wcho Nagm Lyci Cari Lydi Sidt Ital Goth Dsrt Shaw Dupl Osma Elba Aghb Vith Todr Sora Mroo Tnsa Sunu Gukh Krai Linb Lina Cprt Cpmn Sarb Narb Avst Palm Nbat Hatr Armi Prti Phli Phlp Elym Mani Sogo Sogd Ougr}=1 E5{TRAILING}=1 E6{TRAILING}=1 E7{TRAILING}=1 E8{TRAILING}=1 E9{TRAILING}=1 EA{TRAILING}=1 EB{TRAILING}=1 EC{TRAILING}=1 ED{TRAILING}=1 EE{TRAILING}=1 EF{TRAILING}=1 ]
 [categories	Zl	03{SPACE}=1 ]
 [categories	Zp	03{SPACE}=1 ]
 [categories	Zs	03{SPACE}=1 04{SPACE}=17 05{PUNCTUATION}=6 0C{SYMBOL}=29 61{Grek Copt}=1 ]

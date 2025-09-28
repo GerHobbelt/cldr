@@ -2518,7 +2518,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="Ed">d일 (E)</dateFormatItem>
 						<dateFormatItem id="EEEEd">d일 EEEE</dateFormatItem>
 						<dateFormatItem id="Eh" draft="contributed">E a h시</dateFormatItem>
-						<dateFormatItem id="EH" draft="contributed">E H시</dateFormatItem>
 						<dateFormatItem id="Ehm">E a h:mm</dateFormatItem>
 						<dateFormatItem id="EHm">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ehms">E a h:mm:ss</dateFormatItem>
@@ -3126,7 +3125,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="Ed">d일 (E)</dateFormatItem>
 						<dateFormatItem id="EEEEd">d일 EEEE</dateFormatItem>
 						<dateFormatItem id="Eh" draft="contributed">(E) a h</dateFormatItem>
-						<dateFormatItem id="EH" draft="contributed">(E) H시</dateFormatItem>
 						<dateFormatItem id="Ehm">(E) a h:mm</dateFormatItem>
 						<dateFormatItem id="EHm">(E) HH:mm</dateFormatItem>
 						<dateFormatItem id="Ehms">(E) a h:mm:ss</dateFormatItem>
@@ -6099,16 +6097,16 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 					<standard>가이아나 시간</standard>
 				</long>
 			</metazone>
+			<metazone type="Hawaii">
+				<long>
+					<standard>하와이 알류샨 표준시</standard>
+				</long>
+			</metazone>
 			<metazone type="Hawaii_Aleutian">
 				<long>
 					<generic>하와이 알류샨 시간</generic>
 					<standard>하와이 알류샨 표준시</standard>
 					<daylight>하와이 알류샨 하계 표준시</daylight>
-				</long>
-			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<standard>하와이 알류샨 표준시</standard>
 				</long>
 			</metazone>
 			<metazone type="Hong_Kong">
@@ -6207,9 +6205,9 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 			</metazone>
 			<metazone type="Korea">
 				<long>
-					<generic>대한민국 시간</generic>
-					<standard>대한민국 표준시</standard>
-					<daylight>대한민국 하계 표준시</daylight>
+					<generic>한국 시간</generic>
+					<standard>한국 표준시</standard>
+					<daylight>한국 하계 표준시</daylight>
 				</long>
 			</metazone>
 			<metazone type="Kosrae">

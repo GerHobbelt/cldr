@@ -1399,7 +1399,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="EBhms">E, h:mm:ss 'ч'. B</dateFormatItem>
 						<dateFormatItem id="Ed">E, d</dateFormatItem>
 						<dateFormatItem id="Eh" draft="contributed">↑↑↑</dateFormatItem>
-						<dateFormatItem id="EH" draft="contributed">E HH 'ч'</dateFormatItem>
 						<dateFormatItem id="Ehm">E, h:mm 'ч'. a</dateFormatItem>
 						<dateFormatItem id="EHm">E, HH:mm 'ч'.</dateFormatItem>
 						<dateFormatItem id="Ehms">E, h:mm:ss 'ч'. a</dateFormatItem>
@@ -2010,7 +2009,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="EBhms">E, h:mm:ss 'ч'. B</dateFormatItem>
 						<dateFormatItem id="Ed">E, d</dateFormatItem>
 						<dateFormatItem id="Eh">E, h a</dateFormatItem>
-						<dateFormatItem id="EH">E, HH 'ч'</dateFormatItem>
 						<dateFormatItem id="Ehm">E, h:mm 'ч'. a</dateFormatItem>
 						<dateFormatItem id="EHm">E, HH:mm 'ч'.</dateFormatItem>
 						<dateFormatItem id="Ehms">E, h:mm:ss 'ч'. a</dateFormatItem>
@@ -4618,16 +4616,16 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 					<standard>Гаяна</standard>
 				</long>
 			</metazone>
+			<metazone type="Hawaii">
+				<long>
+					<standard>Хавайско-алеутско стандартно време</standard>
+				</long>
+			</metazone>
 			<metazone type="Hawaii_Aleutian">
 				<long>
 					<generic>Хавайско-алеутско време</generic>
 					<standard>Хавайско-алеутско стандартно време</standard>
 					<daylight>Хавайско-алеутско лятно часово време</daylight>
-				</long>
-			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<standard>Хавайско-алеутско стандартно време</standard>
 				</long>
 			</metazone>
 			<metazone type="Hong_Kong">
@@ -5245,12 +5243,12 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 			<currencyFormatLength>
 				<currencyFormat type="standard">
 					<pattern>#,##0.00 ¤</pattern>
-					<pattern alt="alphaNextToNumber" draft="contributed">↑↑↑</pattern>
-					<pattern alt="noCurrency">0.00</pattern>
+					<pattern alt="alphaNextToNumber">#,##0.00 ¤</pattern>
+					<pattern alt="noCurrency">#,##0.00</pattern>
 				</currencyFormat>
 				<currencyFormat type="accounting">
 					<pattern>#,##0.00 ¤;(#,##0.00 ¤)</pattern>
-					<pattern alt="alphaNextToNumber" draft="contributed">↑↑↑</pattern>
+					<pattern alt="alphaNextToNumber">#,##0.00 ¤;(#,##0.00 ¤)</pattern>
 					<pattern alt="noCurrency">#,##0.00;(#,##0.00)</pattern>
 				</currencyFormat>
 			</currencyFormatLength>

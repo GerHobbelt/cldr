@@ -4499,7 +4499,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<dateFormatItem id="EBhms">E, B h:mm:ss</dateFormatItem>
 						<dateFormatItem id="Ed">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Eh">E, a h</dateFormatItem>
-						<dateFormatItem id="EH">E, HH 'сех'</dateFormatItem>
 						<dateFormatItem id="Ehm">E, a h:mm</dateFormatItem>
 						<dateFormatItem id="EHm">E, HH:mm</dateFormatItem>
 						<dateFormatItem id="Ehms">E, a h:mm:ss</dateFormatItem>
@@ -5044,7 +5043,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<dateFormatItem id="EBhms">ccc, B h:mm:ss</dateFormatItem>
 						<dateFormatItem id="Ed">d, ccc</dateFormatItem>
 						<dateFormatItem id="Eh">E, a h</dateFormatItem>
-						<dateFormatItem id="EH">E, HH 'сех'</dateFormatItem>
 						<dateFormatItem id="Ehm">E, a h:mm</dateFormatItem>
 						<dateFormatItem id="EHm">E, HH:mm</dateFormatItem>
 						<dateFormatItem id="Ehms">E, a h:mm:ss</dateFormatItem>
@@ -10583,6 +10581,14 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 					<standard draft="contributed">GYT</standard>
 				</short>
 			</metazone>
+			<metazone type="Hawaii">
+				<long>
+					<standard>Гавайи-Алеут стандартлӑ вӑхӑчӗ</standard>
+				</long>
+				<short>
+					<standard draft="contributed">HST</standard>
+				</short>
+			</metazone>
 			<metazone type="Hawaii_Aleutian">
 				<long>
 					<generic>Гавайи-Алеут вӑхӑчӗ</generic>
@@ -10593,14 +10599,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 					<generic draft="contributed">HST</generic>
 					<standard draft="contributed">HST</standard>
 					<daylight draft="contributed">HDT</daylight>
-				</short>
-			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<standard>Гавайи-Алеут стандартлӑ вӑхӑчӗ</standard>
-				</long>
-				<short>
-					<standard draft="contributed">HST</standard>
 				</short>
 			</metazone>
 			<metazone type="Hong_Kong">
@@ -14965,6 +14963,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 				</currencyFormat>
 				<currencyFormat type="accounting">
 					<pattern>#,##0.00 ¤;(#,##0.00 ¤)</pattern>
+					<pattern alt="alphaNextToNumber">#,##0.00 ¤;(#,##0.00 ¤)</pattern>
 					<pattern alt="noCurrency">#,##0.00;(#,##0.00)</pattern>
 				</currencyFormat>
 			</currencyFormatLength>

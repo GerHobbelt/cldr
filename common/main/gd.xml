@@ -2624,7 +2624,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<dateFormatItem id="EBhms">E h:mm:ssB</dateFormatItem>
 						<dateFormatItem id="Ed">E, d</dateFormatItem>
 						<dateFormatItem id="Eh">E ha</dateFormatItem>
-						<dateFormatItem id="EH">E HH'u'</dateFormatItem>
 						<dateFormatItem id="Ehm">E h:mma</dateFormatItem>
 						<dateFormatItem id="EHm">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ehms">E h:mm:ssa</dateFormatItem>
@@ -3183,7 +3182,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<dateFormatItem id="EBhms">E, h:mm:ssB</dateFormatItem>
 						<dateFormatItem id="Ed">E, d</dateFormatItem>
 						<dateFormatItem id="Eh">E, ha</dateFormatItem>
-						<dateFormatItem id="EH">E, HH'u'</dateFormatItem>
 						<dateFormatItem id="Ehm">E, h:mma</dateFormatItem>
 						<dateFormatItem id="EHm">E, HH:mm</dateFormatItem>
 						<dateFormatItem id="Ehms">E, h:mm:ss a</dateFormatItem>
@@ -6285,6 +6283,14 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 					<standard>Àm Guidheàna</standard>
 				</long>
 			</metazone>
+			<metazone type="Hawaii">
+				<long>
+					<standard>Bun-àm nan Eileanan Hawai’i ’s Aleutach</standard>
+				</long>
+				<short>
+					<standard draft="contributed">HAST</standard>
+				</short>
+			</metazone>
 			<metazone type="Hawaii_Aleutian">
 				<long>
 					<generic>Àm nan Eileanan Hawai’i ’s Aleutach</generic>
@@ -6295,14 +6301,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 					<generic draft="contributed">HAT</generic>
 					<standard draft="contributed">HAST</standard>
 					<daylight draft="contributed">HADT</daylight>
-				</short>
-			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<standard>Bun-àm nan Eileanan Hawai’i ’s Aleutach</standard>
-				</long>
-				<short>
-					<standard draft="contributed">HAST</standard>
 				</short>
 			</metazone>
 			<metazone type="Hong_Kong">

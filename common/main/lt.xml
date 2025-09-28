@@ -2552,7 +2552,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="EBhms">h:mm:ss B, E</dateFormatItem>
 						<dateFormatItem id="Ed">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Eh">↑↑↑</dateFormatItem>
-						<dateFormatItem id="EH">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Ehm">h:mm a, E</dateFormatItem>
 						<dateFormatItem id="EHm">HH:mm, E</dateFormatItem>
 						<dateFormatItem id="Ehms">h:mm:ss a, E</dateFormatItem>
@@ -3142,7 +3141,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="EBhms">h:mm:ss B, E</dateFormatItem>
 						<dateFormatItem id="Ed">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Eh">h a, E</dateFormatItem>
-						<dateFormatItem id="EH">E HH 'h'</dateFormatItem>
 						<dateFormatItem id="Ehm">hh:mm a, E</dateFormatItem>
 						<dateFormatItem id="EHm">HH:mm, E</dateFormatItem>
 						<dateFormatItem id="Ehms">hh:mm:ss a, E</dateFormatItem>
@@ -6605,16 +6603,16 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 					<standard>Gajanos laikas</standard>
 				</long>
 			</metazone>
+			<metazone type="Hawaii">
+				<long>
+					<standard>Havajų–Aleutų žiemos laikas</standard>
+				</long>
+			</metazone>
 			<metazone type="Hawaii_Aleutian">
 				<long>
 					<generic>Havajų-Aleutų laikas</generic>
 					<standard>Havajų–Aleutų žiemos laikas</standard>
 					<daylight>Havajų–Aleutų vasaros laikas</daylight>
-				</long>
-			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<standard>Havajų–Aleutų žiemos laikas</standard>
 				</long>
 			</metazone>
 			<metazone type="Hong_Kong">
@@ -7311,12 +7309,12 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 			<currencyFormatLength>
 				<currencyFormat type="standard">
 					<pattern>#,##0.00 ¤</pattern>
-					<pattern alt="alphaNextToNumber">↑↑↑</pattern>
+					<pattern alt="alphaNextToNumber">#,##0.00 ¤</pattern>
 					<pattern alt="noCurrency">↑↑↑</pattern>
 				</currencyFormat>
 				<currencyFormat type="accounting">
 					<pattern>↑↑↑</pattern>
-					<pattern alt="alphaNextToNumber">↑↑↑</pattern>
+					<pattern alt="alphaNextToNumber">#,##0.00 ¤</pattern>
 					<pattern alt="noCurrency">↑↑↑</pattern>
 				</currencyFormat>
 			</currencyFormatLength>
