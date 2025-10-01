@@ -1068,44 +1068,66 @@ As in other cases, **narrow** may be ambiguous out of context.
 <!ATTLIST era aliases NMTOKENS #IMPLIED >
 ```
 
-The `<calendarData>` element now provides only locale-independent data about calendar behaviors via its `<calendar>` subelements, which for each calendar can specify the astronomical basis of the calendar (solar, lunar, etc.) and the date ranges for its eras.
-
-Era start or end dates are specified in terms of the equivalent proleptic Gregorian date (in "y-M-d" format). Eras may be open-ended, with unspecified start or end dates. For example, here are the eras for the Gregorian calendar:
-
-```xml
-<era type="0" end="0-12-31" code="gregory-inverse" aliases="bc bce"/>
-<era type="1" start="1-01-01" code="gregory" aliases="ad ce"/>
-```
-
-For a sequence of eras with specified start dates, the end of each era need not be explicitly specified (it is assumed to match the start of the subsequent era). For example, here are the first few eras for the Japanese calendar:
+The `<calendarData>` element provides locale-independent data about calendar behaviors via its `<calendar>` subelements,
+which for each calendar can specify the astronomical basis of the calendar (solar, lunar, etc.) and the date ranges for its eras.
+For example:
 
 ```xml
-<era type="0" start="645-6-19" />
-<era type="1" start="650-2-15" />
-<era type="2" start="672-1-1" />
-…
-```
-
-Some eras have additional `code` and `aliases` attributes that define invariant strings for identifying the eras. The `code` is a single globally unique identifier, and `aliases` are space-separated identifiers unique within the calendar. The code and aliases follow the following rules:
-
-1. Every calendar has either an era with a `code` that is the same as the BCP-47 name of that calendar or an `inheritEras` element pointing to another calendar with such an era. This era should be used for anchoring the "extended year" in the calendar (`u` in the date format pattern).
-2. Eras that count backwards (larger numbers for older years) are suffixed with `-inverse`.
-3. If the same era code is used in multiple calendars, then the calculations for year, month, and day in that era must be the same in all calendars in which it is used. For example, the `ethioaa` era is used in two calendar systems.
-
-If a `<calendar>` contains an `<inheritEras/>` element, all eras from the specified calendar should be inserted in order into the sequence of eras for the current calendar and follow the same start and end date rules. For example:
-
-```xml
-<calendar type="japanese">
-    <inheritEras calendar="gregorian" />
-    <eras>
-        <era type="0" start="645-6-19"/>
-        <era type="1" start="650-2-15"/>
-        <!-- ... -->
-    </eras>
+<calendar type="gregorian">
+  <calendarSystem type="solar" />
+  <eras>
+    <era type="0" end="0-12-31" code="bce" aliases="bc"/> <!-- Before Common Era, Before Christ -->
+    <era type="1" start="1-01-01" code="ce" aliases="ad"/> <!-- Common Era, Anno Domini -->
+  </eras>
 </calendar>
 ```
 
-This means that the two eras from calendar "gregorian" should be inserted into the era list for "japanese" for calculations and formatting.
+If a `<calendar>` contains an `<inheritEras/>` element, all eras from the specified calendar should be inserted in order into the sequence of eras for the current calendar, as described below.
+For example, the following means that the two eras from calendar "gregorian" should be inserted into the era list for "japanese" for calculations and formatting.
+
+```xml
+<calendar type="japanese">
+  <inheritEras calendar="gregorian" />
+  <eras>
+    <era type="232" start="1868-10-23" code="meiji"/>
+    <era type="233" start="1912-07-30" code="taisho"/>
+    <era type="234" start="1926-12-25" code="showa"/>
+    <era type="235" start="1989-01-08" code="heisei"/>
+    <era type="236" start="2019-05-01" code="reiwa"/>
+  </eras>
+</calendar>
+```
+
+Each `era` element has a `code` attribute and optional `aliases` attributes that define invariant strings for identifying the eras. These are more mnemonic than the `type` identifiers (see below).
+The `code` is unique within the calendar, and the `aliases` are space-separated identifiers, each also unique within the calendar.
+
+The `start` date is specified in terms of the equivalent _proleptic_ Gregorian date in the format "yyyy-MM-dd", such as 1842-01-01.
+An omitted start date behaves as if start=-∞.
+
+The order for the eras is given by the following algorithm:
+- Include all eras from the inheritEras calendar, if there is one.
+- An omitted start date behaves as if start=-∞
+- All elements are ordered by their start dates.
+- No two elements can have the same start date (otherwise the data is invalid).
+
+Note that the order of the eras is _not_ necessarily the order in the XML file, nor is it based on the numeric value of the `type`s.
+
+For a given _proleptic_ Gregorian date D and calendar C, the era code for D is in the `era` element in C with the greatest start date ≤ the given date.
+It is also the _first_ `era` element with start date ≤ the given date in C, given the above ordering for `era` elements.
+
+The `type` has an integer value. 
+The type values do not have to start at 0, nor do they need to be in chronological order.
+They are used to access the era names in locale files.
+For example:
+
+```xml
+<era type="232">Meiji</era>
+<era type="233">Taishō</era>
+<era type="234">Shōwa</era>
+<era type="235">Heisei</era>
+<era type="236">Reiwa</era>
+
+The `end` attribute is unused, and is slated for deprecation in the future.
 
 **Note:** The `territories` attribute in the `calendar` element is deprecated. It was formerly used to indicate calendar preference by territory, but this is now given by the _[Calendar Preference Data](#Calendar_Preference_Data)_ below.
 
@@ -1237,7 +1259,7 @@ The calculation of the first day of the week depends on various fields in a loca
 
 This element is for data that indicates, for various regions, the preferred time cycle in the region, as well as all time cycles that are considered acceptable in the region. The defaults are those specified for region 001.
 
-There is a single `preferred` value, and multiple `allowed` values. The meanings of the values H, h, K, k, b and B are defined in [Date Field Symbol Table](#Date_Field_Symbol_Table). The `allowed` values are in preference order, and are used with the 'C' hour skeleton pattern symbol.
+There is a single `preferred` value, and multiple `allowed` values. The meanings of the values H, h, K, k, b and B are defined in [Date Field Symbol Table](#Date_Field_Symbol_Table). The `allowed` values are in preference order; they are used with the 'C' hour skeleton pattern symbol and the `c12` and `c24` values for the [Unicode Hour Cycle Identifier](tr35.md#UnicodeHourCycleIdentifier).
 
 For example, in the following, RU (Russia) is marked as using only 24 hour time, and in particular the 24 hour time that goes from 0..23 (H), rather than from 1..24 (k).
 
@@ -2628,8 +2650,10 @@ The choices are:
 3. **H12:** Display hours numbered from 1 through 12 (the most common 12-hour clock)
 4. **H23:** Display hours numbered from 0 through 23 (the most common 24-hour clock)
 5. **H24:** Display hours numbered from 1 through 24
+6. **Clock12:** Display hours using a 12-hour clock preferred by the locale
+7. **Clock24:** Display hours using a 24-hour clock preferred by the locale
 
-Typically, locales will display a day period on H11 and H12, but the day period could be any of those allowed by CLDR, such as AM/PM (field "a"), noon/midnight (field "b"), or flexible day periods such as "in the afternoon" (field "B"). The choice could depend on locale, length, and calendar system.
+Typically, locales will display a day period on H11, H12, and Clock12, but the day period could be any of those allowed by CLDR, such as AM/PM (field "a"), noon/midnight (field "b"), or flexible day periods such as "in the afternoon" (field "B"). The choice could depend on locale, length, and calendar system.
 
 Note: An option could be added in the future to give the developer more control over how day periods are displayed or to disable day periods when there is sufficient context.
 
@@ -2693,23 +2717,23 @@ The following table contains the basic mapping from a semantic field to a standa
 - Standalone: whether the specified field is the only field in the semantic skeleton. "N/A" means to use the same standard field for both standalone and non-standalone.
 - Option: for Time, this is the [hour cycle](#Semantic_Skeleton_Hour_Cycle), and for Zone, this is the [time zone style](#Semantic_Skeleton_Time_Zone_Style).
 
-| Semantic Field | Standalone? | Option   | Long   | Medium | Short  |
-|----------------|-------------|----------|--------|--------|--------|
-| Year           | N/A         | N/A      | \*     | \*     | \*     |
-| Month          | No          | N/A      | \*     | \*     | \*     |
-| Month          | Yes         | N/A      | LLLL   | LLL    | L      |
-| Day            | N/A         | N/A      | \*     | \*     | \*     |
-| Weekday        | No          | N/A      | EEEE   | EEE    | EEE    |
-| Weekday        | Yes         | N/A      | EEEE   | EEE    | EEEEE  |
-| Time           | N/A         | unset    | C      | C      | C      |
-| Time           | N/A         | H11, H12 | h      | h      | h      |
-| Time           | N/A         | H23, H24 | H      | H      | H      |
-| Zone           | No          | Generic  | v      | v      | v      |
-| Zone           | Yes         | Generic  | vvvv   | vvvv   | v      |
-| Zone           | No          | Specific | z      | z      | z      |
-| Zone           | Yes         | Specific | zzzz   | zzzz   | z      |
-| Zone           | N/A         | Location | VVVV   | VVVV   | VVVV   |
-| Zone           | N/A         | Offset   | O      | O      | O      |
+| Semantic Field | Standalone? | Option            | Long   | Medium | Short  |
+|----------------|-------------|-------------------|--------|--------|--------|
+| Year           | N/A         | N/A               | \*     | \*     | \*     |
+| Month          | No          | N/A               | \*     | \*     | \*     |
+| Month          | Yes         | N/A               | LLLL   | LLL    | L      |
+| Day            | N/A         | N/A               | \*     | \*     | \*     |
+| Weekday        | No          | N/A               | EEEE   | EEE    | EEE    |
+| Weekday        | Yes         | N/A               | EEEE   | EEE    | EEEEE  |
+| Time           | N/A         | unset             | C      | C      | C      |
+| Time           | N/A         | H11, H12, Clock12 | h      | h      | h      |
+| Time           | N/A         | H23, H24, Clock24 | H      | H      | H      |
+| Zone           | No          | Generic           | v      | v      | v      |
+| Zone           | Yes         | Generic           | vvvv   | vvvv   | v      |
+| Zone           | No          | Specific          | z      | z      | z      |
+| Zone           | Yes         | Specific          | zzzz   | zzzz   | z      |
+| Zone           | N/A         | Location          | VVVV   | VVVV   | VVVV   |
+| Zone           | N/A         | Offset            | O      | O      | O      |
 
 \* Lengths for Year, Month, and Day are taken from the [datetimeSkeleton](#dateFormats) in the Long, Medium, and Short variants. The era field, if present, should be included with the Year. For example, in en-US, CLDR 46, the datetimeSkeletons are:
 
