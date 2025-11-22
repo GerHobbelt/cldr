@@ -6,7 +6,7 @@ title: CLDR 48 Release Note
 
 | No. |    Date    | Rel. Note |  Data  |  Charts  | Spec |   Delta  | GitHub Tag | Delta DTD | CLDR JSON |
 |:---:|:----------:|:---------:|:------:|:--------:|:------------:|:---:|:----------:|:---------:|:---------:|
-|  48 | 2025-10-~~XX~~ | [v48](/index/downloads/cldr-48) | ~~[CLDR48](https://unicode.org/Public/cldr/48/)~~ | [Charts48](https://unicode.org/cldr/charts/dev) | [LDML48](https://www.unicode.org/reports/tr35/proposed.html) | [Δ48](https://unicode-org.atlassian.net/issues/?jql=project%20%3D%20CLDR%20AND%20status%20%3D%20Done%20AND%20resolution%20%3D%20Fixed%20AND%20fixversion%20%3D%2048%20ORDER%20BY%20priority%20DESC) | [release-48-beta2](https://github.com/unicode-org/cldr/releases/tag/release-48-beta2) | [ΔDtd48](https://www.unicode.org/cldr/charts/dev/supplemental/dtd_deltas.html) | [48.0.0-BETA2](https://github.com/unicode-org/cldr-json/releases/tag/48.0.0-BETA2)) |
+|  48 | 2025-10-~~XX~~ | [v48](/index/downloads/cldr-48) | ~~[CLDR48](https://unicode.org/Public/cldr/48/)~~ | [Charts48](https://unicode.org/cldr/charts/dev) | [LDML48](https://www.unicode.org/reports/tr35/proposed.html) | [Δ48](https://unicode-org.atlassian.net/issues/?jql=project%20%3D%20CLDR%20AND%20status%20%3D%20Done%20AND%20resolution%20%3D%20Fixed%20AND%20fixversion%20%3D%2048%20ORDER%20BY%20priority%20DESC) | [release-48-beta3](https://github.com/unicode-org/cldr/releases/tag/release-48-beta3) | [ΔDtd48](https://www.unicode.org/cldr/charts/dev/supplemental/dtd_deltas.html) | [48.0.0-BETA3](https://github.com/unicode-org/cldr-json/releases/tag/48.0.0-BETA3)) |
 
 # BETA DRAFT
 
@@ -31,7 +31,7 @@ Some of the most significant changes in this release are:
 - Updated to the latest external standards and data sources, such as the language subtag registry, UN M49 macro regions, ISO 4217 currencies, etc.
 - New formatting options
     - Rational number formats added, allowing for formats like 5½.
-    - For timezones, `usesMetazone` adds two new attributes `stdOffset` and `dstOffset` so that implementations can use either "vanguard" or "rearguard" TZDB data sources.
+    - For timezones, `usesMetazone` adds two new attributes `stdOffset` and `dstOffset` so that implementations can use either "main" or "rearguard" TZDB data sources.
     - There are now combination formats for _relative_ dates + times, such as “tomorrow _at_ 12:30”.
     - Additional units were added for scientific contexts (coulombs, farads, teslas, etc.) and for English systems (fortnights, imperial pints, etc.).
 (New English system units were only translated into a few languages.)
@@ -131,7 +131,7 @@ The description of how to format names for locale IDs has been extended and clar
 In some languages the use of a relative date such as “tomorrow” or “2 days ago” requires a _different_ combining pattern than for a fixed date like “March 20”.
 A new “relative” variant is introduced to allow for those languages.
 - Added some additional flexible date formats (aka `availableFormats`).
-- Many locales had seldom-used short timezone abbreviations (such as EST) removed, or moved to sublocales that use them.
+- Some locales had seldom-used short timezone abbreviations (such as EST) removed, or moved to sublocales that use them.
 - The currency-number formats for `alphaNextToNumber`, `noCurrency`, and compact currency formats are now generated from other data for consistency.
 The `alphaNextToNumber` patterns allow for adding a space between letter currency symbols and numbers, for example, "USD 123" vs "US$123".
 - The tooling made it easier to see when a space was a non-breaking character or not, or a thin version of those. The usage is now more consistent in many locales.
@@ -174,7 +174,7 @@ The explanations of usage are in the [Locale Changes](#locale-changes) section.
 - `era` — the range of `code` values now allows two letters before the first hyphen.
 - `languageData` — the `territories` attribute [`supplementalData.xml`](https://github.com/unicode-org/cldr/blob/main/common/supplemental/supplementalData.xml) was deprecated and data using it removed.
 The definition was unclear and prone to misunderstanding — the more detailed data is in `territoryInfo`. [CLDR-5708][]
-- `usesMetazone` — adds two new attributes `stdOffset` and `dstOffset` so that implementations can use either "vanguard" or "rearguard" TZDB data sources.
+- `usesMetazone` — adds two new attributes `stdOffset` and `dstOffset` so that implementations can use either "main" or "rearguard" TZDB data sources.
 - `numberingSystem` — Unicode 17 data was added.
 
 #### ldmlBCP47
@@ -187,7 +187,7 @@ The definition was unclear and prone to misunderstanding — the more detailed d
 For a full listing, see [BCP47 Delta].
 
 - `nu-tols` numbering system for Tolong Siki digits
-- One additional zone: 	America/Coyhaique = tz-clcxq
+- One additional zone: 	`America/Coyhaique` = `tz-clcxq`
 - Region attributes in timezones for determining regions where it can't be derived from the short TZID
 - Three additional aliases
 
@@ -344,7 +344,7 @@ and feedback that the general practice for exact dates is to use Gregorian for p
 
 ## Known Issues
 
-- _None yet_
+- ISO 3166-2 subdivision codes for Iran changed in 2020, and there are not yet new equivalent stable codes. See [CLDR-19046][] for more details.
 
 ## Acknowledgments
 
@@ -374,6 +374,7 @@ For web pages with different views of CLDR data, see [http://cldr.unicode.org/in
 [CLDR-18894]: https://unicode-org.atlassian.net/browse/CLDR-18894
 [CLDR-18934]: https://unicode-org.atlassian.net/browse/CLDR-18934
 [CLDR-18956]: https://unicode-org.atlassian.net/browse/CLDR-18956
+[CLDR-19046]: https://unicode-org.atlassian.net/browse/CLDR-19046
 
 [Delta DTDs]: https://unicode.org/cldr/charts/48/supplemental/dtd_deltas.html
 [BCP47 Delta]: https://unicode.org/cldr/charts/48/delta/bcp47.html
