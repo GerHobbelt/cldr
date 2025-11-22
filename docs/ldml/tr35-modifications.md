@@ -24,7 +24,7 @@ This is a stable document and may be used as reference material or cited as a no
 > _**A Unicode Technical Standard (UTS)** is an independent specification. Conformance to the Unicode Standard does not imply conformance to any UTS._
 
 _Please submit corrigenda and other comments with the CLDR bug reporting form [[Bugs](https://cldr.unicode.org/index/bug-reports)].
-Related information that is useful in understanding this document is found in the [References](#References).
+Related information that is useful in understanding this document is found in the [References](tr35.md#References).
 For the latest version of the Unicode Standard see [[Unicode](https://www.unicode.org/versions/latest/)].
 For more information see [About Unicode Technical Reports](https://www.unicode.org/reports/about-reports.html) and the [Specifications FAQ](https://www.unicode.org/faq/specifications.html).
 Unicode Technical Reports are governed by the Unicode [Terms of Use](https://www.unicode.org/copyright.html)._
@@ -66,6 +66,9 @@ The LDML specification is divided into the following parts:
 -->
 
 **Changes in LDML Version 48 (Differences from Version 47)**
+<!-- Update the date (need to add/update this comment to pass CI tests that require mods to be updated when spec is) -->
+<!-- Some internal links were updated to fix broken links. -->
+<!-- fixed broken links -->
 
 ### Locale Identifiers and Names
 * [Display Name Elements](tr35-general.md#display-name-elements) Described the usage of the `language` element `menu` values `core` and `extension`, and `alt="menu"`.
@@ -74,18 +77,24 @@ Also revamped the description of how to construct names for locale IDs, for clar
 * [Likely Subtags](tr35.md#likely-subtags) Changed the Canonicalize step to point to the section on canonicalization.
 * [Unicode Locale Identifier](tr35.md#unicode-locale-identifier) Changed the `attribute` component in the EBNF to be `uattribute` for consistency with `ufield`, etc.
 and to reduce confusion with XML attributes.
+* [Unicode Subdivision Codes](tr35.md#Unicode_Subdivision_Codes) Added more
+explanation about the potential reuse of ISO 3166-2 codes, and clarified that
+CLDR does not closely monitor all ISO 3166-2 changes.
 
 ### Misc.
 * [Character Elements](tr35-general.md#character-elements) Added new exemplar types.
-* [DTD Annotations](tr35.md#dtd_annotations) Added the @CDATA annotation, to indicate which elements are generated with @CDATA format
+* [DTD Annotations](tr35.md#DTD_Annotations) Added the @CDATA annotation, to indicate which elements are generated with @CDATA format
 * [Person Name Validation](tr35-personNames.md#person-name-validation) Added guidance for validating person names.
+* [Supplemental Language Data](tr35-info.md#Supplemental_Language_Data) For the `language` subelement of `languageData`, the `territory`
+attribute has been deprecated (and data using it has been removed). A better source for such information is the more detailed data
+in [Supplemental Territory Information](tr35-info.md#Supplemental_Territory_Information).
 
 ### DateTime formats
 
 * [Element dateTimeFormat](tr35-dates.md#dateTimeFormat) Added a new type `relative` for relative date/times, such as "tomorrow at 10:00",
 and updated the guidelines for using the different `dateTimeFormat` types.
 * [Using Time Zone Names](tr35-dates.md#using-time-zone-names) Removed the "specific location format".
-* [timeZoneNames Elements Used for Fallback](tr35-dates.md#timeZoneNames-elements-used-for-fallback) Added the `gmtUnknownFormat`, to indicate when the timezone is unknown.
+* [timeZoneNames Elements Used for Fallback](tr35-dates.md#timeZoneNames_Elements_Used_for_Fallback) Added the `gmtUnknownFormat`, to indicate when the timezone is unknown.
 * [Metazone Names](tr35-dates.md#metazone-names) Added `usesMetazone`, to specify which offset is considered standard time, and which offset is considered daylight.
 * [Time Zone Format Terminology](tr35-dates.md#time-zone-format-terminology) Added the **Localized GMT format** (replacing the **Specific location format**).
 This affects the behavior of the `z` timezone format symbol.
@@ -98,12 +107,12 @@ The order of execution is also clearly specified.
 * [Compact Number Formats](tr35-numbers.md#compact-number-formats) Specified the mechanism for formatting compact numbers more precisely.
 * [Rule-Based Number Formatting](tr35-numbers.md#) Added a full specification.
 The rules have been converted to a “flat” format, which is easier for clients to handle (the old format will be retained for one more release).
-* [Rational Numbers](tr35-numbers.md#rational-numbers) Added support for formatting fractions like 5½.
+* [Rational Numbers](tr35-numbers.md#rational-numbers) Added support for formatting fractions like 5½ in technical preview.
 
 ### Units of Measurement
 * [Unit Syntax](tr35-general.md#unit-syntax) Simplified the EBNF `product_unit` and added an additional well-formedness constraint for mixed units.
-* [Unit Identifier Normalization](#tr35-general.md) Modified the normalization process
-* [Mixed Units](tr35-general.md#mixed-units) Modified the guidance for handling precision.
+* [Unit Identifier Normalization](tr35-info.md#Unit_Identifier_Normalization) Modified the normalization process
+* [Mixed Units](tr35-general.md#Unit_Sequences) Modified the guidance for handling precision.
 
 ### Collation
 * [Collation](tr35-collation.md) Added the new `FractionalUCA_blanked.txt` to the root collation data files.
@@ -121,6 +130,7 @@ The rules have been converted to a “flat” format, which is easier for client
 
 * [`display`](tr35-keyboards.md#element-display): Noted that a key without output may be indicated by means of the `keyId=` attribute on the display.
 * [`layer`](tr35-keyboards.md#element-layer): Noted the use of the `modifiers=` attribute for hardware layouts being used as touch layouts.
+* References and links into the section concerning keyboard test data (which was removed prior to spec finalization) were removed.
 
 ### Modifications section
 

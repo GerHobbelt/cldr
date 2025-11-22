@@ -26,7 +26,7 @@ This is a stable document and may be used as reference material or cited as a no
 > _**A Unicode Technical Standard (UTS)** is an independent specification. Conformance to the Unicode Standard does not imply conformance to any UTS._
 
 _Please submit corrigenda and other comments with the CLDR bug reporting form [[Bugs](https://cldr.unicode.org/index/bug-reports)].
-Related information that is useful in understanding this document is found in the [References](#References).
+Related information that is useful in understanding this document is found in the [References](tr35.md#References).
 For the latest version of the Unicode Standard see [[Unicode](https://www.unicode.org/versions/latest/)].
 For more information see [About Unicode Technical Reports](https://www.unicode.org/reports/about-reports.html) and the [Specifications FAQ](https://www.unicode.org/faq/specifications.html).
 Unicode Technical Reports are governed by the Unicode [Terms of Use](https://www.unicode.org/copyright.html)._
@@ -316,25 +316,26 @@ The exact format of the path is provisional in CLDR 29, but as currently shown:
 <!ELEMENT language EMPTY >
 <!ATTLIST language type NMTOKEN #REQUIRED >
 <!ATTLIST language scripts NMTOKENS #IMPLIED >
-<!ATTLIST language territories NMTOKENS #IMPLIED >
 <!ATTLIST language variants NMTOKENS #IMPLIED >
 <!ATTLIST language alt NMTOKENS #IMPLIED >
 ```
 
-The language data is used for consistency checking and testing. It provides a list of which languages are used with which scripts and in which countries. To a large extent, however, the territory list has been superseded by the data in _[Supplemental Territory Information](#Supplemental_Territory_Information)_ .
+The language data is used for consistency checking and testing. It provides a list of which languages are used with which scripts.
+Formerly a `territory` attribute (deprecated in CLDR 48) also provided a list of territories in which the language was used; however
+that has been superseded by the data in _[Supplemental Territory Information](#Supplemental_Territory_Information)_ .
 
 ```xml
 <languageData>
-    <language type="af" scripts="Latn" territories="ZA" />
-    <language type="am" scripts="Ethi" territories="ET" />
-    <language type="ar" scripts="Arab" territories="AE BH DZ EG IN IQ JO KW LB LY MA OM PS QA SA SD SY TN YE" />
+    <language type="af" scripts="Latn"/>
+    <language type="am" scripts="Ethi"/>
+    <language type="ar" scripts="Arab"/>
     ...
 ```
 
-If the language is not a modern language, or the script is not a modern script, or the language not a major language of the territory, then the `alt` attribute is set to secondary.
+If the language is not a modern language, or the script is not a modern script, then the `alt` attribute is set to secondary.
 
 ```xml
-    <language type="fr" scripts="Latn" territories="IT US" alt="secondary" />
+    <language type="ar" scripts="Syrc" alt="secondary"/>
     ...
 ```
 

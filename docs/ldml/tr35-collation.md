@@ -26,7 +26,7 @@ This is a stable document and may be used as reference material or cited as a no
 > _**A Unicode Technical Standard (UTS)** is an independent specification. Conformance to the Unicode Standard does not imply conformance to any UTS._
 
 _Please submit corrigenda and other comments with the CLDR bug reporting form [[Bugs](https://cldr.unicode.org/index/bug-reports)].
-Related information that is useful in understanding this document is found in the [References](#References).
+Related information that is useful in understanding this document is found in the [References](tr35.md#References).
 For the latest version of the Unicode Standard see [[Unicode](https://www.unicode.org/versions/latest/)].
 For more information see [About Unicode Technical Reports](https://www.unicode.org/reports/about-reports.html) and the [Specifications FAQ](https://www.unicode.org/faq/specifications.html).
 Unicode Technical Reports are governed by the Unicode [Terms of Use](https://www.unicode.org/copyright.html)._
@@ -290,7 +290,7 @@ Comments with DUCET-style weights in files other than allkeys_CLDR.txt and allke
   An implementation may modify the weights further to fit the needs of its data structures.
 
 * **UCA_Rules** - A file that specifies the root collation order in the form of [tailoring rules](#Collation_Tailorings). This is only an approximation of the FractionalUCA data, since the rule syntax cannot express every detail of the collation elements. For example, in the DUCET and in FractionalUCA, tertiary differences are usually expressed with special tertiary weights on all collation elements of an expansion, while a typical from-rules builder will modify the tertiary weight of only one of the collation elements.
-* **CollationTest_CLDR** - The CLDR versions of the CollationTest files, which use the tailorings for CLDR. For information on the format, see [CollationTest.html](https://www.unicode.org/Public/UCA/latest/CollationTest.html) in the [UCA data directory](https://www.unicode.org/reports/tr10/#Data10).
+* **CollationTest_CLDR** - The CLDR versions of the CollationTest files, which use the tailorings for CLDR. For information on the format, see [UTS #10: 12.2 Conformance Tests](https://unicode.org/reports/tr10/#Conformance_Tests) and the [UCA data directory](https://www.unicode.org/reports/tr10/#Data10).
   * CollationTest_CLDR_NON_IGNORABLE.txt
   * CollationTest_CLDR_SHIFTED.txt
 
