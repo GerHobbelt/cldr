@@ -574,6 +574,7 @@ Hungary	HU	"9,825,704"	99%	"289,600,000,000"		Slovak	sk	"11,300"
 Hungary	HU	"9,825,704"	99%	"289,600,000,000"		Slovenian	sl	"4,980"
 Iceland	IS	"343,518"	99%	"18,180,000,000"		Danish	da	"2,250"
 Iceland	IS	"343,518"	99%	"18,180,000,000"	official	Icelandic	is	100%			http://en.wikipedia.org/wiki/Iceland - Icelandic official
+India	IN	"1,296,834,042"	63%	"9,474,000,000,000"		Adilabad Gondi	wsg	"275,379"			https://iso639-3.sil.org/sites/iso639-3/files/change_requests/2015/2015-062_wsg.pdf
 India	IN	"1,296,834,042"	63%	"9,474,000,000,000"		Ao Naga	njo	"294,000"
 India	IN	"1,296,834,042"	63%	"9,474,000,000,000"	official_regional	Assamese	as	"16,900,000"
 India	IN	"1,296,834,042"	63%	"9,474,000,000,000"		Awadhi	awa	"24,000,000"	5%
@@ -763,6 +764,7 @@ Japan	JP	"126,168,156"	99%	"5,443,000,000,000"	official	Japanese	ja	95%
 Japan	JP	"126,168,156"	99%	"5,443,000,000,000"		Korean	ko	"661,000"
 Jersey	JE	"99,602"	99%	"5,569,000,000"	official	English	en	95%
 Jordan	JO	"10,458,413"	96%	"89,000,000,000"	official	Arabic	ar	100%			"http://memory.loc.gov/cgi-bin/query/r?frd/cstdy:@field(DOCID+jo0039) says: All Jordanians, regardless of ethnicity or religion, speak Arabic, the official language of Jordan"
+Jordan	JO	"10,458,413"	96%	"89,000,000,000"		Adyghe	ady	"105,000"			https://joshuaproject.net/people_groups/10161/JO
 Jordan	JO	"10,458,413"	96%	"89,000,000,000"		English	en	45%			"http://memory.loc.gov/cgi-bin/query/r?frd/cstdy:@field(DOCID+jo0039) says: All Jordanians, regardless of ethnicity or religion, speak Arabic, the official language of Jordan"
 Jordan	JO	"10,458,413"	96%	"89,000,000,000"		Levantine Arabic	apc	"6,860,000"			https://en.wikipedia.org/wiki/Levantine_Arabic#Speakers_by_country
 Kazakhstan	KZ	"18,744,548"	100%	"478,600,000,000"		English	en	15%
@@ -1549,6 +1551,8 @@ United States	US	"329,256,465"	99%	"19,490,000,000,000"		Ido	io	"100"
 Unknown Region	ZZ	0	0%	0		Ido	io	0	99%
 Unknown Region	ZZ	0	0%	0		Interlingua	ia	0	99%
 Unknown Region	ZZ	0	0%	0		Interlingue	ie	0	99%
+Unknown Region	ZZ	0	0%	0		Interslavic	isv_Latn	20000	99%		https://web.archive.org/web/20230524211611/https://mel.fm/zhizn/istorii/9084523-da-by-komunikovali-edin-s-drugym-chto-takoye-mezhslavyansky-yazyk-i-zachem-ego-pridumali
+Unknown Region	ZZ	0	0%	0		Interslavic	isv_Cyrl	20000	99%		https://web.archive.org/web/20230524211611/https://mel.fm/zhizn/istorii/9084523-da-by-komunikovali-edin-s-drugym-chto-takoye-mezhslavyansky-yazyk-i-zachem-ego-pridumali
 Unknown Region	ZZ	0	0%	0		Kotava	avk	0	99%
 Unknown Region	ZZ	0	0%	0		Lingua Franca Nova	lfn	0	99%		An artificial language.  See http://en.wikipedia.org/wiki/Lingua_Franca_Nova
 Unknown Region	ZZ	0	0%	0		Novial	nov	0	99%		An artificial language.  See http://en.wikipedia.org/wiki/Novial_language

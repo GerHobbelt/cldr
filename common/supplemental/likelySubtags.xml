@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE supplementalData SYSTEM "../../common/dtd/ldmlSupplemental.dtd">
 <!--
-Copyright © 1991-2025 Unicode, Inc.
+Copyright © 1991-2026 Unicode, Inc.
 For terms of use, see http://www.unicode.org/copyright.html
 SPDX-License-Identifier: Unicode-3.0
 CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
@@ -318,6 +318,7 @@ not be patched by hand, as any changes made in that fashion may be lost.
 		<likelySubtag from="inh" to="inh_Cyrl_RU"/>		<!--Ingush‧?‧?	➡ Ingush‧Cyrillic‧Russia-->
 		<likelySubtag from="io" to="io_Latn_001"/>		<!--Ido‧?‧?	➡ Ido‧Latin‧world-->
 		<likelySubtag from="is" to="is_Latn_IS"/>		<!--Icelandic‧?‧?	➡ Icelandic‧Latin‧Iceland-->
+		<likelySubtag from="isv" to="isv_Latn_001"/>		<!--Interslavic‧?‧?	➡ Interslavic‧Latin‧world-->
 		<likelySubtag from="it" to="it_Latn_IT"/>		<!--Italian‧?‧?	➡ Italian‧Latin‧Italy-->
 		<likelySubtag from="itz" to="itz_Latn_GT"/>		<!--Itzá‧?‧?	➡ Itzá‧Latin‧Guatemala-->
 		<likelySubtag from="iu" to="iu_Cans_CA"/>		<!--Inuktitut‧?‧?	➡ Inuktitut‧Unified Canadian Aboriginal Syllabics‧Canada-->
@@ -853,7 +854,7 @@ not be patched by hand, as any changes made in that fashion may be lost.
 		<likelySubtag from="wls" to="wls_Latn_WF"/>		<!--Wallisian‧?‧?	➡ Wallisian‧Latin‧Wallis & Futuna-->
 		<likelySubtag from="wni" to="wni_Arab_KM"/>		<!--Ndzwani Comorian‧?‧?	➡ Ndzwani Comorian‧Arabic‧Comoros-->
 		<likelySubtag from="wo" to="wo_Latn_SN"/>		<!--Wolof‧?‧?	➡ Wolof‧Latin‧Senegal-->
-		<likelySubtag from="wsg" to="wsg_Gong_IN"/>		<!--Adilabad Gondi‧?‧?	➡ Adilabad Gondi‧Gunjala Gondi‧India-->
+		<likelySubtag from="wsg" to="wsg_Telu_IN"/>		<!--Adilabad Gondi‧?‧?	➡ Adilabad Gondi‧Telugu‧India-->
 		<likelySubtag from="wtm" to="wtm_Deva_IN"/>		<!--Mewati‧?‧?	➡ Mewati‧Devanagari‧India-->
 		<likelySubtag from="wuu" to="wuu_Hans_CN"/>		<!--Wu Chinese‧?‧?	➡ Wu Chinese‧Simplified‧China-->
 		<likelySubtag from="xag" to="xag_Aghb_AZ"/>		<!--Aghwan‧?‧?	➡ Aghwan‧Caucasian Albanian‧Azerbaijan-->
@@ -1165,6 +1166,7 @@ not be patched by hand, as any changes made in that fashion may be lost.
 		<likelySubtag from="und_Cyrl_GE" to="ab_Cyrl_GE"/>		<!--?‧Cyrillic‧Georgia	➡ Abkhazian‧Cyrillic‧Georgia-->
 		<likelySubtag from="und_Cyrl_GR" to="mk_Cyrl_GR"/>		<!--?‧Cyrillic‧Greece	➡ Macedonian‧Cyrillic‧Greece-->
 		<likelySubtag from="und_Cyrl_IR" to="kaa_Cyrl_IR"/>		<!--?‧Cyrillic‧Iran	➡ Kara-Kalpak‧Cyrillic‧Iran-->
+		<likelySubtag from="und_Cyrl_JO" to="ady_Cyrl_JO"/>		<!--?‧Cyrillic‧Jordan	➡ Adyghe‧Cyrillic‧Jordan-->
 		<likelySubtag from="und_Cyrl_KG" to="ky_Cyrl_KG"/>		<!--?‧Cyrillic‧Kyrgyzstan	➡ Kyrgyz‧Cyrillic‧Kyrgyzstan-->
 		<likelySubtag from="und_Cyrl_MD" to="uk_Cyrl_MD"/>		<!--?‧Cyrillic‧Moldova	➡ Ukrainian‧Cyrillic‧Moldova-->
 		<likelySubtag from="und_Cyrl_ME" to="sr_Cyrl_ME"/>		<!--?‧Cyrillic‧Montenegro	➡ Serbian‧Cyrillic‧Montenegro-->

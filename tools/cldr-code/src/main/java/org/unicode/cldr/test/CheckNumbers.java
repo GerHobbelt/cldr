@@ -19,6 +19,7 @@ import org.unicode.cldr.test.CheckCLDR.CheckStatus.Type;
 import org.unicode.cldr.test.DisplayAndInputProcessor.NumericType;
 import org.unicode.cldr.util.CLDRConfig;
 import org.unicode.cldr.util.CLDRFile;
+import org.unicode.cldr.util.CLDRLocale;
 import org.unicode.cldr.util.CldrUtility;
 import org.unicode.cldr.util.Factory;
 import org.unicode.cldr.util.ICUServiceBuilder;
@@ -47,13 +48,12 @@ public class CheckNumbers extends FactoryCheckCLDR {
      * If you are going to use ICU services, then ICUServiceBuilder will allow you to create them
      * entirely from CLDR data, without using the ICU data.
      */
-    private ICUServiceBuilder icuServiceBuilder = new ICUServiceBuilder();
+    private ICUServiceBuilder icuServiceBuilder;
 
     private Set<Count> pluralTypes;
     private Map<Count, Set<Double>> pluralExamples;
     private Set<String> validNumberingSystems;
 
-    private String defaultNumberingSystem;
     private String defaultTimeSeparatorPath;
     private String patternForHm;
 
@@ -93,18 +93,19 @@ public class CheckNumbers extends FactoryCheckCLDR {
             CLDRFile cldrFileToCheck, Options options, List<CheckStatus> possibleErrors) {
         if (cldrFileToCheck == null) return this;
         super.handleSetCldrFileToCheck(cldrFileToCheck, options, possibleErrors);
-        icuServiceBuilder.setCldrFile(getResolvedCldrFileToCheck());
+        String localeId = cldrFileToCheck.getLocaleID();
+        CLDRLocale loc = CLDRLocale.getInstance(localeId);
+        this.icuServiceBuilder = ICUServiceBuilder.forLocale(loc);
         isPOSIX = cldrFileToCheck.getLocaleID().indexOf("POSIX") >= 0;
         SupplementalDataInfo supplementalData =
                 SupplementalDataInfo.getInstance(getFactory().getSupplementalDirectory());
-        PluralInfo pluralInfo =
-                supplementalData.getPlurals(PluralType.cardinal, cldrFileToCheck.getLocaleID());
+        PluralInfo pluralInfo = supplementalData.getPlurals(PluralType.cardinal, localeId);
         pluralTypes = pluralInfo.getCounts();
         pluralExamples = pluralInfo.getCountToExamplesMap();
         validNumberingSystems = supplementalData.getNumberingSystems();
 
         CLDRFile resolvedFile = getResolvedCldrFileToCheck();
-        defaultNumberingSystem =
+        String defaultNumberingSystem =
                 resolvedFile.getWinningValue("//ldml/numbers/defaultNumberingSystem");
         if (defaultNumberingSystem == null
                 || !validNumberingSystems.contains(defaultNumberingSystem)) {
@@ -259,21 +260,19 @@ public class CheckNumbers extends FactoryCheckCLDR {
         }
         XPathParts parts = XPathParts.getFrozenInstance(path);
 
-        // TODO: re-enable this commented-out check
-        // Reference: https://unicode-org.atlassian.net/browse/CLDR-18722
-        /*
-        // Check that number formats are for an explicit number system.
-        String numberSystem = parts.getAttributeValue(2, "numberSystem");
-        if (numberSystem == null) {
-            result.add(
-                    new CheckStatus()
-                            .setCause(this)
-                            .setMainType(CheckStatus.errorType)
-                            .setSubtype(Subtype.missingNumberingSystem)
-                            .setMessage(
-                                    "Number formats must have an explicit numberSystem attribute."));
+        // Check that number formats are for an explicit number system (but not for currency paths)
+        if (type != NumericType.CURRENCY) {
+            String numberSystem = parts.getAttributeValue(2, "numberSystem");
+            if (numberSystem == null) {
+                result.add(
+                        new CheckStatus()
+                                .setCause(this)
+                                .setMainType(CheckStatus.errorType)
+                                .setSubtype(Subtype.missingNumberingSystem)
+                                .setMessage(
+                                        "Number formats must have an explicit numberSystem attribute."));
+            }
         }
-         */
 
         // Do tests that need to split the values
 

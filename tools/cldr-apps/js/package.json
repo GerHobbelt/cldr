@@ -37,7 +37,7 @@
     "mocha-headless-chrome": "^4.0.0",
     "style-loader": "^3.3.3",
     "vue-loader": "^17.0.1",
-    "webpack": "^5.98.0",
+    "webpack": "^5.102.1",
     "webpack-cli": "^5.0.1"
   },
   "private": true,
@@ -50,6 +50,7 @@
     "glyphicons-only-bootstrap": "^1.0.1",
     "marked": "^4.3.0",
     "swagger-client": "^3.26.7",
+    "unicode-name": "^1.1.0",
     "vue": "^3.2.47",
     "vue-virtual-scroller": "^2.0.0-beta.8",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"

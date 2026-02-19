@@ -6,7 +6,8 @@ title: CLDR 48 Release Note
 
 | No. |    Date    | Rel. Note |  Data  |  Charts  | Spec |   Delta  | GitHub Tag | Delta DTD | CLDR JSON |
 |:---:|:----------:|:---------:|:------:|:--------:|:------------:|:---:|:----------:|:---------:|:---------:|
-|  48 | 2025-10-29 | [v48](/index/downloads/cldr-48) | [CLDR48](https://unicode.org/Public/cldr/48/) | [Charts48](https://unicode.org/cldr/charts/48/) | [LDML48](https://www.unicode.org/reports/tr35/48/tr35.html) | [Δ48](https://unicode-org.atlassian.net/issues/?jql=project%20%3D%20CLDR%20AND%20status%20%3D%20Done%20AND%20resolution%20%3D%20Fixed%20AND%20fixversion%20%3D%2048%20ORDER%20BY%20priority%20DESC) | [release-48](https://github.com/unicode-org/cldr/releases/tag/release-48) | [ΔDtd48](https://www.unicode.org/cldr/charts/48/supplemental/dtd_deltas.html) | [48.0.0](https://github.com/unicode-org/cldr-json/releases/tag/48.0.0) |
+|  48 | 2025-10-29 | [v48] | [CLDR48] | [Charts48]| [LDML48] | [Δ48] | [release-48] | [ΔDtd48] | [48.0.0] |
+|  48.1 | 2026-01-08 | [v48.1] | [CLDR48.1] | TBD | [LDML48.1] | [Δ48.1] | [release-48-1] | n/a | [48.1.0] |
 
 ## Overview
 
@@ -18,6 +19,8 @@ adapting software to the conventions of different languages.
 CLDR 48 was an open submission cycle allowing contributors to supply data for their languages via the CLDR Survey Tool —
 data that is widely used to support much of the world’s software.
 This data is also a factor in determining which languages are supported on mobile phones and computer operating systems.
+
+Release notes for CLDR 48.1 can be found in the [48.1 Changes section](/downloads/cldr-48#481-changes)
 
 ### Changes
 
@@ -333,7 +336,22 @@ For example: El Aaiun → El Aaiún; Casey → Casey Station; Hovd Time → Khov
 - A few additional availableFormat and interval format patterns have been added, such as GyMEd and Hv, to fill some gaps.
 - The metazone for Hawaii has changed.
 
-### V49 advance warnings
+## 48.1 Changes
+
+Version 48.1 is a dot release. The following summarizes the changes. For a full listing, see [Δ48.1](https://unicode-org.atlassian.net/issues/?jql=project+%3D+CLDR+AND+status+%3D+Done+AND+resolution+%3D+Fixed+AND+fixVersion+%3D+%2248.1%22+ORDER+BY+priority+DESC)
+
+### Data changes
+
+- Update RSD (Serbian Dinar) to use 2-digits for non-cash and 0-digits for cash.
+- Fix issue with tippi and bindi in Punjabi exemplars.
+- Fix parsing issue in numeric date+time patterns for zh_Hant and yue.
+- Fix issues with hour cycle display names for several languages.
+
+### Spec changes
+
+- Segmentations - removed outdated note about `X Format*->` not being supported in CLDR since it no longer accurate.
+
+## V49 advance warnings
 
 The following changes are planned for CLDR 49. Please plan accordingly to avoid disruption.
 - H24 will be deprecated. If it is encountered, it will have H23 behavior. There is no known intentional usage of H24. If you have a current need for H24 instead of H23, please comment on [CLDR-18303][].
@@ -346,6 +364,7 @@ and feedback that the general practice for exact dates is to use Gregorian for p
 ## Known Issues
 
 - ISO 3166-2 subdivision codes for Iran changed in 2020, and there are not yet new equivalent stable codes. See [CLDR-19046][] for more details.
+- Segmentation format changed, spec updated in CLDR 48.1 to remove obsolete note. See [CLDR-19140][] for more details.
 
 ## Acknowledgments
 
@@ -377,6 +396,7 @@ For web pages with different views of CLDR data, see [http://cldr.unicode.org/in
 [CLDR-18956]: https://unicode-org.atlassian.net/browse/CLDR-18956
 [CLDR-19029]: https://unicode-org.atlassian.net/browse/CLDR-19029
 [CLDR-19046]: https://unicode-org.atlassian.net/browse/CLDR-19046
+[CLDR-19140]: https://unicode-org.atlassian.net/browse/CLDR-19140
 
 [Delta DTDs]: https://unicode.org/cldr/charts/48/supplemental/dtd_deltas.html
 [BCP47 Delta]: https://unicode.org/cldr/charts/48/delta/bcp47.html
@@ -384,3 +404,23 @@ For web pages with different views of CLDR data, see [http://cldr.unicode.org/in
 [Likely Subtags]: https://www.unicode.org/cldr/charts/48/delta/supplemental-data.html#Likely
 [Transforms Delta]: https://unicode.org/cldr/charts/48/delta/transforms.html
 [Delta Data]: https://unicode.org/cldr/charts/48/delta/index.html
+
+<!-- 48.1 release: 2026-01-08 -->
+[v48.1]: /downloads/cldr-48#481-changes
+[CLDR48.1]: https://unicode.org/Public/cldr/48.1/
+[Charts48]: https://unicode.org/cldr/charts/48.1/
+[LDML48.1]: https://www.unicode.org/reports/tr35/48/tr35.html
+[release-48-1]: https://github.com/unicode-org/cldr/releases/tag/release-48-1
+[Δ48.1]: https://unicode-org.atlassian.net/issues/?jql=project%20%3D%20CLDR%20AND%20status%20%3D%20Done%20AND%20resolution%20%3D%20Fixed%20AND%20fixversion%20%3D%2048.1%20ORDER%20BY%20priority%20DESC
+[48.1.0]: https://github.com/unicode-org/cldr-json/releases/tag/48.1.0
+
+<!-- 48 release: 2025-10-29 -->
+[v48]: /downloads/cldr-48
+[CLDR48]: https://unicode.org/Public/cldr/48/
+[Charts48]: https://unicode.org/cldr/charts/48
+[LDML48]: https://www.unicode.org/reports/tr35/tr35-76/tr35.html
+[Δ48]: https://unicode-org.atlassian.net/issues/?jql=project%20%3D%20CLDR%20AND%20status%20%3D%20Done%20AND%20resolution%20%3D%20Fixed%20AND%20fixversion%20%3D%2048%20ORDER%20BY%20priority%20DESC
+[release-48]: https://github.com/unicode-org/cldr/releases/tag/release-48
+[ΔDtd48]: https://www.unicode.org/cldr/charts/48/supplemental/dtd_deltas.html
+[48.0.0]: https://github.com/unicode-org/cldr-json/releases/tag/48.0.0
+

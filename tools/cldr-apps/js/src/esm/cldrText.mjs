@@ -4,6 +4,14 @@
 const CLDR_TEXT_DEBUG = false;
 
 const strings = {
+  badLocalesExist: "Invalid locale IDs are assigned to some Survey Tool users.",
+  badLocalesPleaseLogIn: "To view, please log in as Admin.",
+  badLocalesCurrentlyNone:
+    "There are currently no invalid locale IDs assigned to users 🎉",
+  badLocalesFixAll: "Fix all invalid locale IDs!",
+  badLocalesFixSuccessHeader: "Success",
+  badLocalesFixSuccessDetail: "The invalid locale IDs were successfully fixed",
+
   dash_needs_locale_and_coverage:
     "Please choose a locale and a coverage level first.",
 
@@ -164,7 +172,7 @@ const strings = {
   info_panel_selected:
     "Description of the currently selected candidate item, including any errors, warnings, or examples",
 
-  // pClass ( see DataPage.java)
+  // Status of candidate item (see CandidateStatus in DataPage.java)
   item_description_winner: "This item is currently winning.",
   item_description_alias_same_locale:
     "This item is inherited from another field in this locale.",
@@ -175,7 +183,6 @@ const strings = {
     "This item is inherited from the root locale.",
   item_description_loser: "This item is currently losing.",
   item_description_fallback: "This item is inherited from the ${0} locale.",
-  pClassExplain_desc: "This area shows the item's status.",
   followAlias: "Jump to Original ⇒",
   noFollowAlias: "This item is constructed from other values.",
 
@@ -489,6 +496,7 @@ const strings = {
   special_admin: "Admin Panel",
   special_add_user: "Add a Survey Tool user",
   special_auto_import: "Import Old Winning Votes",
+  special_bad_locales: "Invalid Locale IDs",
   special_bulk_close_posts: "Bulk Close Posts",
   special_cla: "Contributor License Agreement",
   special_createAndLogin: "Create and Login",
