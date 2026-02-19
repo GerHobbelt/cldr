@@ -2289,7 +2289,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="hms">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Hms">H:mm:ss</dateFormatItem>
 						<dateFormatItem id="hv">↑↑↑</dateFormatItem>
-						<dateFormatItem id="Hv">↑↑↑</dateFormatItem>
+						<dateFormatItem id="Hv">H v</dateFormatItem>
 						<dateFormatItem id="M">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Md">d.M</dateFormatItem>
 						<dateFormatItem id="MEd">E, d/M</dateFormatItem>
@@ -2891,7 +2891,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="hmv">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Hmv">↑↑↑</dateFormatItem>
 						<dateFormatItem id="hv">↑↑↑</dateFormatItem>
-						<dateFormatItem id="Hv">↑↑↑</dateFormatItem>
+						<dateFormatItem id="Hv">H v</dateFormatItem>
 						<dateFormatItem id="M">↑↑↑</dateFormatItem>
 						<dateFormatItem id="Md">d.M</dateFormatItem>
 						<dateFormatItem id="MEd">E, d.M</dateFormatItem>
@@ -3670,15 +3670,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="yyyyQQQQ">QQQQ y</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
-			</calendar>
-			<calendar type="japanese">
-				<eras>
-					<eraAbbr>
-						<era type="0">טאיקה</era>
-						<era type="24">נינג׳ו</era>
-						<era type="73">שוטוקו</era>
-					</eraAbbr>
-				</eras>
 			</calendar>
 			<calendar type="persian">
 				<months>
