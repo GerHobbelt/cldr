@@ -127,6 +127,7 @@ Bouvet Island	BV	6	99%	"44,930"		Norwegian	no	100%			https://en.wikipedia.org/wi
 Brazil	BR	"208,846,892"	90%	"3,248,000,000,000"		English	en	8%
 Brazil	BR	"208,846,892"	90%	"3,248,000,000,000"		German	de	"1,750,000"
 Brazil	BR	"208,846,892"	90%	"3,248,000,000,000"		Guajajára	gub	"17,500"
+Brazil	BR	"208,846,892"	90%	"3,248,000,000,000"		Hunsrik	hrx	"1,225,500"			https://lume.ufrgs.br/handle/10183/194384
 Brazil	BR	"208,846,892"	90%	"3,248,000,000,000"		Italian	it	"583,000"
 Brazil	BR	"208,846,892"	90%	"3,248,000,000,000"		Japanese	ja	"443,000"
 Brazil	BR	"208,846,892"	90%	"3,248,000,000,000"		Kaingang	kgp	"50,000"			http://www.portalkaingang.org/index_povo_1default.htm
@@ -319,7 +320,6 @@ Côte d’Ivoire	CI	"26,260,582"	57%	"97,160,000,000"		Cebaara Senoufo	sef	4.3%	
 Côte d’Ivoire	CI	"26,260,582"	57%	"97,160,000,000"		Dan	dnj	4%	1%
 Côte d’Ivoire	CI	"26,260,582"	57%	"97,160,000,000"	official	French	fr	33.6%			https://observatoire.francophonie.org//wp-content/uploads/2022/03/odsef-lfdm-2022.pdf Organisation internationale de la Francophonie Meta-study. Data from 2014 census
 Côte d’Ivoire	CI	"26,260,582"	57%	"97,160,000,000"		Koro	kfo	"61,300"
-Côte d’Ivoire	CI	"26,260,582"	57%	"97,160,000,000"		Koro Wachi	bqv	"45,500"	10%
 Croatia	HR	"4,270,480"	99%	"102,100,000,000"	official	Croatian	hr	99%
 Croatia	HR	"4,270,480"	99%	"102,100,000,000"		English	en	49%
 Croatia	HR	"4,270,480"	99%	"102,100,000,000"	official_regional	Italian	it	"66,300"
@@ -365,7 +365,7 @@ Egypt	EG	"99,413,317"	74%	"1,204,000,000,000"		Coptic	cop_Copt	6%			https://www.
 Egypt	EG	"99,413,317"	74%	"1,204,000,000,000"		Greek	el	"60,900"
 El Salvador	SV	"6,187,271"	85%	"51,170,000,000"	official	Spanish	es	89%
 El Salvador	SV	"6,187,271"	85%	"51,170,000,000"		Nahaut Pipil	ppl	2730			https://translatorswithoutborders.org/language-data-for-el-salvador
-El Salvador	SV	"6,187,271"	85%	"51,170,000,000"		Cacaopera	ccr	3700			ttps://translatorswithoutborders.org/language-data-for-el-salvador
+El Salvador	SV	"6,187,271"	85%	"51,170,000,000"		Cacaopera	ccr	3700			https://translatorswithoutborders.org/language-data-for-el-salvador
 El Salvador	SV	"6,187,271"	85%	"51,170,000,000"		Lenca	len	1340			https://translatorswithoutborders.org/language-data-for-el-salvador
 Equatorial Guinea	GQ	"797,457"	94%	"31,520,000,000"		Bube	bvb	7.9%
 Equatorial Guinea	GQ	"797,457"	94%	"31,520,000,000"		Fang	fan	51%

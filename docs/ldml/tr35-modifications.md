@@ -30,6 +30,9 @@ This is a partial document, describing only the changes to the LDML since the pr
 
 <!--
       Note: As of CLDR-18209, ALL changes to the spec require this file, tr35-modifications.md to be modified as well. If you are making a change that doesn't need to be noted, or is already noted, please simply add an HTML comment (such as this one) to the appropriate section.  The comment will not be visible to viewers of the HTML page.
+      
+      - regenerated ToC
+      
 -->
 
 **Changes in LDML Version 49 (Differences from Version 48.2)**
@@ -40,7 +43,9 @@ This is a partial document, describing only the changes to the LDML since the pr
 **Changes in LDML Version 48.2 (Differences from Version 48.1)**
 
 * New section [Nested Bracket Replacement](tr35-general.html#Character_Nested_Bracket_Replacement)
-* [Locale Display Name Algorithm](tr35-general.html#locale_display_name_algorithm) updated to use the nested bracket replacement data and avoid nested parentheses by flattening `-t-` (transform) language names
+* [Locale Display Name Algorithm](tr35-general.html#locale_display_name_algorithm) updated to use the nested bracket replacement data and avoid nested parentheses by flattening `-t-` (transform) language names.
+    * As part of this, the display name order is changed so that any names for `-u-` items appear _before_ (instead of after) any names for `-t-` items.
+* Specify that missing `<keys>` translations should fall back to the key identifier
 * The section "Enhanced Language Matching" is retitled as [Language Matching Variables](tr35.html#enhanced-language-matching) and clarified.
 
 ### MessageFormat
@@ -118,6 +123,7 @@ The rules have been converted to a “flat” format, which is easier for client
 * [`display`](tr35-keyboards.md#element-display): Noted that a key without output may be indicated by means of the `keyId=` attribute on the display.
 * [`layer`](tr35-keyboards.md#element-layer): Noted the use of the `modifiers=` attribute for hardware layouts being used as touch layouts.
 * References and links into the section concerning keyboard test data (which was removed prior to spec finalization) were removed.
+* Normalization for the default backspace transform was clarified, and authors were encouraged to add backspace transforms to avoid the default.
 
 ### Modifications section
 

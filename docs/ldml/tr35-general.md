@@ -60,6 +60,7 @@ The LDML specification is divided into the following parts:
   * ~~[Mapping](#Character_Mapping)~~
   * ~~[Index Labels](#IndexLabels)~~
   * [Ellipsis](#Ellipsis)
+  * [Nested Bracket Replacement](#Character_Nested_Bracket_Replacement)
   * [More Information](#Character_More_Info)
   * [Parse Lenient](#Character_Parse_Lenient)
 * [Delimiter Elements](#Delimiter_Elements)
@@ -444,6 +445,8 @@ Note that the `key` and `type` values may use aliases. Thus if the locale u-exte
 
 <type name="phonebk" description="…" alias="phonebook"/>
 ```
+
+These elements are not present in root.xml. If they are missing in a locale, fall back to the key or value identifier.
 
 * * *
 
