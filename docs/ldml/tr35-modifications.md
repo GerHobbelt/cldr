@@ -1,10 +1,10 @@
+---
+appendix: A
+title: Modifications
+---
 ## Unicode Technical Standard #35
 
 # Unicode Locale Data Markup Language (LDML)<br/>Appendix A: Modifications
-
-|Version|49 (draft)|
-|-------|----------|
-|Editors|<a href="tr35-acknowledgments.md#acknowledgments">CLDR committee members|
 
 For the full header, table of contents, and status, see [Part 1: Core](tr35.md).
 
@@ -15,6 +15,7 @@ This is a partial document, describing only the changes to the LDML since the pr
 ## <a name="Contents" href="#Contents">Contents of Appendix A, Modifications</a>
 
 * [Modifications](#modifications)
+  * [MessageFormat](#messageformat)
   * [Locale Identifiers and Names](#locale-identifiers-and-names)
   * [Misc.](#misc)
   * [DateTime formats](#datetime-formats)
@@ -30,35 +31,36 @@ This is a partial document, describing only the changes to the LDML since the pr
 
 <!--
       Note: As of CLDR-18209, ALL changes to the spec require this file, tr35-modifications.md to be modified as well. If you are making a change that doesn't need to be noted, or is already noted, please simply add an HTML comment (such as this one) to the appropriate section.  The comment will not be visible to viewers of the HTML page.
-      
+
       - regenerated ToC
-      
+      - bump spec date
+
 -->
 
 **Changes in LDML Version 49 (Differences from Version 48.2)**
 
 * TBD
+<!-- CLDR-19274 updated typo in link -->
 
 
 **Changes in LDML Version 48.2 (Differences from Version 48.1)**
 
-* New section [Nested Bracket Replacement](tr35-general.html#Character_Nested_Bracket_Replacement)
-* [Locale Display Name Algorithm](tr35-general.html#locale_display_name_algorithm) updated to use the nested bracket replacement data and avoid nested parentheses by flattening `-t-` (transform) language names.
+<!-- CLDR-19231 reformatted/simplified tr35.md version block to improve deployment-->
+
+* New section [Nested Bracket Replacement](tr35-general.md#Character_Nested_Bracket_Replacement)
+* [Locale Display Name Algorithm](tr35-general.md#locale_display_name_algorithm) updated to use the nested bracket replacement data and avoid nested parentheses by flattening `-t-` (transform) language names.
     * As part of this, the display name order is changed so that any names for `-u-` items appear _before_ (instead of after) any names for `-t-` items.
 * Specify that missing `<keys>` translations should fall back to the key identifier
-* The section "Enhanced Language Matching" is retitled as [Language Matching Variables](tr35.html#enhanced-language-matching) and clarified.
+* The section "Enhanced Language Matching" is retitled as [Language Matching Variables](tr35.md#enhanced-language-matching) and clarified.
 
 ### MessageFormat
 
 * The `:currency` and `:percent` functions are now Stable, with the same implementations as previously.
 * The `u:locale` option (previously in Draft) is dropped from the specification.
 
-<!-- Bump spec this-version and previous-version due to spec update in 48.1, update spec date -->
-
 **Changes in LDML Version 48.1 (Differences from Version 48)**
 
-* [Segmentations](tr35-general.html#Segmentations) removed outdated note about `X Format*->X` not being supported in CLDR since it no longer accurate.
-<!-- typo fix -->
+* [Segmentations](tr35-general.md#Segmentations) removed outdated note about `X Format*->X` not being supported in CLDR since it no longer accurate.
 
 **Changes in LDML Version 48 (Differences from Version 47)**
 

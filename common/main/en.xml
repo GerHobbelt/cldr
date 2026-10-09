@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
-<!-- Copyright © 1991-2025 Unicode, Inc.
+<!-- Copyright © 1991-2026 Unicode, Inc.
 For terms of use, see http://www.unicode.org/copyright.html
 SPDX-License-Identifier: Unicode-3.0
 CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
@@ -747,6 +747,7 @@ annotations.
 			<script type="Cari">Carian</script>
 			<script type="Cham">Cham</script>
 			<script type="Cher">Cherokee</script>
+			<script type="Chis">Chisoi</script>
 			<script type="Chrs">Chorasmian</script>
 			<script type="Cirt">Cirth</script>
 			<script type="Copt">Coptic</script>
@@ -1630,6 +1631,7 @@ annotations.
 			<type key="numbers" type="brah">Brahmi Digits</type>
 			<type key="numbers" type="cakm">Chakma Digits</type>
 			<type key="numbers" type="cham">Cham Digits</type>
+			<type key="numbers" type="chis">Chisoi Digits</type>
 			<type key="numbers" type="cyrl">Cyrillic Numerals</type>
 			<type key="numbers" type="deva">Devanagari Digits</type>
 			<type key="numbers" type="diak">Dives Akuru Digits</type>
@@ -9546,9 +9548,9 @@ annotations.
 				<unitPattern count="other">{0} fl oz Imp.</unitPattern>
 			</unit>
 			<unit type="volume-tablespoon">
-				<displayName>tbsp</displayName>
-				<unitPattern count="one">{0} tbsp</unitPattern>
-				<unitPattern count="other">{0} tbsp</unitPattern>
+				<displayName>Tbsp</displayName>
+				<unitPattern count="one">{0} Tbsp</unitPattern>
+				<unitPattern count="other">{0} Tbsp</unitPattern>
 			</unit>
 			<unit type="volume-teaspoon">
 				<displayName>tsp</displayName>
@@ -10848,9 +10850,9 @@ annotations.
 				<unitPattern count="other">{0}fl oz Im</unitPattern>
 			</unit>
 			<unit type="volume-tablespoon">
-				<displayName>tbsp</displayName>
-				<unitPattern count="one">{0}tbsp</unitPattern>
-				<unitPattern count="other">{0}tbsp</unitPattern>
+				<displayName>Tbsp</displayName>
+				<unitPattern count="one">{0}Tbsp</unitPattern>
+				<unitPattern count="other">{0}Tbsp</unitPattern>
 			</unit>
 			<unit type="volume-teaspoon">
 				<displayName>tsp</displayName>
