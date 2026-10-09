@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
-<!-- Copyright © 1991-2025 Unicode, Inc.
+<!-- Copyright © 1991-2026 Unicode, Inc.
 For terms of use, see http://www.unicode.org/copyright.html
 SPDX-License-Identifier: Unicode-3.0
 CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
@@ -225,13 +225,13 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="⛑" draft="contributed">bergen | erste Hilfe | Helm | Helm mit weissem Kreuz | Hilfe | Kreuz | retten | Rettungshelm | roter Helm | Sanitäter</annotation>
 		<annotation cp="🔍">Lupe nach links | Suche | Vergrösserungsglas</annotation>
 		<annotation cp="🔎" draft="contributed">Lupe | Lupe nach rechts | Suche | Vergrösserungsglas</annotation>
-		<annotation cp="📆" draft="contributed">Abreisskalender | Datum | Kalender | Termin</annotation>
+		<annotation cp="📆">Abreisskalender | Datum | Kalender | Termin</annotation>
 		<annotation cp="📆" type="tts">Abreisskalender</annotation>
 		<annotation cp="📌">anpinnen | Reisszwecke</annotation>
 		<annotation cp="📌" type="tts">Reisszwecke</annotation>
 		<annotation cp="📍">anpinnen | Reisszwecke | rund | runde Reisszwecke | Stecknadel</annotation>
 		<annotation cp="🔑" draft="contributed">Passwort | schliessen | Schlüssel</annotation>
-		<annotation cp="🩼" draft="contributed">Behinderung | Beinverletzung | Fussverletzung | Gehhilfe | Gehstütze | Hilfe | Krücke | Schmerzen | Stock | verletzt | Verletzung</annotation>
+		<annotation cp="🩼">Behinderung | Beinverletzung | Fussverletzung | Gehhilfe | Gehstütze | Hilfe | Krücke | Schmerzen | Stock | verletzt | Verletzung</annotation>
 		<annotation cp="🚮">Abfall | Müll | Mülleimer | Sauberkeit | Symbol „Papierkorb“ | wegschmeissen | wegwerfen</annotation>
 		<annotation cp="🛅">Gepäck | Gepäckaufbewahrung | Schliessfach</annotation>
 		<annotation cp="🚸">Kinder | Kinder überqueren die Strasse | Kinder-queren-die-Strasse-Schild | Strassenschild | Vorsicht</annotation>
