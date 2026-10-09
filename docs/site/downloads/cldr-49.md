@@ -72,6 +72,7 @@ For a full listing, see [¤¤BCP47 Delta](https://unicode.org/cldr/charts/dev/de
 
 ### Locale Changes
 
+- New plural case `many` for Galician (`gl`)
 - TBD
 
 For a full listing, see [Delta Data](https://unicode.org/cldr/charts/dev/delta/index.html)
@@ -102,7 +103,14 @@ For a full listing, see [Delta Data](https://unicode.org/cldr/charts/dev/delta/i
 
 ### File Changes
 
-- TBD
+* New locale files (28 files, eg. brh.xml)
+* New test data
+    * Date/time, decimal, messageFormat (10 files)
+    * Person name formatting (1 file, br.txt)
+    * Rule-based number formatting (99 files, eg, af.ssv)
+* MessageFormat tests/functions (1 file, math.json)
+* New keyboard files (4 files)
+* Many new or modified readme files.
 
 ### Tooling Changes
 
@@ -131,11 +139,13 @@ and feedback that the general practice for exact dates is to use Gregorian for p
 The following changes are planned for CLDR 50. Please plan accordingly to avoid disruption.
 
 - Locales which do not have Core data will be removed if still missing core data by alpha. [CLDR-16004]
+- Montenegrin `cnr` will be considered a separate locale and will no longer alias to `sr_Latn_ME`. [CLDR-10769]
 
 ## Known Issues
 
-- ISO 3166-2 subdivision codes for Iran changed in 2020, and there are not yet new equivalent stable codes. See [CLDR-19046][] for more details.
-  
+- ISO 3166-2 subdivision codes for Iran changed in 2020, and there are not yet new equivalent stable codes. See [CLDR-19060][] for more details.
+- Keyboard: Normalization-safe segments definition does not cover all normalization cases. [CLDR-19218]
+
 
 ## Acknowledgments
 
@@ -147,7 +157,10 @@ in particular, see [Exhibit 1](https://unicode.org/copyright.html#Exhibit1).
 
 For web pages with different views of CLDR data, see [http://cldr.unicode.org/index/charts](/index/charts).
 
+[CLDR-10769]: https://unicode-org.atlassian.net/browse/CLDR-10769
 [CLDR-16004]: https://unicode-org.atlassian.net/browse/CLDR-16004
 [CLDR-18275]: https://unicode-org.atlassian.net/browse/CLDR-18275
 [CLDR-18303]: https://unicode-org.atlassian.net/browse/CLDR-18303
 [CLDR-19046]: https://unicode-org.atlassian.net/browse/CLDR-19046
+[CLDR-19060]: https://unicode-org.atlassian.net/browse/CLDR-19060
+[CLDR-19218]: https://unicode-org.atlassian.net/browse/CLDR-19218
