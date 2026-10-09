@@ -37,8 +37,6 @@ public class ExtraPaths {
             CharUtilities.internImmutableSet(
                     Set.of(
                             // Individual zone overrides
-                            "//ldml/dates/timeZoneNames/zone[@type=\"Europe/Dublin\"]/long/daylight",
-                            "//ldml/dates/timeZoneNames/zone[@type=\"Europe/London\"]/long/daylight",
                             "//ldml/dates/timeZoneNames/zone[@type=\"Etc/UTC\"]/long/standard",
                             "//ldml/dates/timeZoneNames/zone[@type=\"Etc/UTC\"]/short/standard",
                             // Person name paths
@@ -435,21 +433,16 @@ public class ExtraPaths {
 
     public static void addLocaleDependent(
             Set<String> toAddTo, Iterable<String> file, String localeID) {
+        if (localeID == null)
+            return; // no locale ID is set, so do not attempt any locale specific processing.
         SupplementalDataInfo.PluralInfo plurals =
                 supplementalData.getPlurals(SupplementalDataInfo.PluralType.cardinal, localeID);
         SupplementalDataInfo.PluralInfo ordinals =
                 supplementalData.getPlurals(SupplementalDataInfo.PluralType.ordinal, localeID);
-        if (DEBUG && (plurals == null || ordinals == null)) {
-            System.err.println(
-                    "No "
-                            + SupplementalDataInfo.PluralType.cardinal
-                            + "  plurals for "
-                            + localeID
-                            + " in "
-                            + supplementalData.getDirectory().getAbsolutePath());
-        }
 
+        if (ordinals == null) return;
         addDayOfMonthPaths(toAddTo, ordinals);
+        if (plurals == null) return;
         addMinimalPairs(toAddTo, plurals, ordinals);
         Set<SupplementalDataInfo.PluralInfo.Count> pluralCounts =
                 Count.LOCALES_USING_OTHER_ONLY_HACK.contains(localeID)

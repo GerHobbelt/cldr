@@ -499,11 +499,11 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<dateFormatItem id="yyyyQQQQ">r(U) QQQQ</dateFormatItem>
 					</availableFormats>
 					<appendItems>
-						<alias source="locale" path="../../../calendar[@type='gregorian']/dateTimeFormats/appendItems"/>
+						<alias source="locale" path="../../../calendar[@type='generic']/dateTimeFormats/appendItems"/>
 					</appendItems>
 					<intervalFormats>
 						<intervalFormatRanges>
-							<alias source="locale" path="../../../../calendar[@type='gregorian']/dateTimeFormats/intervalFormats/intervalFormatRanges"/>
+							<alias source="locale" path="../../../../calendar[@type='generic']/dateTimeFormats/intervalFormats/intervalFormatRanges"/>
 						</intervalFormatRanges>
 						<intervalFormatFallback>{0} – {1}</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
@@ -2005,7 +2005,8 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 				</timeFormats>
 				<dateTimeFormats>
 					<numericSeparators>
-						<alias source="locale" path="../../../calendar[@type='gregorian']/dateTimeFormats/numericSeparators"/>
+						<numericDateSeparator>-</numericDateSeparator>
+						<numericTimeSeparator>:</numericTimeSeparator>
 					</numericSeparators>
 					<dateTimeFormatLength type="full">
 						<dateTimeFormat>
@@ -2957,6 +2958,12 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 			<zone type="Pacific/Wallis">
 				<exemplarCity>Wallis &amp; Futuna</exemplarCity>
 			</zone>
+			<metazone type="British">
+				<alias source="locale" path="../metazone[@type='GMT']"/>
+			</metazone>
+			<metazone type="Irish">
+				<alias source="locale" path="../metazone[@type='GMT']"/>
+			</metazone>
 		</timeZoneNames>
 	</dates>
 	<numbers>
@@ -4560,6 +4567,10 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 				<symbol>CA$</symbol>
 				<symbol alt="narrow">$</symbol>
 			</currency>
+			<currency type="CHF">
+				<symbol>CHF</symbol>
+				<symbol alt="narrow">Fr.</symbol>
+			</currency>
 			<currency type="CLP">
 				<symbol alt="narrow">$</symbol>
 			</currency>
@@ -5507,9 +5518,17 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 				<displayName>lbf</displayName>
 				<unitPattern count="other">{0} lbf</unitPattern>
 			</unit>
+			<unit type="force-poundal">
+				<displayName>pdl</displayName>
+				<unitPattern count="other">{0} pdl</unitPattern>
+			</unit>
 			<unit type="force-newton">
 				<displayName>N</displayName>
 				<unitPattern count="other">{0} N</unitPattern>
+			</unit>
+			<unit type="force-dyne">
+				<displayName>dyn</displayName>
+				<unitPattern count="other">{0} dyn</unitPattern>
 			</unit>
 			<unit type="force-kilowatt-hour-per-100-kilometer">
 				<displayName>kWh/100km</displayName>
@@ -5616,6 +5635,10 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 				<displayName>in</displayName>
 				<unitPattern count="other">{0} in</unitPattern>
 				<perUnitPattern>{0}/in</perUnitPattern>
+			</unit>
+			<unit type="length-mil">
+				<displayName>mil [US]</displayName>
+				<unitPattern count="other">{0} mil [US]</unitPattern>
 			</unit>
 			<unit type="length-parsec">
 				<displayName>pc</displayName>

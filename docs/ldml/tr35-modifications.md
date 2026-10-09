@@ -50,6 +50,7 @@ This is a partial document, describing only the changes to the LDML since the pr
 
 * [`dateTime`](tr35-dates.md#Time_Zone_Names) Removed `gmtZeroOffset` item
 
+
 **Changes in LDML Version 48.2 (Differences from Version 48.1)**
 
 <!-- CLDR-19231 reformatted/simplified tr35.md version block to improve deployment-->
@@ -59,6 +60,10 @@ This is a partial document, describing only the changes to the LDML since the pr
     * As part of this, the display name order is changed so that any names for `-u-` items appear _before_ (instead of after) any names for `-t-` items.
 * Specify that missing `<keys>` translations should fall back to the key identifier
 * The section "Enhanced Language Matching" is retitled as [Language Matching Variables](tr35.md#enhanced-language-matching) and clarified.
+
+**Changes in LDML Version 49 (Differences from Version 48.2)**
+* Clarified the process of selecting the best `dateFormatItem` when there is no exact match, and how to use `appendItems` to add missing fields. This includes a clarification of what are date fields and what are time fields, and a note that `appendItems` for date and time fields should be appended before combining them.
+<!-- Updated spec date -->
 
 ### MessageFormat
 

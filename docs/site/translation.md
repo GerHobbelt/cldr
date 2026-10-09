@@ -5,14 +5,7 @@ title: Information Hub for Linguists
 # Information Hub for Linguists
 
 ## News
-- 2026-06-02 Updated [Known Issues][]
-- 2026-06-01 Updated multiple sections for date/time, marked with 🚨.
-    - Use ‘Find in Page’ in your browser to see them.
-    - Whenever you see error/warning messages in date/time items, please review the new guidance in [Error/warning messages](/translation/date-time#errorwarning-messages-). 
-- 2026-05-22 New Survey Tool category see [Dashboard Tips][] for details
-- 2026-05-17 Updated [Survey Tool Guide][] and [Dashboard Tips][]
-- 2026-05-08 Updated [Preventing digit-digit concatenations][] and [Numeric datetime separators][] sections
-- 2026-04-29 [CLDR Survey Tool][] opens for General Submission
+- 2026-07-07 Survey Tool now in [Resolution][] mode for all locales
 
 ----
 ## Getting started
@@ -25,17 +18,39 @@ title: Information Hub for Linguists
 ----
 ## Status and Schedule
 
+<!-- Submission phase wording
 The [CLDR Survey Tool][] is now open for [General Submission][] for version 49.
 [DDL locales][] remain open for submission throughout the General Submission and Vetting periods. 
 
 The other key milestones are as follows:
 
-- [Vetting][] will start on June 10.
-- [Resolution][] will start on June 29.
+- [Vetting][] will start on TBD
+- [Resolution][] will start on TBD
+
+We are reviewing new DDL locale requests for inclusion in CLDR 49.
+See [how to add a new locales](https://cldr.unicode.org/development/adding-locales) for more information.
+
+-->
+
+<!-- Vetting phase wording
+
+The [CLDR Survey Tool][] is now open for [Vetting][] for version 49. Please review the priorities for [Vetting][] on the Survey Tool phases page.
+[DDL locales][] remain open for submission throughout the General Submission and Vetting periods.
+
+The other key milestones are as follows:
+
+- [Resolution][] will start on TBD.
 
 For information about these phases, see [Survey Tool phases][].
 
-We are reviewing new DDL locale requests for inclusion in CLDR 49.
+-->
+
+<!-- Resolution phase wording -->
+
+The [CLDR Survey Tool][] is now closed for [Resolution][] for version 49. For information about these phases, see [Survey Tool phases][].
+
+We plan to re-open the Survey Tool to allow DDL managed locales to start submission for CLDR 50 early, and will be reviewing new DDL locale requests for inclusion in CLDR 50 starting in September 2026.
+
 See [how to add a new locales](https://cldr.unicode.org/development/adding-locales) for more information.
 
 ----
@@ -284,7 +299,7 @@ See [new items in Survey Tool](https://st.unicode.org/cldr-apps/v#/USER/Generic/
 ##### Guidelines
 
 These need to follow the flexible formats for the Codes `yMd` and `Hms`.
-🚨 Follow the guidelines for [Error/warning messages](/date-time.md#errorwarning-messages-)!
+🚨 Follow the guidelines for [Date & Time: Error/warning messages][]!
 
 #### Formats - Intervals - Range
 
@@ -360,7 +375,7 @@ Aside from the new skeletons with `ddd` used for Ordinal days in dates,
 there are some new patterns that flesh out support for different combinations of long months (MMMM) plus days, and eras or days of the week, such as and `MMMMEd`.
 See [new items in Survey Tool](https://st.unicode.org/cldr-apps/v#/USER/Gregorian/75be2c5885156280).
 
-🚨 Follow the guidelines for [Error/warning messages][]!
+🚨 Follow the guidelines for [Date & Time: Error/warning messages]!
 
 ##### Guidelines
 
@@ -374,7 +389,7 @@ Like the *Additional available skeletons*, there are a few new interval skeleton
 Check to make sure they have patterns that are similar to related interval skeletons' patterns.
 See [new items in Survey Tool](https://st.unicode.org/cldr-apps/v#/USER/Gregorian/d9bdb15b05e77dd)
 
-🚨 Follow the guidelines for [Error/warning messages][]!
+🚨 Follow the guidelines for [Date & Time: Error/warning messages]!
 
 #### UTC Timezone Display Patterns
 
@@ -402,6 +417,12 @@ The following time zone display names have been added to modern coverage:
 - [Türkiye Time](https://st.unicode.org/cldr-apps/v#/USER/WAsia/68d13963fcc3d7d7)
 - [Ürümqi Time](https://st.unicode.org/cldr-apps/v#/USER/EAsia/6cc40a7f1a8cb19c)
 
+##### Hawaii time zone name updates 🚨
+
+A new timezone for "Hawaii Time" was added for a shorter display name.
+
+Item in Survey Tool: [Hawaii Time](https://st.unicode.org/cldr-apps/v#/USER/NAmerica/3da2b2fe3b2ac678)
+
 ##### Samoa time zone name updates
 
 In order to disambiguate between the timezones of Samoa and American Samoa, 
@@ -423,7 +444,7 @@ There are 9 new emojis with short names and search keywords. You can find the ne
 ----
 ## Known Issues
 
-Last updated: 2026-06-02
+Last updated: 2026-06-18
 
 If you run into a problem with the Survey Tool functionalities or if the documentation doesn't match the current Survey Tool experience,
 please check the [Survey Tool FAQ][] and list of issues below to see whether it has already been reported (and whether there is a work-around).
@@ -433,14 +454,10 @@ If there is a PM (Project Manager) managing contributions for your organization,
 To get support for DDL locales check the [DDL: Help Center][] for instructions.
 Otherwise, please [file a ticket][], but please review this list first to avoid creating duplicate tickets.
 
-1. [CLDR-18980] - Unable to vote for date and time numeric separators in certain situations.
-1. [CLDR-19409] - Reports, Examples and checks are incorrect.
+1. [CLDR-19573] - Can't fix logical group errors due to a missing item.
 1. [CLDR-19525] - Info panel and examples should be clearer about what numbers a plural case corresponds to.
-1. [CLDR-18942] - Hawaii Time value is wrong in English.
-1. [CLDR-14549] - Zawgyi converter is introducing errors and needs to be coverted to be a warning.
 1. [CLDR-19515] - XML bulk import fails for some locales.
 1. [CLDR-18518] - Links to more information about a language in the Info Panel are currently broken.
-1. [CLDR-19434] - The cursor should be visible in the text input box after adding a hidden character by using the new ‘add hidden character’ option so that vetters can know where the next character will be added after the current one without having to click back into the text input box.
 1. [CLDR-19435] - Current row should be highlighted if the data item the vetter tried submitting was rejected because the data item was not valid.
 1. [CLDR-19456] - Open requests by you + Open requests by others should add up to the number of open requests, somehow they are not. Verified this is an issue in Wolof.
 1. [CLDR-19420] - Browser back button does not work as expected for forum and reports.
@@ -453,8 +470,13 @@ Otherwise, please [file a ticket][], but please review this list first to avoid 
 
 ## Resolved Issues
 
-Last updated: 2026-05-20
+Last updated: 2026-06-18
 
+1. [CLDR-18980] - Unable to vote for date and time numeric separators in certain situations.
+1. [CLDR-19409] - Reports, Examples and checks are incorrect.
+1. [CLDR-18942] - Hawaii Time value is wrong in English.
+1. [CLDR-14549] - Zawgyi converter is introducing errors and needs to be coverted to be a warning.
+1. [CLDR-19434] - The cursor should be visible in the text input box after adding a hidden character by using the new ‘add hidden character’ option so that vetters can know where the next character will be added after the current one without having to click back into the text input box.
 1. [CLDR-19490] - Clarify annotation keyword delimiter in the Info Panel
 1. [CLDR-19495] - Resolved internal error when numbers are added to a territory name.
 1. [CLDR-19455] - Items don't re-appear in the Dashboard missing or provisional category if you change your vote to abstain after having originally voting for something.
@@ -553,6 +575,7 @@ For example, if your language doesn't have a concept of calendar "quarters", use
 [CLDR-19495]: https://unicode-org.atlassian.net/browse/CLDR-19495
 [CLDR-19515]: https://unicode-org.atlassian.net/browse/CLDR-19515
 [CLDR-19525]: https://unicode-org.atlassian.net/browse/CLDR-19525
+[CLDR-19573]: https://unicode-org.atlassian.net/browse/CLDR-19573
 <!-- Links are order alphabetically for easier maintence -->
 [Change Protected Items]: /translation/getting-started/guide#changing-protected-items
 [CLDR Survey Tool]: https://st.unicode.org/cldr-apps/v#locales///
@@ -561,9 +584,9 @@ For example, if your language doesn't have a concept of calendar "quarters", use
 [Critical reminders for all linguists]: /translation#critical-reminders-for-all-linguists
 [Dashboard category]: /translation/getting-started/vetting-view#dashboard-categories
 [Dashboard Tips]: /translation/getting-started/vetting-view
+[Date & Time: Error/warning messages]: /translation/date-time#errorwarning-messages
 [DDL locales]: /ddl#list
 [DDL: Help Center]: /translation/ddl
-[Error/warning messages]: /translation/date-time#errorwarning-messages-
 [Example Hidden]: https://st.unicode.org/cldr-apps/v#/USER/Number_Formatting_Patterns/67afe297d3a17a3
 [file a ticket]: /requesting_changes
 [Forum]: /translation/getting-started/guide#forum
@@ -578,6 +601,7 @@ For example, if your language doesn't have a concept of calendar "quarters", use
 [New Areas]: /translation#new-areas
 [Preventing digit-digit concatenations]: /translation#preventing-digit-digit-concatenations
 [Reports]: /translation/getting-started/review-formats
+[resolving disputed items]: https://cldr.unicode.org/translation/getting-started/vetting-view#disputed
 [Resolution]: /translation/getting-started/survey-tool-phases#resolution-closed-to-vetters
 [stand-alone vs. formatting]: /translation/date-time/date-time-patterns#when-to-use-standalone-vs-formatting
 [Survey Tool accounts]: /index/survey-tool/survey-tool-accounts

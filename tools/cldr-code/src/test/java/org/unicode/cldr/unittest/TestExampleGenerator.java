@@ -41,6 +41,7 @@ import org.unicode.cldr.util.CLDRFileOverride;
 import org.unicode.cldr.util.CLDRInfo.UserInfo;
 import org.unicode.cldr.util.CLDRLocale;
 import org.unicode.cldr.util.CldrIntervalFormat;
+import org.unicode.cldr.util.CldrNumberingSystem;
 import org.unicode.cldr.util.CldrUtility;
 import org.unicode.cldr.util.CodePointEscaper;
 import org.unicode.cldr.util.Counter;
@@ -151,7 +152,7 @@ public class TestExampleGenerator extends TestFmwk {
      */
     static final Set<String> DELIBERATE_EXCLUDED_EXAMPLES =
             ImmutableSet.of(
-                    "//ldml/layout/orientation/characterOrder",
+                    CLDRFile.CHARACTER_ORDER_PATH,
                     "//ldml/layout/orientation/lineOrder",
                     "//ldml/characters/moreInformation",
                     "//ldml/numbers/symbols[@numberSystem=\"([^\"]*+)\"]/infinity",
@@ -268,7 +269,7 @@ public class TestExampleGenerator extends TestFmwk {
      */
     static final Set<String> DELIBERATE_OK_TO_MISS_BACKGROUND =
             ImmutableSet.of(
-                    "//ldml/numbers/defaultNumberingSystem",
+                    CldrNumberingSystem.defaultSystem.path,
                     "//ldml/numbers/otherNumberingSystems/native",
                     // TODO fix formatting
                     "//ldml/characters/exemplarCharacters",
@@ -299,7 +300,7 @@ public class TestExampleGenerator extends TestFmwk {
      */
     static final Set<String> TEMPORARY_OK_TO_MISS_BACKGROUND =
             ImmutableSet.of(
-                    "//ldml/numbers/defaultNumberingSystem",
+                    CldrNumberingSystem.defaultSystem.path,
                     "//ldml/dates/calendars/calendar[@type=\"([^\"]*+)\"]/dateTimeFormats/availableFormats/dateFormatItem[@id=\"([^\"]*+)\"][@count=\"([^\"]*+)\"]",
                     "//ldml/dates/timeZoneNames/zone[@type=\"([^\"]*+)\"]/long/standard",
                     "//ldml/dates/timeZoneNames/metazone[@type=\"([^\"]*+)\"]/short/generic",
@@ -946,6 +947,9 @@ public class TestExampleGenerator extends TestFmwk {
                 With.in(
                         cldrFile.iterator(
                                 "//ldml/dates/timeZoneNames", cldrFile.getComparator()))) {
+            if (xpath.endsWith("alias")) {
+                continue;
+            }
             String value = cldrFile.getStringValue(xpath);
             String actual = exampleGenerator.getExampleHtml(xpath, value);
             if (actual == null) {
@@ -2562,7 +2566,13 @@ public class TestExampleGenerator extends TestFmwk {
                                 intf.separator,
                                 intf.secondPattern,
                                 intf.secondFields);
-                String actual2 = intf.format(DATE1, DATE2, isb, TimeZone.GMT_ZONE);
+                String actual2 =
+                        intf.format(
+                                DATE1,
+                                DATE2,
+                                isb,
+                                TimeZone.GMT_ZONE,
+                                ICUServiceBuilder.NUMBERING_SYSTEM_DEFAULT);
                 assertEquals(Joiners.COMMA_SP.join(source, DATE1, DATE2), expected2, actual2);
             } catch (Exception e) {
                 actual = e.getMessage();
