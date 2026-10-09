@@ -1,12 +1,16 @@
 # Data for generating descriptions of paths in Survey Tool
 
+This top section  is documentation, it's not visible to users.
+
 Example Entry:
 
+```md
     ### First Day of the Week
 
     - `localeDisplayNames/types/type[@key="fw"][@type="%anyAttribute"]`
 
     The name of “first day of the week is {1}”. For more information, please see [Locale Option Names].
+```
 
 1. The first line beginning with `###` is a comment and can be used to describe that section. It can be blank, just `###`.
     If it begins with `ROOT` it has special placeholders.
@@ -19,6 +23,7 @@ Example Entry:
     Variable substitution is performed automatically.
 3. Finally is markdown, continuing up to the next line beginning with `#`.  Please keep all URLs in [References](#references), which is copied to every markdown fragment. This way we can share URLs and use more natural sounding links.
 4. Double hash (`##`) are used to group sections. These may not be blank. The last section is special and is named `References`.
+5. Order is important. Put "longer" matches first. i.e. `a/b[@foo="bar"][@baz="quux"]` should go before `a/b[@foo="bar"]`
 
 # VARIABLES
 %anyAttribute = ([^"]*)
@@ -112,117 +117,131 @@ The name of the timezone for “{0}”. Note: before translating, be sure to rea
 
 ## OTHER Descriptions
 
-###
+### Type: Collation: Core
+
+- `localeDisplayNames/types/type[@key="collation"][@type="%anyAttribute"][@scope="core"]`
+
+The name of “{1} collation” (sorting order) — **without the key name**. For more information, please see [Locale Option Names].
+
+This is the [Core Name]. <!-- boilerplate for [@scope="core"] -->
+
+### Type: Collation: any
 
 - `localeDisplayNames/types/type[@key="collation"][@type="%anyAttribute"]`
 
 The name of “{1} collation” (sorting order). For more information, please see [Locale Option Names].
 
-###
+### Type: calendar, roc, core
 
-- `localeDisplayNames/types/type[@key="numbers"][@type="%anyAttribute"]`
+- `localeDisplayNames/types/type[@key="calendar"][@type="roc"][@scope="core"]`
 
-The name of “{1} number system”. For more information, please see [Locale Option Names].
+The name of “roc calendar” (common names include “Minguo Calendar”, “Republic of China Calendar”, and “Republican Calendar”) — **without the key name**. For more information, please see [Locale Option Names].
 
-###
+This is the [Core Name]. <!-- boilerplate for [@scope="core"] -->
+
+### Type: Collation: roc
 
 - `localeDisplayNames/types/type[@key="calendar"][@type="roc"]`
 
 The name of “roc calendar” (common names include “Minguo Calendar”, “Republic of China Calendar”, and “Republican Calendar”). For more information, please see [Locale Option Names].
 
-###
+### Type: calendar, core
+
+- `localeDisplayNames/types/type[@key="calendar"][@type="%anyAttribute"][@scope="core"]`
+
+The name of “{1} calendar” — **without the key name**. For more information, please see [Locale Option Names].
+
+This is the [Core Name]. <!-- boilerplate for [@scope="core"] -->
+
+### Type: em, core
+
+- `localeDisplayNames/types/type[@key="em"][@type="%anyAttribute"][@scope="%anyAttribute"]`
+
+The name of “emoji presentation style {1}” — **without the key name**. For more information, please see [Locale Option Names].
+
+This is the [Core Name]. <!-- boilerplate for [@scope="core"] -->
+
+### Type: fw, core
+
+- `localeDisplayNames/types/type[@key="fw"][@type="%anyAttribute"][@scope="%anyAttribute"]`
+
+The name of “first day of the week is {1}” — **without the key name**. For more information, please see [Locale Option Names].
+
+This is the [Core Name]. <!-- boilerplate for [@scope="core"] -->
+
+### Type: lb, core
+
+- `localeDisplayNames/types/type[@key="lb"][@type="%anyAttribute"][@scope="%anyAttribute"]`
+
+The name of “{1} line break style” — **without the key name**. For more information, please see [Locale Option Names].
+
+This is the [Core Name]. <!-- boilerplate for [@scope="core"] -->
+
+### Type: Calendar: Any alt
 
 - `localeDisplayNames/types/type[@key="calendar"][@type="%anyAttribute"][@alt="variant"]`
 
 The alternate name of “{1} calendar”. For more information, please see [Locale Option Names].
 
-###
+### Type: Calendar: Any
 
 - `localeDisplayNames/types/type[@key="calendar"][@type="%anyAttribute"]`
 
 The name of “{1} calendar”. For more information, please see [Locale Option Names].
 
-###
+### Type: em: Any
 
 - `localeDisplayNames/types/type[@key="em"][@type="%anyAttribute"]`
 
 The name of “emoji presentation style {1}”. For more information, please see [Locale Option Names].
 
-### First Day of the Week
+### Type: First Day of the Week
 
 - `localeDisplayNames/types/type[@key="fw"][@type="%anyAttribute"]`
 
 The name of “first day of the week is {1}”. For more information, please see [Locale Option Names].
 
-###
+### Type: lb
 
 - `localeDisplayNames/types/type[@key="lb"][@type="%anyAttribute"]`
 
 The name of “{1} line break style”. For more information, please see [Locale Option Names].
 
-###
+### Type: Numbers: core
+
+- `localeDisplayNames/types/type[@key="numbers"][@type="%anyAttribute"][@scope="core"]`
+
+The name of “{1} number system” — **without the key name**. For more information, please see [Locale Option Names].
+
+This is the [Core Name]. <!-- boilerplate for [@scope="core"] -->
+
+### Type: Number: any
+
+- `localeDisplayNames/types/type[@key="numbers"][@type="%anyAttribute"]`
+
+The name of “{1} number system”. For more information, please see [Locale Option Names].
+
+### Type: anything else, core
+
+- `localeDisplayNames/types/type[@key="%anyAttribute"][@type="%anyAttribute"][@scope="%anyAttribute"]`
+
+The name of the “{2} {1}” — **without the key name**. For more information, please see [Locale Option Names].
+
+This is the [Core Name]. <!-- boilerplate for [@scope="core"] -->
+
+### Type: anything else
 
 - `localeDisplayNames/types/type[@key="%anyAttribute"][@type="%anyAttribute"]`
 
 The name of the “{2} {1}”. For more information, please see [Locale Option Names].
 
-###
+### Key: anything else
 
 - `localeDisplayNames/keys/key[@type="%anyAttribute"]`
 
 The name of the system for “{1}”. For more information, please see [Locale Option Names].
 
-
-###
-
-- `localeDisplayNames/types/type[@key="collation"][@type="%anyAttribute"][@scope="%anyAttribute"]`
-
-The _core_ name of “{1} collation” (sorting order) — **without the key name**. For more information, please see [Locale Option Names].
-
-###
-
-- `localeDisplayNames/types/type[@key="numbers"][@type="%anyAttribute"][@scope="%anyAttribute"]`
-
-The _core_ name of “{1} number system” — **without the key name**. For more information, please see [Locale Option Names].
-
-###
-
-- `localeDisplayNames/types/type[@key="calendar"][@type="roc"][@scope="%anyAttribute"]`
-
-The _core_ name of “roc calendar” (common names include “Minguo Calendar”, “Republic of China Calendar”, and “Republican Calendar”) — **without the key name**. For more information, please see [Locale Option Names].
-
-###
-
-- `localeDisplayNames/types/type[@key="calendar"][@type="%anyAttribute"][@scope="%anyAttribute"]`
-
-The _core_ name of “{1} calendar” — **without the key name**. For more information, please see [Locale Option Names].
-
-###
-
-- `localeDisplayNames/types/type[@key="em"][@type="%anyAttribute"][@scope="%anyAttribute"]`
-
-The _core_ name of “emoji presentation style {1}” — **without the key name**. For more information, please see [Locale Option Names].
-
-###
-
-- `localeDisplayNames/types/type[@key="fw"][@type="%anyAttribute"][@scope="%anyAttribute"]`
-
-The _core_ name of “first day of the week is {1}” — **without the key name**. For more information, please see [Locale Option Names].
-
-###
-
-- `localeDisplayNames/types/type[@key="lb"][@type="%anyAttribute"][@scope="%anyAttribute"]`
-
-The _core_ name of “{1} line break style” — **without the key name**. For more information, please see [Locale Option Names].
-
-###
-
-- `localeDisplayNames/types/type[@key="%anyAttribute"][@type="%anyAttribute"][@scope="%anyAttribute"]`
-
-The _core_ name of the “{2} {1}” — **without the key name**. For more information, please see [Locale Option Names].
-
-
-###
+### Any variant
 
 - `localeDisplayNames/variants/variant[@type="%anyAttribute"]`
 
@@ -356,7 +375,7 @@ The pattern used to compose generic fallback time zone names, such as 'Germany T
 
 ###
 
-- `dates/timeZoneNames/(fallback|fallbackRegion|gmtZero|gmtUnknown|gmt|hour|region)Format`
+- `dates/timeZoneNames/(fallback|fallbackRegion|gmtZero|gmtUnknown|gmt|hour|region|dualOffset)Format`
 
 The {1} pattern used to compose time zone names. Note: before translating, be sure to read [Time Zone City Names].
 
@@ -837,6 +856,14 @@ Provide the {3}, {2} version of the name for the day period code “{4}”. To s
 
 ###
 
+- `dates/calendars/calendar[@type="%A"]/dayOfMonths/dayOfMonthContext[@type="%A"]/dayOfMonthWidth[@type="%A"]/dayOfMonth[@ordinal="%A"]`
+
+Provide the {2} and {3} version of the name for day-of-the-month {4}.
+Some locales/calendars may require formats for specific days (like day 1 of the month), which can be arranged.
+For more information, please see [Date Time Names].
+
+###
+
 - `dates/calendars/calendar[@type="%anyAttribute"]/days/dayContext[@type="%anyAttribute"]/dayWidth[@type="%anyAttribute"]/day[@type="%anyAttribute"]`
 
 Provide the {2} and {3} version of the name for day-of-the-week {4}. For more information, please see [Date Time Names].
@@ -938,6 +965,22 @@ The lettercasing should be appropriate for the top example. If the lettercasing 
 - `dates/fields/field[@type="%anyAttribute"]/relativePeriod`
 
 Provide a name for “the {1} of SOME_DATE”. For more information, please see [Date Time Names].
+
+
+
+###
+
+- `dates/calendars/calendar[@type="%N"]/dateTimeFormats/numericSeparators/numericTimeSeparator`
+
+Provide the separator for a numeric time pattern. These are the default separators between numeric fields of HOUR, MINUTE, and/or SECOND, such as 8:35:59 or Tuesday 8:35 am.
+Note: before translating, be sure to read [Date Time Patterns].
+
+###
+
+- `dates/calendars/calendar[@type="%N"]/dateTimeFormats/numericSeparators/numericDateSeparator`
+
+Provide the separator for a numeric date pattern. These are the default separators between numeric fields of YEAR, MONTH, and/or DAY, such as 2026-09-13 AD or Tuesday, 9/13.
+Note: before translating, be sure to read [Date Time Patterns].
 
 ###
 
@@ -1118,6 +1161,7 @@ All links should be cldr.unicode.org/translation/
 [Exemplar Characters]: https://cldr.unicode.org/translation/core-data/exemplars
 [Grammatical Inflection]: https://cldr.unicode.org/translation/grammatical-inflection
 [Locale Option Names]: https://cldr.unicode.org/translation/displaynames/locale-option-names-key
+[Core Name]: https://cldr.unicode.org/translation/displaynames/locale-option-names-key#core-names
 [Language Names]: https://cldr.unicode.org/translation/displaynames/languagelocale-names
 [Lists]: https://cldr.unicode.org/translation/miscellaneous-displaying-lists
 [Locale Patterns]: https://cldr.unicode.org/translation/displaynames/languagelocale-name-patterns
