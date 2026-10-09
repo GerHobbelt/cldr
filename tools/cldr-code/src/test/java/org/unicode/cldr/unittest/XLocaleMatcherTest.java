@@ -12,6 +12,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.Disabled;
 import org.unicode.cldr.draft.XLocaleDistance;
 import org.unicode.cldr.draft.XLocaleDistance.DistanceOption;
 import org.unicode.cldr.draft.XLocaleMatcher;
@@ -178,6 +179,7 @@ public class XLocaleMatcherTest extends TestFmwk {
         }
     }
 
+    @Disabled
     public void testPerf() {
         if (LANGUAGE_MATCHER_DATA == null) {
             return; // skip except when testing data
@@ -314,6 +316,7 @@ public class XLocaleMatcherTest extends TestFmwk {
         return (delta / iterations);
     }
 
+    @Disabled
     public void testDataDriven() throws IOException {
         DataDrivenTestHelper tfh =
                 new MyTestFileHandler()

@@ -302,10 +302,12 @@ export default {
       this.includeOther = true;
       this.reloadDashboard();
     },
+
     reloadWithoutOther() {
       this.includeOther = false;
       this.reloadDashboard();
     },
+
     fetchData() {
       this.locale = cldrStatus.getCurrentLocale();
       this.level = cldrCoverage.effectiveName(this.locale);
@@ -411,11 +413,14 @@ export default {
     },
 
     describe(category) {
+      const lastVoteVersion = cldrStatus.getLastVoteVersion();
       // The category is like "English_Changed" or "English Changed"
       // The corresponding key is like "notification_category_english_changed"
       const key =
         "notification_category_" + category.toLowerCase().replaceAll(" ", "_");
-      let description = cldrText.get(key);
+      let description = cldrText.sub(key, {
+        lastVoteVersion,
+      });
       if (description === key) {
         console.error(
           "Dashboard is missing a description for the category: " + category

@@ -3366,6 +3366,12 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+
+							<intervalFormatRange type="non-numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">↑↑↑</greatestDifference>
@@ -4867,7 +4873,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<timeZoneNames>
 			<hourFormat>+HH:mm;−HH:mm</hourFormat>
 			<gmtFormat>UTC{0}</gmtFormat>
-			<gmtZeroFormat>UTC</gmtZeroFormat>
 			<gmtUnknownFormat>↑↑↑</gmtUnknownFormat>
 			<regionFormat>heure : {0}</regionFormat>
 			<regionFormat type="daylight">{0} (heure d’été)</regionFormat>
@@ -7812,12 +7817,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 				<displayName count="one">yuan chinois (zone extracôtière)</displayName>
 				<displayName count="other">yuans chinois (zone extracôtière)</displayName>
 				<symbol>↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
-				<displayName draft="unconfirmed">dollar de la Banque populaire chinoise</displayName>
-				<displayName count="one" draft="unconfirmed">dollar de la Banque populaire chinoise</displayName>
-				<displayName count="other" draft="unconfirmed">dollars de la Banque populaire chinoise</displayName>
-				<symbol draft="unconfirmed">↑↑↑</symbol>
 			</currency>
 			<currency type="CNY">
 				<displayName>yuan renminbi chinois</displayName>

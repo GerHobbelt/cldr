@@ -2030,6 +2030,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="non-numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">↑↑↑</greatestDifference>
@@ -3140,7 +3145,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>↑↑↑</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<regionFormat>Време: {0}</regionFormat>
 			<regionFormat type="daylight">↑↑↑</regionFormat>
 			<regionFormat type="standard">↑↑↑</regionFormat>
@@ -5930,11 +5934,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 				<displayName count="few">кинеска јуана (острвска)</displayName>
 				<displayName count="other">кинеских јуана (острвских)</displayName>
 				<symbol draft="contributed">↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
-				<displayName count="one" draft="provisional">долар кинеске народне банке</displayName>
-				<displayName count="few" draft="provisional">↑↑↑</displayName>
-				<displayName count="other" draft="provisional">долара кинеске народне банке</displayName>
 			</currency>
 			<currency type="CNY">
 				<displayName>Кинески јуан</displayName>

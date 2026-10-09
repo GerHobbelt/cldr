@@ -1873,6 +1873,12 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+
+							<intervalFormatRange type="non-numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">↑↑↑</greatestDifference>
@@ -2673,7 +2679,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>GMT {0}</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<gmtUnknownFormat>↑↑↑</gmtUnknownFormat>
 			<regionFormat>Saa za {0}</regionFormat>
 			<regionFormat type="daylight">Saa za Mchana za {0}</regionFormat>

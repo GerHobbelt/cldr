@@ -3096,6 +3096,12 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0}至{1}</intervalFormatRange>
+
+							<intervalFormatRange type="non-numeric" draft="provisional">{0}至{1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}至{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>{0}至{1}</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">Bh時至Bh時</greatestDifference>
@@ -4449,7 +4455,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>↑↑↑</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<gmtUnknownFormat>↑↑↑</gmtUnknownFormat>
 			<regionFormat>{0}時間</regionFormat>
 			<regionFormat type="daylight">{0}夏令時間</regionFormat>
@@ -7154,9 +7159,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 			<currency type="CNH">
 				<displayName>人民幣 (離岸)</displayName>
 				<displayName count="other">↑↑↑</displayName>
-				<symbol draft="contributed">↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
 				<symbol draft="contributed">↑↑↑</symbol>
 			</currency>
 			<currency type="CNY">

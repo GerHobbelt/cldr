@@ -30,7 +30,9 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.unicode.cldr.icu.dev.util.ElapsedTimer;
+import org.unicode.cldr.test.CheckCLDR.CheckStatus;
 import org.unicode.cldr.test.CheckCLDR.CheckStatus.Subtype;
+import org.unicode.cldr.test.CheckCLDR.Phase;
 import org.unicode.cldr.util.CLDRFile;
 import org.unicode.cldr.util.CLDRInfo.CandidateInfo;
 import org.unicode.cldr.util.CLDRInfo.PathValueInfo;
@@ -832,7 +834,7 @@ public abstract class CheckCLDR implements CheckAccessor {
             coverageLevel,
             missingPluralInfo,
             currencySymbolTooWide,
-            incorrectDatePattern,
+            datetimePatternLikelyIncorrect,
             abbreviatedDateFieldTooWide,
             displayCollision,
             illegalExemplarSet,
@@ -934,7 +936,9 @@ public abstract class CheckCLDR implements CheckAccessor {
             inconsistentCurrencyPattern,
             inconsistentCompactPattern,
             inconsistentPositiveAndNegativePatterns,
-            dateTimeSeparatorMismatch;
+            conflictWithBasePattern,
+            conflictsWithNumericSeparator,
+            conflictsWithConstructedInterval;
 
             @Override
             public String toString() {
@@ -1316,6 +1320,10 @@ public abstract class CheckCLDR implements CheckAccessor {
         // }
         result.clear();
 
+        if (VoteResolver.NO_WINNING_VALUE.equals(value)) {
+            return this;
+        }
+
         /*
          * If the item is non-winning, and either inherited or it is code-fallback, then don't run
          * any tests on this item.  See http://unicode.org/cldr/trac/ticket/7574
@@ -1652,5 +1660,15 @@ public abstract class CheckCLDR implements CheckAccessor {
         return !CldrUtility.INHERITANCE_MARKER.equals(value)
                 ? value
                 : getCldrFileToCheck().getStringValueWithBailey(path);
+    }
+
+    protected final CheckStatus.Type getErrorTypeButWarningInBuild() {
+        return getPhase() == Phase.BUILD ? CheckStatus.warningType : CheckStatus.errorType;
+    }
+
+    protected final CheckStatus.Type getErrorTypeButWarningInBuildOrSubmission() {
+        return getPhase() == Phase.SUBMISSION || getPhase() == Phase.BUILD
+                ? CheckStatus.warningType
+                : CheckStatus.errorType;
     }
 }

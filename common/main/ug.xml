@@ -1758,6 +1758,11 @@ Reviewed by Waris Abdukerim Janbaz <oyghan@gmail.com> of the Uyghur Computer Sci
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="non-numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback draft="contributed">{0} – {1}</intervalFormatFallback>
 						<intervalFormatItem id="d">
 							<greatestDifference id="d" draft="contributed">d – d</greatestDifference>
@@ -2119,7 +2124,6 @@ Reviewed by Waris Abdukerim Janbaz <oyghan@gmail.com> of the Uyghur Computer Sci
 		<timeZoneNames>
 			<hourFormat draft="contributed">↑↑↑</hourFormat>
 			<gmtFormat draft="contributed">↑↑↑</gmtFormat>
-			<gmtZeroFormat draft="contributed">↑↑↑</gmtZeroFormat>
 			<regionFormat draft="contributed">{0} ۋاقتى</regionFormat>
 			<regionFormat type="daylight" draft="contributed">{0} يازلىق ۋاقتى</regionFormat>
 			<regionFormat type="standard" draft="contributed">{0} ئۆلچەملىك ۋاقتى</regionFormat>
@@ -3603,11 +3607,6 @@ Reviewed by Waris Abdukerim Janbaz <oyghan@gmail.com> of the Uyghur Computer Sci
 			</currency>
 			<currency type="CLP">
 				<displayName draft="contributed">چىلى پېسوسى</displayName>
-				<displayName count="one" draft="contributed">↑↑↑</displayName>
-				<displayName count="other" draft="contributed">↑↑↑</displayName>
-			</currency>
-			<currency type="CNX">
-				<displayName draft="contributed">جۇڭگو خەلق بانكىسى دوللىرى</displayName>
 				<displayName count="one" draft="contributed">↑↑↑</displayName>
 				<displayName count="other" draft="contributed">↑↑↑</displayName>
 			</currency>

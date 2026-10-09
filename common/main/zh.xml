@@ -3615,6 +3615,12 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<appendItem request="Timezone">{1}{0}</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+
+							<intervalFormatRange type="non-numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}至{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>{0} – {1}</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">Bh时至Bh时</greatestDifference>
@@ -5492,7 +5498,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>↑↑↑</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<gmtUnknownFormat>↑↑↑</gmtUnknownFormat>
 			<regionFormat>{0}时间</regionFormat>
 			<regionFormat type="daylight">{0}夏令时间</regionFormat>
@@ -9557,11 +9562,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 				<displayName>人民币（离岸）</displayName>
 				<displayName count="other">↑↑↑</displayName>
 				<symbol>↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
-				<displayName draft="contributed">中国人民银行元</displayName>
-				<displayName count="other" draft="contributed">↑↑↑</displayName>
-				<symbol draft="contributed">↑↑↑</symbol>
 			</currency>
 			<currency type="CNY">
 				<displayName>人民币</displayName>

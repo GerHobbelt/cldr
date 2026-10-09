@@ -4468,6 +4468,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="non-numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">↑↑↑</greatestDifference>
@@ -6520,7 +6525,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>UTC{0}</gmtFormat>
-			<gmtZeroFormat>UTC</gmtZeroFormat>
 			<gmtUnknownFormat>UTC+?</gmtUnknownFormat>
 			<regionFormat>eur {0}</regionFormat>
 			<regionFormat type="daylight">eur hañv {0}</regionFormat>
@@ -9718,15 +9722,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 				<displayName count="two">↑↑↑</displayName>
 				<displayName count="few">↑↑↑</displayName>
 				<displayName count="many">a yuanoù Sina (diavaez)</displayName>
-				<displayName count="other">↑↑↑</displayName>
-				<symbol draft="contributed">↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
-				<displayName>dollar Bank poblel Sina</displayName>
-				<displayName count="one">↑↑↑</displayName>
-				<displayName count="two">zollar Bank poblel Sina</displayName>
-				<displayName count="few">↑↑↑</displayName>
-				<displayName count="many">a zollaroù Bank poblel Sina</displayName>
 				<displayName count="other">↑↑↑</displayName>
 				<symbol draft="contributed">↑↑↑</symbol>
 			</currency>

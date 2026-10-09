@@ -4607,19 +4607,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 					</intervalFormats>
 				</dateTimeFormats>
 			</calendar>
-			<calendar type="ethiopic-amete-alem">
-				<eras>
-					<eraNames>
-						<era type="0">↑↑↑</era>
-					</eraNames>
-					<eraAbbr>
-						<era type="0">↑↑↑</era>
-					</eraAbbr>
-					<eraNarrow>
-						<era type="0">↑↑↑</era>
-					</eraNarrow>
-				</eras>
-			</calendar>
 			<calendar type="generic">
 				<dateFormats>
 					<dateFormatLength type="full">
@@ -5351,6 +5338,12 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+
+							<intervalFormatRange type="non-numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">↑↑↑</greatestDifference>
@@ -8104,7 +8097,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<timeZoneNames>
 			<hourFormat>+HH:mm; -HH:mm</hourFormat>
 			<gmtFormat>GMT {0}</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<gmtUnknownFormat>↑↑↑</gmtUnknownFormat>
 			<regionFormat>↑↑↑</regionFormat>
 			<regionFormat type="daylight">{0}, ljetno vrijeme</regionFormat>
@@ -13378,12 +13370,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 				<displayName count="few">kineska juana (izvanteritorijalni)</displayName>
 				<displayName count="other">kineskih juana (izvanteritorijalni)</displayName>
 				<symbol>↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
-				<displayName>Dolar kineske narodne banke</displayName>
-				<displayName count="one">dolar kineske narodne banke</displayName>
-				<displayName count="few">↑↑↑</displayName>
-				<displayName count="other">dolara kineske narodne banke</displayName>
 			</currency>
 			<currency type="CNY">
 				<displayName>Kineski juan</displayName>

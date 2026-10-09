@@ -1,10 +1,16 @@
 package org.unicode.cldr.util;
 
+import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ClassInfo;
+import io.github.classgraph.ScanResult;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
+import org.unicode.cldr.icu.dev.test.TestFmwk;
 import org.unicode.cldr.icu.dev.test.TestFmwk.TestGroup;
 
 /**
@@ -12,6 +18,7 @@ import org.unicode.cldr.icu.dev.test.TestFmwk.TestGroup;
  * they can be shared between tools/java and tools/cldr-apps
  */
 public class ShimmedMain {
+    private static final String DISABLED_ANNOTATION = "org.junit.jupiter.api.Disabled";
     public static final String TEST_ARGS = ".testArgs";
     public static final String DEFAULT_ARGS = "-n -q";
     final String[] args;
@@ -73,5 +80,71 @@ public class ShimmedMain {
                 | InvocationTargetException nsm) {
             throw new RuntimeException("Could not invoke main for " + clazz, nsm);
         }
+    }
+
+    /** Go fishing and find all TestFmwk subclasses in the package. */
+    public static String[] findAllTests(final Package inPackage) {
+        // keep these in lexical order
+        final Set<String> allTestClasses = new TreeSet<String>();
+        // use ClassGraph to look for all subclasses of TestFmwk
+        try (ScanResult scanResult =
+                new ClassGraph()
+                        .acceptPackages(inPackage.getName())
+                        .enableAnnotationInfo()
+                        .enableClassInfo()
+                        // .verbose() // NOTE: Uncomment this for lots of verbose info about
+                        // scanning
+                        .scan()) {
+            processScanResult(inPackage, allTestClasses, scanResult, TestFmwk.class);
+            return allTestClasses.toArray(new String[allTestClasses.size()]);
+        }
+    }
+
+    private static void processScanResult(
+            final Package inPackage,
+            final Set<String> allTestClasses,
+            ScanResult scanResult,
+            final Class<?> clazz) {
+        for (ClassInfo info : scanResult.getClassInfo(clazz.getCanonicalName()).getSubclasses()) {
+            processScanResult(inPackage, allTestClasses, info);
+        }
+    }
+
+    private static void processScanResult(
+            final Package inPackage, final Set<String> allTestClasses, ClassInfo info) {
+        if (info.getPackageName().equals(inPackage.getName())
+                && !info.getSuperclass().getName().equals(TestFmwk.TestGroup.class.getName())) {
+            if (hasDisabledAnnotation(info)) {
+                System.err.println("Skipping, @Disabled: " + info.getName());
+            } else {
+                allTestClasses.add(info.getName());
+            }
+        }
+    }
+
+    /**
+     * @return true if @Disabled is on this item
+     */
+    public static boolean hasDisabledAnnotation(ClassInfo info) {
+        return info.hasAnnotation(DISABLED_ANNOTATION);
+    }
+
+    /**
+     * @return true if @Disabled is on this item
+     */
+    public static boolean hasDisabledAnnotation(Method m) {
+        return hasDisabledAnnotation(m.getAnnotations());
+    }
+
+    /**
+     * @return true if @Disabled is on this item
+     */
+    public static boolean hasDisabledAnnotation(java.lang.annotation.Annotation m[]) {
+        for (final java.lang.annotation.Annotation a : m) {
+            if (a.annotationType().getName().equals(DISABLED_ANNOTATION)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

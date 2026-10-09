@@ -4463,19 +4463,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 					</intervalFormats>
 				</dateTimeFormats>
 			</calendar>
-			<calendar type="ethiopic-amete-alem">
-				<eras>
-					<eraNames>
-						<era type="0">↑↑↑</era>
-					</eraNames>
-					<eraAbbr>
-						<era type="0">↑↑↑</era>
-					</eraAbbr>
-					<eraNarrow>
-						<era type="0">↑↑↑</era>
-					</eraNarrow>
-				</eras>
-			</calendar>
 			<calendar type="generic">
 				<dateFormats>
 					<dateFormatLength type="full">
@@ -5219,6 +5206,12 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<appendItem request="Timezone">{0} ({1})</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+
+							<intervalFormatRange type="non-numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">B h – B h</greatestDifference>
@@ -7912,7 +7905,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<timeZoneNames>
 			<hourFormat>+HH:mm;–HH:mm</hourFormat>
 			<gmtFormat>↑↑↑</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<gmtUnknownFormat>↑↑↑</gmtUnknownFormat>
 			<regionFormat>{0} aldeko ordua</regionFormat>
 			<regionFormat type="daylight">{0} (udako ordua)</regionFormat>
@@ -13065,12 +13057,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 				<displayName count="one">↑↑↑</displayName>
 				<displayName count="other">yuan txinatar (itsasoz haraindikoa)</displayName>
 				<symbol>↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
-				<displayName>Txinako Herri Bankuaren dolarra</displayName>
-				<displayName count="one">↑↑↑</displayName>
-				<displayName count="other">Txinako Herri Bankuaren dolar</displayName>
-				<symbol draft="contributed">↑↑↑</symbol>
 			</currency>
 			<currency type="CNY">
 				<displayName>yuan txinatarra</displayName>

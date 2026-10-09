@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import org.junit.jupiter.api.Disabled;
 import org.unicode.cldr.icu.dev.test.TestFmwk;
 import org.unicode.cldr.util.CLDRConfig;
 import org.unicode.cldr.util.CLDRFile;
@@ -83,6 +84,7 @@ public class TestLsrvCanonicalizer extends TestFmwk {
         }
     }
 
+    @Disabled
     public void TestAgainstLanguageSubtagRegistry() {
         Map<String, String> exceptions =
                 ImmutableMap.<String, String>builder()

@@ -2294,6 +2294,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="non-numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>{0} – {1}</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">h B – h B</greatestDifference>
@@ -3403,7 +3408,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>↑↑↑</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<gmtUnknownFormat>↑↑↑</gmtUnknownFormat>
 			<regionFormat>{0} ваҡыты</regionFormat>
 			<regionFormat type="daylight">{0} йәйге ваҡыты</regionFormat>
@@ -10747,11 +10751,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 			<currency type="CNH">
 				<displayName>Ҡытай юане (офшор)</displayName>
 				<displayName count="other">Ҡытай юане (офшор)</displayName>
-				<symbol draft="contributed">↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
-				<displayName>Ҡытай Халыҡ Банкы доллары</displayName>
-				<displayName count="other">Ҡытай Халыҡ Банкы доллары</displayName>
 				<symbol draft="contributed">↑↑↑</symbol>
 			</currency>
 			<currency type="CNY">

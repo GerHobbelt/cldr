@@ -1759,19 +1759,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 					</intervalFormats>
 				</dateTimeFormats>
 			</calendar>
-			<calendar type="ethiopic-amete-alem">
-				<eras>
-					<eraNames>
-						<era type="0">↑↑↑</era>
-					</eraNames>
-					<eraAbbr>
-						<era type="0">↑↑↑</era>
-					</eraAbbr>
-					<eraNarrow>
-						<era type="0">↑↑↑</era>
-					</eraNarrow>
-				</eras>
-			</calendar>
 			<calendar type="generic">
 				<dateFormats>
 					<dateFormatLength type="full">
@@ -2508,6 +2495,12 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+
+							<intervalFormatRange type="non-numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>{0} – {1}</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">B h – B h</greatestDifference>
@@ -3665,7 +3658,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<timeZoneNames>
 			<hourFormat>+HHmm;-HHmm</hourFormat>
 			<gmtFormat>ጂ ኤም ቲ{0}</gmtFormat>
-			<gmtZeroFormat>ጂ ኤም ቲ</gmtZeroFormat>
 			<gmtUnknownFormat>ጂ ኤም ቲ+</gmtUnknownFormat>
 			<regionFormat>{0} ሰዓት</regionFormat>
 			<regionFormat type="daylight">{0} የቀን ብርሃን ሰዓት</regionFormat>

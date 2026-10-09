@@ -1658,6 +1658,12 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+
+							<intervalFormatRange type="non-numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="d">
 							<greatestDifference id="d">↑↑↑</greatestDifference>
@@ -2306,7 +2312,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>{0} GMT</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<regionFormat>{0} game</regionFormat>
 			<regionFormat type="daylight">{0} ŋkekemeɣeyiɣi</regionFormat>
 			<regionFormat type="standard">{0} game ɖoɖoea</regionFormat>
@@ -4994,11 +4999,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 				<displayName count="other">↑↑↑</displayName>
 				<symbol draft="contributed">↑↑↑</symbol>
 				<symbol alt="narrow" draft="contributed">↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
-				<displayName>tsainatɔwo ƒe gadzraɖoƒe dollar</displayName>
-				<displayName count="one">tsainatɔwo ƒe gadzraɖoƒe dollar</displayName>
-				<displayName count="other">tsainatɔwo ƒe gadzraɖoƒe dollarwo</displayName>
 			</currency>
 			<currency type="CNY">
 				<displayName>Chinesega yuan</displayName>

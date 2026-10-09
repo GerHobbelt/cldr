@@ -95,7 +95,10 @@ public class ConsoleCheckCLDR {
     static boolean SHOW_LOCALE = true;
     static boolean SHOW_EXAMPLES = false;
     private static boolean CLDR_GITHUB_ANNOTATIONS =
-            (Boolean.parseBoolean(System.getProperty("CLDR_GITHUB_ANNOTATIONS", "false")));
+            Boolean.parseBoolean(System.getProperty("CLDR_GITHUB_ANNOTATIONS", "false"));
+    // allow shutting off file locations when testing locally
+    private static boolean SHOW_FILE_LOCATIONS =
+            Boolean.parseBoolean(System.getProperty("SHOW_FILE_LOCATIONS", "true"));
 
     // TODO get ride of these in favor of MyOptions
 
@@ -497,7 +500,7 @@ public class ConsoleCheckCLDR {
         english = backCldrFactory.make("en", true);
 
         CheckCLDR.setDisplayInformation(english);
-        setExampleGenerator(new ExampleGenerator(english, english));
+        setExampleGenerator(new ExampleGenerator(english, backCldrFactory));
         PathShower pathShower = new PathShower();
 
         // call on the files
@@ -601,7 +604,7 @@ public class ConsoleCheckCLDR {
                     // also need the locale in the options
                     options.put(Options.Option.locale.getKey(), localeID);
 
-                    if (SHOW_LOCALE && sequential) System.out.println();
+                    // if (SHOW_LOCALE && sequential) System.out.println();
 
                     CLDRFile file;
                     CLDRFile englishFile = english;
@@ -681,12 +684,12 @@ public class ConsoleCheckCLDR {
                     UnicodeSet missingExemplars = new UnicodeSet();
                     UnicodeSet missingCurrencyExemplars = new UnicodeSet();
                     FlexibleDateFromCLDR fset =
-                            checkFlexibleDates ? new FlexibleDateFromCLDR(file) : null;
+                            checkFlexibleDates ? new FlexibleDateFromCLDR(cldrFactory, file) : null;
                     pathShower.set(localeID);
 
                     // only create if we are going to use it
                     final ExampleGenerator exampleGenerator =
-                            SHOW_EXAMPLES ? new ExampleGenerator(file, englishFile) : null;
+                            SHOW_EXAMPLES ? new ExampleGenerator(file, cldrFactory) : null;
 
                     int pathCount = 0;
                     Status otherPath = new Status();
@@ -1797,7 +1800,9 @@ public class ConsoleCheckCLDR {
             subtype = Subtype.none;
         }
         final SourceLocation location =
-                fullPath == null ? null : cldrFile.getSourceLocation(fullPath);
+                fullPath == null || !SHOW_FILE_LOCATIONS
+                        ? null
+                        : cldrFile.getSourceLocation(fullPath);
 
         if (ErrorFile.errorFileWriter == null) {
             example = example == null ? "" : example;

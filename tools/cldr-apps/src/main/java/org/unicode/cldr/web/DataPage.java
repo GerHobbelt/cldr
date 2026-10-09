@@ -619,7 +619,7 @@ public class DataPage {
          *     myItem = row.addItem(ourValue, "our");
          */
         private CandidateItem addItem(String value, String candidateHistory) {
-            if (value == null) {
+            if (value == null || VoteResolver.NO_WINNING_VALUE.equals(value)) {
                 return null;
             }
             if (VoteResolver.DROP_HARD_INHERITANCE && value.equals(inheritedValue)) {
@@ -1351,7 +1351,9 @@ public class DataPage {
             page.comparisonValueFile = sm.getEnglishFile();
 
             page.nativeExampleGenerator =
-                    TestCache.getExampleGenerator(locale, ourSrc, page.comparisonValueFile);
+                    sm.getSTFactory()
+                            .getTestCache()
+                            .getExampleGenerator(locale, ourSrc, page.comparisonValueFile);
 
             page.populateFrom(ourSrc, checkCldr);
             /*

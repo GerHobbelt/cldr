@@ -50,6 +50,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -67,13 +68,13 @@ import org.unicode.cldr.util.DayPeriodInfo;
 import org.unicode.cldr.util.DayPeriodInfo.DayPeriod;
 import org.unicode.cldr.util.EmojiConstants;
 import org.unicode.cldr.util.ExemplarSets.ExemplarType;
+import org.unicode.cldr.util.Factory;
 import org.unicode.cldr.util.GrammarInfo;
 import org.unicode.cldr.util.GrammarInfo.GrammaticalFeature;
 import org.unicode.cldr.util.GrammarInfo.GrammaticalScope;
 import org.unicode.cldr.util.GrammarInfo.GrammaticalTarget;
 import org.unicode.cldr.util.ICUServiceBuilder;
 import org.unicode.cldr.util.LanguageTagParser;
-import org.unicode.cldr.util.LocaleNames;
 import org.unicode.cldr.util.NameGetter;
 import org.unicode.cldr.util.NameType;
 import org.unicode.cldr.util.Pair;
@@ -84,6 +85,7 @@ import org.unicode.cldr.util.PatternPlaceholders.PlaceholderInfo;
 import org.unicode.cldr.util.PluralSamples;
 import org.unicode.cldr.util.Rational;
 import org.unicode.cldr.util.Rational.FormatStyle;
+import org.unicode.cldr.util.RecordingCLDRFile;
 import org.unicode.cldr.util.ScriptToExemplars;
 import org.unicode.cldr.util.SimpleUnicodeSetFormatter;
 import org.unicode.cldr.util.SupplementalCalendarData;
@@ -97,6 +99,7 @@ import org.unicode.cldr.util.UnitConverter;
 import org.unicode.cldr.util.UnitConverter.UnitId;
 import org.unicode.cldr.util.UnitConverter.UnitSystem;
 import org.unicode.cldr.util.Units;
+import org.unicode.cldr.util.VoteResolver;
 import org.unicode.cldr.util.XListFormatter.ListTypeLength;
 import org.unicode.cldr.util.XPathParts;
 import org.unicode.cldr.util.personname.PersonNameFormatter;
@@ -416,21 +419,13 @@ public class ExampleGenerator {
      * Create an Example Generator. If this is shared across threads, it must be synchronized.
      *
      * @param resolvedCldrFile
-     */
-    public ExampleGenerator(CLDRFile resolvedCldrFile) {
-        this(resolvedCldrFile, CLDRConfig.getInstance().getEnglish());
-    }
-
-    /**
-     * Create an Example Generator. If this is shared across threads, it must be synchronized.
-     *
-     * @param resolvedCldrFile
      * @param englishFile
      */
-    public ExampleGenerator(CLDRFile resolvedCldrFile, CLDRFile englishFile) {
+    public ExampleGenerator(CLDRFile resolvedCldrFile, Factory cldrFactory) {
         if (!resolvedCldrFile.isResolved()) {
             throw new IllegalArgumentException("CLDRFile must be resolved");
         }
+        final CLDRFile englishFile = cldrFactory.make("en", true);
         if (!englishFile.isResolved()) {
             throw new IllegalArgumentException("English CLDRFile must be resolved");
         }
@@ -442,12 +437,13 @@ public class ExampleGenerator {
                 supplementalDataInfo.getGrammarInfo(localeId); // getGrammarInfo can return null
         this.englishFile = englishFile;
         this.typeIsEnglish = (resolvedCldrFile == englishFile);
-        boolean locIsFake =
-                LocaleNames.XX_TEST.equals(localeId) || LocaleNames.MUL.equals(localeId);
+        // GenerateExampleDependencies needs the ICUServiceBuilder instance to use the
+        // RecordingCLDRFile if one is provided, rather than a pre-existing ordinary CLDRFile.
+        boolean fileIsRecording = cldrFile.getClass() == RecordingCLDRFile.class;
         this.icuServiceBuilder =
-                locIsFake
-                        ? new ICUServiceBuilder(resolvedCldrFile, locIsFake)
-                        : ICUServiceBuilder.forLocale(CLDRLocale.getInstance(localeId));
+                fileIsRecording
+                        ? ICUServiceBuilder.inefficientSingletonServiceBuilder(cldrFile)
+                        : cldrFactory.getICUServiceBuilder(CLDRLocale.getInstance(localeId));
 
         bestMinimalPairSamples = new BestMinimalPairSamples(cldrFile, icuServiceBuilder, false);
 
@@ -500,7 +496,10 @@ public class ExampleGenerator {
     }
 
     private String getExampleHtmlExtended(String xpath, String value, boolean nonTrivial) {
-        if (value == null || xpath == null || xpath.endsWith("/alias")) {
+        if (value == null
+                || xpath == null
+                || xpath.endsWith("/alias")
+                || VoteResolver.NO_WINNING_VALUE.equals(value)) {
             return null;
         }
         String result;
@@ -2192,11 +2191,19 @@ public class ExampleGenerator {
                 break;
             case "Timezone":
                 timeIndex = DateFormat.MEDIUM;
-                toAppend = cldrFile.getStringValue("//ldml/dates/timeZoneNames/gmtZeroFormat");
+                toAppend =
+                        getGMTFormat(
+                                null,
+                                cldrFile.getStringValue("//ldml/dates/timeZoneNames/gmtFormat"),
+                                8);
                 break;
             case "Date-Timezone":
                 dateIndex = DateFormat.MEDIUM;
-                toAppend = cldrFile.getStringValue("//ldml/dates/timeZoneNames/gmtZeroFormat");
+                toAppend =
+                        getGMTFormat(
+                                null,
+                                cldrFile.getStringValue("//ldml/dates/timeZoneNames/gmtFormat"),
+                                8);
                 break;
             default:
                 return;
@@ -3840,32 +3847,42 @@ public class ExampleGenerator {
                 examples.add(combined);
             }
         } else if (parts.getElement(-1).equals("typeValue")) {
-            final String COL_ALTERNATE =
-                    "//ldml/localeDisplayNames/keys/key[@type=\"colAlternate\"]";
             String type = parts.getAttributeValue(-1, "type");
-            String exampleValue = getCldrFile().getStringValue(COL_ALTERNATE);
-            if (exampleValue == null || exampleValue.isEmpty()) {
-                exampleValue = englishFile.getStringValue(COL_ALTERNATE);
-            }
             if (YES_NO.contains(type)) {
+                final Collection<String> typeValueKeyStrings = getTypeValueKeyStrings();
                 for (final String t : YES_NO) {
-                    if (type.equals(t)) {
-                        examples.add(exampleValue + ": " + setBackground(value));
-                    } else {
-                        // show all others that are present
-                        String otherValue =
-                                getCldrFile()
-                                        .getStringValue(
-                                                "//ldml/localeDisplayNames/typeValues/typeValue[@type=\""
-                                                        + t
-                                                        + "\"]");
-                        if (otherValue != null && !otherValue.isEmpty()) {
-                            examples.add(exampleValue + ": " + otherValue);
+                    final String yesNo =
+                            type.equals(t)
+                                    ? setBackground(value)
+                                    : getStringValue(
+                                            "//ldml/localeDisplayNames/typeValues/typeValue[@type=\"%s\"]",
+                                            t);
+                    if (yesNo != null) {
+                        for (final String exampleValue : typeValueKeyStrings) {
+                            // SomeValue:  Off
+                            // SomeOtherValue: On
+                            examples.add(String.format("%s: %s", exampleValue, yesNo));
                         }
                     }
                 }
             }
         }
+    }
+
+    private static final String[] typeValueSampleTypes = {"colAlternate", "ss"};
+
+    /** Get some example strings to use with On/Off strings, such as "Ignore Symbols Sorting" */
+    private Collection<String> getTypeValueKeyStrings() {
+        final Set<String> strings = new TreeSet<>();
+        for (final String type : typeValueSampleTypes) {
+            String exampleValue =
+                    getStringValueOrEnglish(
+                            "//ldml/localeDisplayNames/keys/key[@type=\"%s\"]", type);
+            if (exampleValue != null) {
+                strings.add(exampleValue);
+            }
+        }
+        return strings;
     }
 
     private String formatExampleList(String[] examples) {
@@ -4179,5 +4196,70 @@ public class ExampleGenerator {
                 .replace("</div>", "〗")
                 .replace("<span class='cldr_substituted'>", "❬")
                 .replace("</span>", "❭");
+    }
+
+    /** Convenience function for getting a path from some file */
+    final String getStringValue(final CLDRFile file, final String path) {
+        return file.getStringValue(path);
+    }
+
+    /**
+     * Convenience function for getting a formatted path from some file. Example use:
+     * getStringValue("//ldml/%s", "localeDisplayNames")
+     *
+     * @param file CLDRFile to use
+     * @param path Example: "//ldml/%s"
+     * @param args
+     * @return result or null
+     */
+    final String getStringValue(final CLDRFile file, final String path, final Object... args) {
+        return getStringValue(file, String.format(path, args));
+    }
+
+    /**
+     * Convenience function for getting a formatted path from the current file. Example use:
+     * getStringValue("//ldml/%s", "localeDisplayNames")
+     *
+     * @param file CLDRFile to use
+     * @param path Example: "//ldml/%s"
+     * @param args
+     * @return result or null
+     */
+    final String getStringValue(final String path, final Object... args) {
+        return getStringValue(getCldrFile(), String.format(path, args));
+    }
+
+    /**
+     * Convenience function for getting a formatted path from the current file, fallign back to
+     * English Example use: getStringValue("//ldml/%s", "localeDisplayNames")
+     *
+     * @param file CLDRFile to use
+     * @param path Example: "//ldml/%s"
+     * @param args
+     * @return result or null
+     */
+    final String getStringValueOrEnglish(final String path, final Object... args) {
+        final String currentVal = getStringValue(getCldrFile(), String.format(path, args));
+        if (currentVal != null && !currentVal.isEmpty()) {
+            return currentVal;
+        }
+        final String eng = getEnglishStringValue(path, args);
+        if (eng != null) {
+            return "⟨" + eng + "⟩";
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Convenience function for getting a formatted path from the English file. Example use:
+     * getStringValue("//ldml/%s", "localeDisplayNames")
+     *
+     * @param path Example: "//ldml/%s"
+     * @param args
+     * @return result or null
+     */
+    final String getEnglishStringValue(final String path, Object... args) {
+        return getStringValue(englishFile, String.format(path, args));
     }
 }

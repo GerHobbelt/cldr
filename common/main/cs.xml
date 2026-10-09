@@ -4552,6 +4552,12 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+
+							<intervalFormatRange type="non-numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">↑↑↑</greatestDifference>
@@ -7025,7 +7031,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<timeZoneNames>
 			<hourFormat>+H:mm;-H:mm</hourFormat>
 			<gmtFormat>↑↑↑</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<gmtUnknownFormat>↑↑↑</gmtUnknownFormat>
 			<regionFormat>časové pásmo {0}</regionFormat>
 			<regionFormat type="daylight">↑↑↑</regionFormat>
@@ -10219,14 +10224,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 				<displayName count="many">čínského jüanu (offshore)</displayName>
 				<displayName count="other">čínských jüanů (offshore)</displayName>
 				<symbol>↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
-				<displayName draft="contributed">čínský dolar ČLB</displayName>
-				<displayName count="one" draft="contributed">čínský dolar ČLB</displayName>
-				<displayName count="few" draft="contributed">čínské dolary ČLB</displayName>
-				<displayName count="many" draft="contributed">čínského dolaru ČLB</displayName>
-				<displayName count="other" draft="contributed">čínských dolarů ČLB</displayName>
-				<symbol draft="contributed">↑↑↑</symbol>
 			</currency>
 			<currency type="CNY">
 				<displayName>čínský jüan</displayName>

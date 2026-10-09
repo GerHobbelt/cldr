@@ -4270,11 +4270,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 				</months>
 				<eras>
 					<eraNames>
-						<era type="0">↑↑↑</era>
+						<era type="0">annu de su mundu</era>
 						<era type="1">↑↑↑</era>
 					</eraNames>
 					<eraAbbr>
-						<era type="0">↑↑↑</era>
+						<era type="0">a.m.</era>
 						<era type="1">↑↑↑</era>
 					</eraAbbr>
 					<eraNarrow>
@@ -4512,19 +4512,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						</intervalFormatItem>
 					</intervalFormats>
 				</dateTimeFormats>
-			</calendar>
-			<calendar type="ethiopic-amete-alem">
-				<eras>
-					<eraNames>
-						<era type="0">annu de su mundu</era>
-					</eraNames>
-					<eraAbbr>
-						<era type="0">a.m.</era>
-					</eraAbbr>
-					<eraNarrow>
-						<era type="0">↑↑↑</era>
-					</eraNarrow>
-				</eras>
 			</calendar>
 			<calendar type="generic">
 				<dateFormats>
@@ -5211,6 +5198,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="non-numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">↑↑↑</greatestDifference>
@@ -7949,7 +7941,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>↑↑↑</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<gmtUnknownFormat>↑↑↑</gmtUnknownFormat>
 			<regionFormat>Ora {0}</regionFormat>
 			<regionFormat type="daylight">Ora legale: {0}</regionFormat>
@@ -13046,12 +13037,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 				<displayName>renminbi tzinesu (extracontinentale)</displayName>
 				<displayName count="one">yuan tzinesu (extracontinentale)</displayName>
 				<displayName count="other">yuans tzinesos (extracontinentales)</displayName>
-				<symbol draft="contributed">↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
-				<displayName>dòllaru de sa Banca Popolare Tzinesa</displayName>
-				<displayName count="one">dòllaru de sa Banca Popolare Tzinesa</displayName>
-				<displayName count="other">dòllaros de sa Banca Popolare Tzinesa</displayName>
 				<symbol draft="contributed">↑↑↑</symbol>
 			</currency>
 			<currency type="CNY">

@@ -208,7 +208,6 @@ public class PathHeader implements Comparable<PathHeader> {
         Coptic(SectionId.DateTime),
         Dangi(SectionId.DateTime),
         Ethiopic(SectionId.DateTime),
-        Ethiopic_Amete_Alem(SectionId.DateTime, "Ethiopic-Amete-Alem"),
         Hebrew(SectionId.DateTime),
         Indian(SectionId.DateTime),
         Islamic(SectionId.DateTime),
@@ -1687,7 +1686,6 @@ public class PathHeader implements Comparable<PathHeader> {
                                             .put(
                                                     "dualOffsetFormat",
                                                     "Dual Standard/Daylight Format")
-                                            .put("gmtZeroFormat", "GMT Zero Format")
                                             .put("gmtUnknownFormat", "GMT Unknown Format")
                                             .put("fallbackFormat", "Location Fallback Format")
                                             .freeze();
@@ -1698,7 +1696,6 @@ public class PathHeader implements Comparable<PathHeader> {
                                             "regionFormat-daylight",
                                             "gmtFormat",
                                             "hourFormat",
-                                            "gmtZeroFormat",
                                             "gmtUnknownFormat",
                                             "dualOffsetFormat",
                                             "fallbackFormat");

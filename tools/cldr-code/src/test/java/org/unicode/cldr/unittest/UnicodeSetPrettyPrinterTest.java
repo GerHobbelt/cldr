@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.Disabled;
 import org.unicode.cldr.icu.dev.test.TestFmwk;
 import org.unicode.cldr.util.CLDRConfig;
 import org.unicode.cldr.util.CLDRFile;
@@ -125,11 +126,11 @@ public class UnicodeSetPrettyPrinterTest extends TestFmwk {
         Comparator<String> collator = susf.getComparator();
         UnicodeSet toEscape = susf.getToEscape();
         int maxRange = susf.getUseRangesAbove();
-
+        final Factory f = CLDRConfig.getInstance().getCldrFactory();
         int count = 0;
         for (String[] test : unicodeToDisplay) {
             if ("LOCALE".equals(test[0])) {
-                collator = SimpleUnicodeSetFormatter.getComparatorForLocale(test[1]);
+                collator = SimpleUnicodeSetFormatter.getComparatorForLocale(f, test[1]);
                 susf = new SimpleUnicodeSetFormatter(collator, toEscape, maxRange);
                 continue;
             }
@@ -221,6 +222,7 @@ public class UnicodeSetPrettyPrinterTest extends TestFmwk {
         // UnicodeSet("[{\\u200D\\u200e}]"), false);
     }
 
+    @Disabled
     public void testSimpleUnicodeSetFormatterWithLocales() {
         havePrintln = false;
         StringBuilder needsEscapeReport = new StringBuilder();

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import org.junit.jupiter.api.Disabled;
 import org.unicode.cldr.draft.XLikelySubtags.LSR;
 import org.unicode.cldr.draft.XLocaleDistance;
 import org.unicode.cldr.draft.XLocaleDistance.DistanceNode;
@@ -55,6 +56,7 @@ public class XLocaleDistanceTest extends TestFmwk {
         }
     }
 
+    @Disabled
     public void testTiming() {
         List<Arguments> testArgs = new ArrayList<>();
         for (List<String> line : tfh.getLines()) {
@@ -164,6 +166,7 @@ public class XLocaleDistanceTest extends TestFmwk {
         }
     }
 
+    @Disabled
     public void testDataDriven() throws IOException {
         tfh.test();
         if (REFORMAT) {

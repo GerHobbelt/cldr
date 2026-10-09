@@ -2654,6 +2654,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="non-numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="d">
 							<greatestDifference id="d">d – d</greatestDifference>
@@ -4300,7 +4305,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>↑↑↑</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<regionFormat>Hora de {0}</regionFormat>
 			<regionFormat type="daylight">Hora braniega de {0}</regionFormat>
 			<regionFormat type="standard">Hora estándar de {0}</regionFormat>
@@ -7091,11 +7095,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 				<displayName count="other">pesos chilenos</displayName>
 				<symbol>↑↑↑</symbol>
 				<symbol alt="narrow" draft="contributed">↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
-				<displayName>Dólar del Bancu Popular Chinu</displayName>
-				<displayName count="one">dólar del Bancu Popular Chinu</displayName>
-				<displayName count="other">dólares del Bancu Popular Chinu</displayName>
 			</currency>
 			<currency type="CNY">
 				<displayName>Yuan chinu</displayName>

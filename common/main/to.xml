@@ -1865,26 +1865,16 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 			<calendar type="ethiopic">
 				<eras>
 					<eraNames>
-						<era type="0" draft="unconfirmed">Taʻu ʻĪtiōpia</era>
-					</eraNames>
-					<eraAbbr>
-						<era type="0" draft="unconfirmed">TI</era>
-					</eraAbbr>
-					<eraNarrow>
-						<era type="0" draft="unconfirmed">↑↑↑</era>
-					</eraNarrow>
-				</eras>
-			</calendar>
-			<calendar type="ethiopic-amete-alem">
-				<eras>
-					<eraNames>
 						<era type="0" draft="unconfirmed">Taʻu ʻĪtiōpia-ʻAmete-ʻAlemi</era>
+						<era type="1" draft="unconfirmed">Taʻu ʻĪtiōpia</era>
 					</eraNames>
 					<eraAbbr>
 						<era type="0" draft="unconfirmed">TIAA</era>
+						<era type="1" draft="unconfirmed">TI</era>
 					</eraAbbr>
 					<eraNarrow>
 						<era type="0" draft="unconfirmed">↑↑↑</era>
+						<era type="1" draft="unconfirmed">↑↑↑</era>
 					</eraNarrow>
 				</eras>
 			</calendar>
@@ -2552,6 +2542,12 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+
+							<intervalFormatRange type="non-numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">↑↑↑</greatestDifference>
@@ -3430,7 +3426,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>↑↑↑</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<regionFormat>Taimi {0}</regionFormat>
 			<regionFormat type="daylight">{0} Taimi liliu</regionFormat>
 			<regionFormat type="standard">{0} Taimi totonu</regionFormat>

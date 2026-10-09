@@ -4411,19 +4411,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 					</intervalFormats>
 				</dateTimeFormats>
 			</calendar>
-			<calendar type="ethiopic-amete-alem">
-				<eras>
-					<eraNames>
-						<era type="0">тӗнче пуҫланнӑран</era>
-					</eraNames>
-					<eraAbbr>
-						<era type="0">т. п-р.</era>
-					</eraAbbr>
-					<eraNarrow>
-						<era type="0">т. п-р.</era>
-					</eraNarrow>
-				</eras>
-			</calendar>
 			<calendar type="generic">
 				<dateFormats>
 					<dateFormatLength type="full">
@@ -5099,6 +5086,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<appendItem request="Timezone">{0} ({1})</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="non-numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">B h – B h</greatestDifference>
@@ -7903,7 +7895,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>↑↑↑</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<gmtUnknownFormat>↑↑↑</gmtUnknownFormat>
 			<regionFormat>{0} вӑхӑчӗ</regionFormat>
 			<regionFormat type="daylight">{0} ҫуллахи вӑхӑчӗ</regionFormat>
@@ -19113,13 +19104,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 				<displayName count="zero">Китай юанӗ (офшор)</displayName>
 				<displayName count="one">Китай юанӗ (офшор)</displayName>
 				<displayName count="other">Китай юанӗ (офшор)</displayName>
-				<symbol draft="contributed">↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
-				<displayName>Китай халӑх банкӗн долларӗ</displayName>
-				<displayName count="zero">Китай халӑх банкӗн долларӗ</displayName>
-				<displayName count="one">Китай халӑх банкӗн долларӗ</displayName>
-				<displayName count="other">Китай халӑх банкӗн долларӗ</displayName>
 				<symbol draft="contributed">↑↑↑</symbol>
 			</currency>
 			<currency type="CNY">

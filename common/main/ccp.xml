@@ -1761,6 +1761,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="non-numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>{0} – {1}</intervalFormatFallback>
 						<intervalFormatItem id="d">
 							<greatestDifference id="d">↑↑↑</greatestDifference>
@@ -2545,7 +2550,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>GMT {0}</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<regionFormat>{0} 𑄃𑄧𑄇𑄴𑄖𑄧</regionFormat>
 			<regionFormat type="daylight">{0} 𑄘𑄨𑄝𑄪𑄌𑄴𑄎𑄳𑄠 𑄃𑄧𑄇𑄴𑄖𑄧𑄖𑄴</regionFormat>
 			<regionFormat type="standard">{0} 𑄟𑄚𑄧𑄇𑄴 𑄃𑄧𑄇𑄴𑄖𑄧𑄖𑄴</regionFormat>

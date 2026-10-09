@@ -4477,19 +4477,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 					</intervalFormats>
 				</dateTimeFormats>
 			</calendar>
-			<calendar type="ethiopic-amete-alem">
-				<eras>
-					<eraNames>
-						<era type="0">↑↑↑</era>
-					</eraNames>
-					<eraAbbr>
-						<era type="0">↑↑↑</era>
-					</eraAbbr>
-					<eraNarrow>
-						<era type="0">↑↑↑</era>
-					</eraNarrow>
-				</eras>
-			</calendar>
 			<calendar type="generic">
 				<dateFormats>
 					<dateFormatLength type="full">
@@ -5225,6 +5212,12 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0}至{1}</intervalFormatRange>
+
+							<intervalFormatRange type="non-numeric" draft="provisional">{0}至{1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}至{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">↑↑↑</greatestDifference>
@@ -7463,7 +7456,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>↑↑↑</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<gmtUnknownFormat>↑↑↑</gmtUnknownFormat>
 			<regionFormat>↑↑↑</regionFormat>
 			<regionFormat type="daylight">{0}夏令時間</regionFormat>
@@ -10758,9 +10750,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 			<currency type="CNH">
 				<displayName>↑↑↑</displayName>
 				<displayName count="other">↑↑↑</displayName>
-				<symbol>↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
 				<symbol>↑↑↑</symbol>
 			</currency>
 			<currency type="CNY">

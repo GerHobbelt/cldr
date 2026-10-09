@@ -1773,6 +1773,12 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0}– {1}</intervalFormatRange>
+
+							<intervalFormatRange type="non-numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">Bनि h – Bनि h</greatestDifference>
@@ -2664,7 +2670,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>जि.एम.ति {0}</gmtFormat>
-			<gmtZeroFormat>जि.एम.ति</gmtZeroFormat>
 			<regionFormat>{0} सम</regionFormat>
 			<regionFormat type="daylight">{0} साननि सोरां सम</regionFormat>
 			<regionFormat type="standard">{0} थाखोआरि सम</regionFormat>

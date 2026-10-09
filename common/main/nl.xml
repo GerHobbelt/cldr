@@ -5454,6 +5454,12 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+
+							<intervalFormatRange type="non-numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">↑↑↑</greatestDifference>
@@ -8132,7 +8138,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>↑↑↑</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<gmtUnknownFormat draft="contributed">↑↑↑</gmtUnknownFormat>
 			<regionFormat>tijd in {0}</regionFormat>
 			<regionFormat type="daylight">zomertijd in {0}</regionFormat>
@@ -13370,12 +13375,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 				<displayName count="one">↑↑↑</displayName>
 				<displayName count="other">↑↑↑</displayName>
 				<symbol>↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
-				<displayName draft="contributed">dollar van de Chinese Volksbank</displayName>
-				<displayName count="one" draft="contributed">↑↑↑</displayName>
-				<displayName count="other" draft="contributed">↑↑↑</displayName>
-				<symbol draft="contributed">↑↑↑</symbol>
 			</currency>
 			<currency type="CNY">
 				<displayName>Chinese yuan</displayName>

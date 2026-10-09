@@ -2720,6 +2720,12 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+
+							<intervalFormatRange type="non-numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>{0}–{1}</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">↑↑↑</greatestDifference>
@@ -3937,7 +3943,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<timeZoneNames>
 			<hourFormat>+H.mm;-H.mm</hourFormat>
 			<gmtFormat>UTC{0}</gmtFormat>
-			<gmtZeroFormat>UTC</gmtZeroFormat>
 			<gmtUnknownFormat>↑↑↑</gmtUnknownFormat>
 			<regionFormat>aikavyöhyke: {0}</regionFormat>
 			<regionFormat type="daylight">{0} (kesäaika)</regionFormat>
@@ -6723,12 +6728,6 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 				<displayName>Kiinan juan (offshore)</displayName>
 				<displayName count="one">Kiinan juan (offshore)</displayName>
 				<displayName count="other">Kiinan juania (offshore)</displayName>
-				<symbol>↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
-				<displayName>Kiinan kansanpankin dollari</displayName>
-				<displayName count="one">Kiinan kansanpankin dollari</displayName>
-				<displayName count="other">Kiinan kansanpankin dollaria</displayName>
 				<symbol>↑↑↑</symbol>
 			</currency>
 			<currency type="CNY">

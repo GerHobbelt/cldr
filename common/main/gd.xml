@@ -3252,6 +3252,12 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<appendItem request="Timezone">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+
+							<intervalFormatRange type="non-numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">↑↑↑</greatestDifference>
@@ -4542,7 +4548,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<timeZoneNames>
 			<hourFormat>↑↑↑</hourFormat>
 			<gmtFormat>↑↑↑</gmtFormat>
-			<gmtZeroFormat>↑↑↑</gmtZeroFormat>
 			<gmtUnknownFormat>↑↑↑</gmtUnknownFormat>
 			<regionFormat>↑↑↑</regionFormat>
 			<regionFormat type="daylight">Tìde samhraidh: {0}</regionFormat>
@@ -8497,14 +8502,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 				<displayName count="two">↑↑↑</displayName>
 				<displayName count="few">↑↑↑</displayName>
 				<displayName count="other">yuan Sìneach (far-thìreach)</displayName>
-				<symbol draft="contributed">↑↑↑</symbol>
-			</currency>
-			<currency type="CNX">
-				<displayName>Dolar an t-sluagh-bhanca Shìnich</displayName>
-				<displayName count="one">↑↑↑</displayName>
-				<displayName count="two">dholar an t-sluagh-bhanca Shìnich</displayName>
-				<displayName count="few">dolaran an t-sluagh-bhanca Shìnich</displayName>
-				<displayName count="other">dolar an t-sluagh-bhanca Shìnich</displayName>
 				<symbol draft="contributed">↑↑↑</symbol>
 			</currency>
 			<currency type="CNY">

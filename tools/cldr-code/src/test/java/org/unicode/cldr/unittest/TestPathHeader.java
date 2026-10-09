@@ -362,11 +362,11 @@ public class TestPathHeader extends TestFmwkPlus {
             assertEquals(
                     "appendItem:Timezone placeholders", "Pacific Time", placeholderInfo2.example);
         }
-        ExampleGenerator eg = new ExampleGenerator(cldrFile, cldrFile);
+        ExampleGenerator eg = new ExampleGenerator(cldrFile, factory);
         String example =
                 eg.getExampleHtml(APPEND_TIMEZONE, cldrFile.getStringValue(APPEND_TIMEZONE));
         String result = ExampleGenerator.simplify(example, false);
-        assertEquals("", "〖❬6:25:59 PM❭ ❬GMT❭〗", result);
+        assertEquals("", "〖❬6:25:59 PM❭ ❬GMT❬+08:00❭❭〗", result);
     }
 
     public void TestOptional() {

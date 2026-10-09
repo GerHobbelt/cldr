@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
-<!-- Copyright © 1991-2025 Unicode, Inc.
+<!-- Copyright © 1991-2026 Unicode, Inc.
 For terms of use, see http://www.unicode.org/copyright.html
 SPDX-License-Identifier: Unicode-3.0
 CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
@@ -824,6 +824,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 						<appendItem request="Timezone" draft="unconfirmed">↑↑↑</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="non-numeric" draft="provisional">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="numeric" draft="provisional">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback draft="unconfirmed">↑↑↑</intervalFormatFallback>
 						<intervalFormatItem id="d">
 							<greatestDifference id="d" draft="unconfirmed">↑↑↑</greatestDifference>
@@ -1084,7 +1089,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<timeZoneNames>
 			<hourFormat draft="unconfirmed">↑↑↑</hourFormat>
 			<gmtFormat draft="unconfirmed">UTC{0}</gmtFormat>
-			<gmtZeroFormat draft="unconfirmed">UTC</gmtZeroFormat>
 			<regionFormat draft="unconfirmed">ora : {0}</regionFormat>
 			<regionFormat type="daylight" draft="unconfirmed">{0} (ora d’estate)</regionFormat>
 			<regionFormat type="standard" draft="unconfirmed">{0} (ora usuale)</regionFormat>

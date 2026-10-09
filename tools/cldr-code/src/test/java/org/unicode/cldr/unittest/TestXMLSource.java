@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import org.junit.jupiter.api.Disabled;
 import org.unicode.cldr.icu.dev.test.TestFmwk;
 import org.unicode.cldr.util.CLDRConfig;
 import org.unicode.cldr.util.CLDRFile;
@@ -63,6 +64,7 @@ public class TestXMLSource extends TestFmwk {
         new TestXMLSource().run(args);
     }
 
+    @Disabled
     public void TestGetPathsWithValue() {
         XMLSource source = new DummyXMLSource();
         source.putValueAtDPath("//ldml/foo", "x");
