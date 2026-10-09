@@ -12,12 +12,8 @@
           ref="addValueCharMenuRef"
         />
       </template>
-      <template v-if="tagIsClickable(tag)">
-        <a-tag
-          @click="handleClickTag($event, index)"
-          class="regular-tag"
-          :id="makeTagId(index)"
-        >
+      <template v-if="shouldDisplayAsTag(tag)">
+        <a-tag @click="handleClickTag($event, index)" class="regular-tag">
           <a-tooltip>
             <template #title> {{ tagTooltip(tag) }} </template>
             {{ displayTag(tag) }}
@@ -34,16 +30,10 @@ import { onMounted, ref } from "vue";
 
 import * as cldrAddValue from "../esm/cldrAddValue.mjs";
 import * as cldrChar from "../esm/cldrChar.mjs";
-import * as cldrEscaper from "../esm/cldrEscaper.mjs";
 
 import AddValueCharMenu from "./AddValueCharMenu.vue";
 
 const DEBUG = false;
-
-/**
- * Should ASCII space (U+0020) be displayed as a tag?
- */
-const SPACES_HAVE_TAGS = false;
 
 const props = defineProps({
   modelValue: String,
@@ -68,38 +58,16 @@ function updateParent() {
   emit("update:modelValue", cldrAddValue.convertTagsToText(tagArray.value));
 }
 
-function makeTagId(index) {
-  return "cldr-tag-" + index;
-}
-
-function tagIsClickable(tag) {
-  const c = cldrChar.firstChar(tag);
-  if (SPACES_HAVE_TAGS) {
-    return cldrChar.isSpecial(c);
-  } else {
-    return c !== " " && cldrChar.isSpecial(c);
-  }
+function shouldDisplayAsTag(tag) {
+  return cldrAddValue.shouldDisplayAsTag(tag);
 }
 
 function displayTag(tag) {
-  const c = cldrChar.firstChar(tag);
-  const shortName = cldrEscaper.getShortName(c);
-  if (shortName) {
-    return shortName;
-  } else {
-    return tag;
-  }
+  return cldrAddValue.textForTag(tag);
 }
 
 function tagTooltip(tag) {
-  const c = cldrChar.firstChar(tag);
-  const codePoint = cldrChar.firstCodePoint(tag);
-  return (
-    cldrEscaper.getShortName(c) +
-    " (" +
-    cldrChar.uPlus(codePoint) +
-    "): click to choose alternative"
-  );
+  return cldrAddValue.tagTooltipPlusClick(tag);
 }
 
 function handleClickTag(event, index) {
@@ -130,23 +98,10 @@ function handleChooseCharacter() {
 }
 </script>
 
-<style>
-/* The div with "ant-select-selector" normally contains the menu arrow and placeholder.
-   Even if showArrow=false and placeholder=null, an empty div is displayed as an
-   obnoxious little rectangle overlapping the tag to which the menu is attached,
-   unless this style is overridden, and it can't be "style scoped". (Note that
-  "display: none" would hide the entire menu.) */
-.ant-select-selector {
-  width: 0 !important;
-  height: 0 !important;
-  border: 0 !important;
-}
-</style>
-
 <style scoped>
 .regular-tag {
-  margin: 1pt;
-  padding: 1pt;
+  margin: 1px;
+  padding: 1px;
 }
 
 /* Prevent the text to the right of the menu moving when the menu is opened */
@@ -155,7 +110,7 @@ function handleChooseCharacter() {
 }
 
 .tag-array {
-  /* Compare lrmarker-container in redesign.css; see also the surrounding style tag-area in AddValue.vue */
+  user-select: none;
   font-weight: bold;
   color: black;
   margin: 1px;

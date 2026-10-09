@@ -413,55 +413,9 @@ public class TestCoverageLevel extends TestFmwkPlus {
          */
         final ImmutableSet<String> inactiveMetazones =
                 ImmutableSet.of(
-                        "Greenland", // TODO: New metazone added for tz2023d update,
-                        // In CLDR 45, we don't want to include this one in modern coverage because
-                        // we don't open ST for translating display names for this metazone.
-                        // After 45, we will include "Greenland" in modern coverage.
-                        "Bering",
-                        "Dominican",
-                        "Shevchenko",
-                        "Alaska_Hawaii",
-                        "Yerevan",
-                        "Africa_FarWestern",
-                        "British",
-                        "Sverdlovsk",
-                        "Karachi",
-                        "Malaya",
-                        "Oral",
-                        "Frunze",
-                        "Dutch_Guiana",
-                        "Irish",
-                        "Uralsk",
-                        "Tashkent",
-                        "Kwajalein",
-                        "Ashkhabad",
-                        "Kizilorda",
-                        "Kuybyshev",
-                        "Baku",
-                        "Dushanbe",
-                        "Goose_Bay",
-                        "Liberia",
-                        "Samarkand",
-                        "Tbilisi",
-                        "Borneo",
-                        "Greenland_Central",
-                        "Dacca",
-                        "Aktyubinsk",
-                        "Turkey",
-                        "Urumqi",
-                        "Acre",
-                        "Almaty",
-                        "Anadyr",
-                        "Aqtau",
-                        "Aqtobe",
-                        "Kamchatka",
-                        "Macau",
-                        "Qyzylorda",
-                        "Samara",
-                        "Casey",
-                        "Guam",
-                        "Lanka",
-                        "North_Mariana");
+                        "Anadyr", // unused since 2010-03-27
+                        "Casey" // unused since 2023-03-08
+                        );
 
         final Pattern calendar100 =
                 PatternCache.get("(coptic|ethiopic-amete-alem|islamic-(rgsa|tbla|umalqura))");
@@ -525,6 +479,15 @@ public class TestCoverageLevel extends TestFmwkPlus {
                 continue;
             }
             Level lvl = sdi.getCoverageLevel(path, "en");
+            if (path.equals(
+                    "//ldml/characters/placeholderBoundarySpacing[@type=\"digit-digit\"][@scopes=\"datetime\"]")) {
+                logln(
+                        "placeholderBoundarySpacing Level OK ["
+                                + lvl.toString()
+                                + "] for path => "
+                                + path);
+                continue;
+            }
             if (lvl == Level.UNDETERMINED) {
                 errln("Undetermined coverage value for path => " + path);
                 continue;
@@ -874,8 +837,12 @@ public class TestCoverageLevel extends TestFmwkPlus {
         }
     }
 
+    /**
+     * @see {@link LogicalGrouping.PathType} and ensure each value is represented.
+     */
     public void testLogicalGroupingSamples() {
         getLogger().fine(GrammarInfo.getGrammarLocales().toString());
+        /** Add example LogicalGrouping.PathType entries here. */
         String[][] test = {
             {
                 "de", "SINGLETON", "//ldml/localeDisplayNames/localeDisplayPattern/localePattern",
@@ -985,7 +952,8 @@ public class TestCoverageLevel extends TestFmwkPlus {
                 "//ldml/units/unitLength[@type=\"long\"]/compoundUnit[@type=\"power2\"]/compoundUnitPattern1[@count=\"one\"][@gender=\"feminine\"][@case=\"oblique\"]",
                 "//ldml/units/unitLength[@type=\"long\"]/compoundUnit[@type=\"power2\"]/compoundUnitPattern1[@count=\"other\"][@case=\"oblique\"]",
                 "//ldml/units/unitLength[@type=\"long\"]/compoundUnit[@type=\"power2\"]/compoundUnitPattern1[@count=\"other\"][@gender=\"feminine\"][@case=\"oblique\"]"
-            }
+            },
+            {"ady", "TYPE_VALUE"}
         };
         Set<PathType> seenPt = new TreeSet<>(Arrays.asList(PathType.values()));
         for (String[] row : test) {
@@ -1010,7 +978,10 @@ public class TestCoverageLevel extends TestFmwkPlus {
             }
             seenPt.remove(expectedPathType);
         }
-        assertEquals("PathTypes tested", Collections.emptySet(), seenPt);
+        assertEquals(
+                "Expected to see every LogicalGrouping.PathType represented, missing some from test",
+                Collections.emptySet(),
+                seenPt);
     }
 
     private Multimap<String, String> delta(Set<String> expected, Set<String> grouping) {

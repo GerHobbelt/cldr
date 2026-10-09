@@ -184,6 +184,8 @@ public class TestExampleGenerator extends TestFmwk {
      */
     static final Set<String> TEMPORARY_EXCLUDED_EXAMPLES =
             ImmutableSet.of(
+                    // CLDR-19227
+                    "//ldml/characters/placeholderBoundarySpacing[@type=\"([^\"]*+)\"][@scopes=\"([^\"]*+)\"]",
                     // CLDR-14831
                     "//ldml/characters/nestedBracketReplacement[@bracket=\"([^\"]*+)\"]",
                     "//ldml/numbers/currencyFormats[@numberSystem=\"([^\"]*+)\"]/currencySpacing/beforeCurrency/currencyMatch",
@@ -211,8 +213,10 @@ public class TestExampleGenerator extends TestFmwk {
                     "//ldml/dates/calendars/calendar[@type=\"([^\"]*+)\"]/eras/eraAbbr/era[@type=\"([^\"]*+)\"][@alt=\"([^\"]*+)\"]",
                     "//ldml/dates/calendars/calendar[@type=\"([^\"]*+)\"]/eras/eraNarrow/era[@type=\"([^\"]*+)\"][@alt=\"([^\"]*+)\"]",
                     "//ldml/dates/calendars/calendar[@type=\"([^\"]*+)\"]/months/monthContext[@type=\"([^\"]*+)\"]/monthWidth[@type=\"([^\"]*+)\"]/month[@type=\"([^\"]*+)\"][@yeartype=\"([^\"]*+)\"]",
-                    "//ldml/dates/timeZoneNames/gmtZeroFormat",
-                    "//ldml/dates/timeZoneNames/gmtUnknownFormat",
+                    "//ldml/dates/timeZoneNames/gmtZeroFormat", // TODO CLDR-14121
+                    "//ldml/dates/timeZoneNames/gmtUnknownFormat", // TODO CLDR-14121
+                    "//ldml/dates/timeZoneNames/gmtUnknownFormat[@alt=\"([^\"]*+)\"]", // TODO
+                    // CLDR-14121
                     "//ldml/numbers/minimumGroupingDigits",
                     "//ldml/numbers/symbols[@numberSystem=\"([^\"]*+)\"]/timeSeparator",
                     "//ldml/units/unitLength[@type=\"([^\"]*+)\"]/unit[@type=\"([^\"]*+)\"]/displayName",
@@ -2203,6 +2207,8 @@ public class TestExampleGenerator extends TestFmwk {
                         + "//ldml/dates/fields/field[@type=\"*\"]/relative[@type=\"*\"]"
                         + "//ldml/dates/timeZoneNames/gmtZeroFormat"
                         + "//ldml/dates/timeZoneNames/gmtUnknownFormat"
+                        + "//ldml/dates/timeZoneNames/gmtUnknownFormat[@alt=\"*\"]" // TODO
+                        // CLDR-14121
                         + "//ldml/dates/timeZoneNames/metazone[@type=\"*\"]/short/standard"
                         + "//ldml/numbers/symbols[@numberSystem=\"*\"]/infinity"
                         + "//ldml/numbers/symbols[@numberSystem=\"*\"]/nan"

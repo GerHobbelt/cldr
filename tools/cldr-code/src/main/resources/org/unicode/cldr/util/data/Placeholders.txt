@@ -144,6 +144,7 @@
 ^//ldml/dates/fields/field\[@type="week-narrow"]/relativePeriod ; locale ; {0}=NUMBER_OF_WEEKS 3
 
 ^//ldml/dates/calendars/calendar\[@type="%A"]/dateTimeFormats/appendItems/appendItem\[@request="Date-Timezone"] ; {0}=BASE_FORMAT January 23; {1}=APPEND_FIELD_FORMAT Pacific Time
+^//ldml/dates/calendars/calendar\[@type="%A"]/dateTimeFormats/appendItems/appendItem\[@request="Time-Day-Of-Week"] ; {0}=BASE_FORMAT 14:30; {1}=APPEND_FIELD_FORMAT Monday
 ^//ldml/dates/calendars/calendar\[@type="%A"]/dateTimeFormats/appendItems/appendItem\[@request="Day-Of-Week"] ; {0}=BASE_FORMAT January 23; {1}=APPEND_FIELD_FORMAT Monday
 ^//ldml/dates/calendars/calendar\[@type="%A"]/dateTimeFormats/appendItems/appendItem\[@request="Timezone"] ; {0}=BASE_FORMAT 12:30; {1}=APPEND_FIELD_FORMAT Pacific Time
 ^//ldml/dates/calendars/calendar\[@type="%A"]/dateTimeFormats/appendItems/appendItem\[@request="Era"] ; {0}=BASE_FORMAT Monday, January 23; {1}=APPEND_FIELD_FORMAT A.D.
@@ -163,7 +164,7 @@
 ^//ldml/dates/calendars/calendar\[@type="%A"]/monthPatterns/monthPatternContext\[@type="%A"]/monthPatternWidth\[@type="%A"]/monthPattern\[@type="%A"] ; {0}=CHINESE_CALENDAR_MONTH_NAME Month4
 
 ^//ldml/dates/timeZoneNames/fallbackFormat ; {1}=METAZONE Pacific Time; {0}=CITY_OR_COUNTRY Los Angeles
-^//ldml/dates/timeZoneNames/gmtFormat ; {0}=HOURS_FROM_GMT +3
+^//ldml/dates/timeZoneNames/gmtFormat ; {0}=HOURS_FROM_UTC +3
 ^//ldml/dates/timeZoneNames/dualOffsetFormat ; {0}=STANDARD_OFFSET +3; {1}=DAYLIGHT_OFFSET +4
 ^//ldml/dates/timeZoneNames/regionFormat ; {0}=COUNTRY_OR_CITY Canada
 

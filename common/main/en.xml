@@ -1781,6 +1781,10 @@ annotations.
 			<type key="va" type="posix">POSIX Compliant Locale</type>
 			<type key="va" type="posix" scope="core">POSIX variant</type>
 		</types>
+		<typeValues>
+			<typeValue type="no">Off</typeValue>
+			<typeValue type="yes">On</typeValue>
+		</typeValues>
 		<measurementSystemNames>
 			<measurementSystemName type="metric">Metric</measurementSystemName>
 			<measurementSystemName type="UK">UK</measurementSystemName>
@@ -2320,19 +2324,26 @@ annotations.
 						<dateFormatItem id="yyyyQQQQ">QQQQ y G</dateFormatItem>
 					</availableFormats>
 					<appendItems>
+						<appendItem request="Date-Timezone">{0} {1}</appendItem>
 						<appendItem request="Day">{0} ({2}: {1})</appendItem>
-						<appendItem request="Day-Of-Week">{0}, {1}</appendItem>
+						<appendItem request="Day-Of-Week">{1}, {0}</appendItem>
 						<appendItem request="Era">{0} {1}</appendItem>
 						<appendItem request="Hour">{0} ({2}: {1})</appendItem>
 						<appendItem request="Minute">{0} ({2}: {1})</appendItem>
 						<appendItem request="Month">{0} ({2}: {1})</appendItem>
 						<appendItem request="Quarter">{0} ({2}: {1})</appendItem>
 						<appendItem request="Second">{0} ({2}: {1})</appendItem>
+						<appendItem request="Time-Day-Of-Week">{1}, {0}</appendItem>
 						<appendItem request="Timezone">{0} {1}</appendItem>
 						<appendItem request="Week">{0} ({2}: {1})</appendItem>
 						<appendItem request="Year">{0} {1}</appendItem>
 					</appendItems>
 					<intervalFormats>
+						<intervalFormatRanges>
+							<intervalFormatRange type="mixed">{0} – {1}</intervalFormatRange>
+							<intervalFormatRange type="non-numeric">{0}–{1}</intervalFormatRange>
+							<intervalFormatRange type="numeric">{0}–{1}</intervalFormatRange>
+						</intervalFormatRanges>
 						<intervalFormatFallback>{0} – {1}</intervalFormatFallback>
 						<intervalFormatItem id="Bh">
 							<greatestDifference id="B">h B – h B</greatestDifference>
@@ -2921,8 +2932,11 @@ annotations.
 						<dateFormatItem id="GyMMMddd">MMM ddd, y G</dateFormatItem>
 						<dateFormatItem id="GyMMMEd">E, MMM d, y G</dateFormatItem>
 						<dateFormatItem id="GyMMMEddd">E, MMM ddd, y G</dateFormatItem>
+						<dateFormatItem id="GyMMMM">MMMM y G</dateFormatItem>
+						<dateFormatItem id="GyMMMMd">MMMM d, y G</dateFormatItem>
 						<dateFormatItem id="GyMMMMddd">MMMM ddd, y G</dateFormatItem>
-						<dateFormatItem id="GyMMMMEddd">E, MMM ddd, y G</dateFormatItem>
+						<dateFormatItem id="GyMMMMEd">E, MMMM d, y G</dateFormatItem>
+						<dateFormatItem id="GyMMMMEddd">E, MMMM ddd, y G</dateFormatItem>
 						<dateFormatItem id="h">h a</dateFormatItem>
 						<dateFormatItem id="h" alt="ascii">h a</dateFormatItem>
 						<dateFormatItem id="H">HH</dateFormatItem>
@@ -2951,6 +2965,7 @@ annotations.
 						<dateFormatItem id="MMMEddd">E, MMM ddd</dateFormatItem>
 						<dateFormatItem id="MMMMd">MMMM d</dateFormatItem>
 						<dateFormatItem id="MMMMddd">MMMM ddd</dateFormatItem>
+						<dateFormatItem id="MMMMEd">E, MMMM d</dateFormatItem>
 						<dateFormatItem id="MMMMEddd">E, MMMM ddd</dateFormatItem>
 						<dateFormatItem id="MMMMW" count="one">'week' W 'of' MMMM</dateFormatItem>
 						<dateFormatItem id="MMMMW" count="other">'week' W 'of' MMMM</dateFormatItem>
@@ -2965,20 +2980,24 @@ annotations.
 						<dateFormatItem id="yMMMEd">E, MMM d, y</dateFormatItem>
 						<dateFormatItem id="yMMMEddd">E, MMM ddd, y</dateFormatItem>
 						<dateFormatItem id="yMMMM">MMMM y</dateFormatItem>
+						<dateFormatItem id="yMMMMd">MMMM d, y</dateFormatItem>
+						<dateFormatItem id="yMMMMEd">E, MMMM d, y</dateFormatItem>
 						<dateFormatItem id="yQQQ">QQQ y</dateFormatItem>
 						<dateFormatItem id="yQQQQ">QQQQ y</dateFormatItem>
 						<dateFormatItem id="yw" count="one">'week' w 'of' Y</dateFormatItem>
 						<dateFormatItem id="yw" count="other">'week' w 'of' Y</dateFormatItem>
 					</availableFormats>
 					<appendItems>
+						<appendItem request="Date-Timezone">{0} {1}</appendItem>
 						<appendItem request="Day">{0} ({2}: {1})</appendItem>
-						<appendItem request="Day-Of-Week">{0}, {1}</appendItem>
+						<appendItem request="Day-Of-Week">{1}, {0}</appendItem>
 						<appendItem request="Era">{0} {1}</appendItem>
 						<appendItem request="Hour">{0} ({2}: {1})</appendItem>
 						<appendItem request="Minute">{0} ({2}: {1})</appendItem>
 						<appendItem request="Month">{0} ({2}: {1})</appendItem>
 						<appendItem request="Quarter">{0} ({2}: {1})</appendItem>
 						<appendItem request="Second">{0} ({2}: {1})</appendItem>
+						<appendItem request="Time-Day-Of-Week">{1}, {0}</appendItem>
 						<appendItem request="Timezone">{0} {1}</appendItem>
 						<appendItem request="Week">{0} ({2}: {1})</appendItem>
 						<appendItem request="Year">{0} {1}</appendItem>
@@ -4448,13 +4467,6 @@ annotations.
 					<daylight>AKDT</daylight>
 				</short>
 			</metazone>
-			<metazone type="Almaty">
-				<long>
-					<generic>Almaty Time</generic>
-					<standard>Almaty Standard Time</standard>
-					<daylight>Almaty Summer Time</daylight>
-				</long>
-			</metazone>
 			<metazone type="Amazon">
 				<long>
 					<generic>Amazon Time</generic>
@@ -4519,23 +4531,9 @@ annotations.
 			</metazone>
 			<metazone type="Apia">
 				<long>
-					<generic>Samoa Time</generic>
-					<standard>Samoa Standard Time</standard>
-					<daylight>Samoa Daylight Time</daylight>
-				</long>
-			</metazone>
-			<metazone type="Aqtau">
-				<long>
-					<generic>Aqtau Time</generic>
-					<standard>Aqtau Standard Time</standard>
-					<daylight>Aqtau Summer Time</daylight>
-				</long>
-			</metazone>
-			<metazone type="Aqtobe">
-				<long>
-					<generic>Aqtobe Time</generic>
-					<standard>Aqtobe Standard Time</standard>
-					<daylight>Aqtobe Summer Time</daylight>
+					<generic>West Samoa Time</generic>
+					<standard>West Samoa Standard Time</standard>
+					<daylight>West Samoa Daylight Time</daylight>
 				</long>
 			</metazone>
 			<metazone type="Arabian">
@@ -4846,11 +4844,6 @@ annotations.
 					<daylight>West Greenland Summer Time</daylight>
 				</long>
 			</metazone>
-			<metazone type="Guam">
-				<long>
-					<standard>Guam Standard Time</standard>
-				</long>
-			</metazone>
 			<metazone type="Gulf">
 				<long>
 					<standard>Gulf Standard Time</standard>
@@ -4999,11 +4992,6 @@ annotations.
 					<standard>Kyrgyzstan Time</standard>
 				</long>
 			</metazone>
-			<metazone type="Lanka">
-				<long>
-					<standard>Lanka Time</standard>
-				</long>
-			</metazone>
 			<metazone type="Line_Islands">
 				<long>
 					<standard>Line Islands Time</standard>
@@ -5014,13 +5002,6 @@ annotations.
 					<generic>Lord Howe Time</generic>
 					<standard>Lord Howe Standard Time</standard>
 					<daylight>Lord Howe Daylight Time</daylight>
-				</long>
-			</metazone>
-			<metazone type="Macau">
-				<long>
-					<generic>Macao Time</generic>
-					<standard>Macao Standard Time</standard>
-					<daylight>Macao Summer Time</daylight>
 				</long>
 			</metazone>
 			<metazone type="Magadan">
@@ -5138,11 +5119,6 @@ annotations.
 					<daylight>Fernando de Noronha Summer Time</daylight>
 				</long>
 			</metazone>
-			<metazone type="North_Mariana">
-				<long>
-					<standard>Northern Mariana Islands Time</standard>
-				</long>
-			</metazone>
 			<metazone type="Novosibirsk">
 				<long>
 					<generic>Novosibirsk Time</generic>
@@ -5222,13 +5198,6 @@ annotations.
 					<standard>North Korea Time</standard>
 				</long>
 			</metazone>
-			<metazone type="Qyzylorda">
-				<long>
-					<generic>Kyzylorda Time</generic>
-					<standard>Kyzylorda Standard Time</standard>
-					<daylight>Kyzylorda Summer Time</daylight>
-				</long>
-			</metazone>
 			<metazone type="Reunion">
 				<long>
 					<standard>Réunion Time</standard>
@@ -5255,9 +5224,7 @@ annotations.
 			</metazone>
 			<metazone type="Samoa">
 				<long>
-					<generic>American Samoa Time</generic>
-					<standard>American Samoa Standard Time</standard>
-					<daylight>American Samoa Daylight Time</daylight>
+					<standard>American Samoa Time</standard>
 				</long>
 			</metazone>
 			<metazone type="Seychelles">
@@ -5348,6 +5315,11 @@ annotations.
 					<generic>Uruguay Time</generic>
 					<standard>Uruguay Standard Time</standard>
 					<daylight>Uruguay Summer Time</daylight>
+				</long>
+			</metazone>
+			<metazone type="Urumqi">
+				<long>
+					<standard>Ürümqi Time</standard>
 				</long>
 			</metazone>
 			<metazone type="Uzbekistan">

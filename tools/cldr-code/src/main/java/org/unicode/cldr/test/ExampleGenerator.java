@@ -1,5 +1,7 @@
 package org.unicode.cldr.test;
 
+import static org.unicode.cldr.util.LogicalGrouping.YES_NO;
+
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -58,7 +60,6 @@ import org.unicode.cldr.util.CLDRFile;
 import org.unicode.cldr.util.CLDRFile.WinningChoice;
 import org.unicode.cldr.util.CLDRFileOverride;
 import org.unicode.cldr.util.CLDRLocale;
-import org.unicode.cldr.util.CldrPathUtilities;
 import org.unicode.cldr.util.CldrUtility;
 import org.unicode.cldr.util.CodePointEscaper;
 import org.unicode.cldr.util.DateConstants;
@@ -2156,16 +2157,55 @@ public class ExampleGenerator {
     }
 
     private void handleAppendItems(XPathParts parts, String value, List<String> examples) {
+        // Example parts:
+        // //ldml/dates/calendars/calendar[@type="gregorian"]/dateTimeFormats/appendItems/appendItem[@request="Timezone"]
         String request = parts.getAttributeValue(-1, "request");
-        if (!"Timezone".equals(request)) {
-            return;
-        }
         String calendar = parts.getAttributeValue(3, "type");
+        // what we append to
+        int dateIndex = 0;
+        int timeIndex = 0;
+        String toAppend = "";
+        switch (request) {
+            case "Era":
+                dateIndex = DateFormat.MEDIUM;
+                toAppend =
+                        cldrFile.getStringValue(
+                                "//ldml/dates/calendars/calendar[@type=\""
+                                        + calendar
+                                        + "\"]/eras/eraAbbr/era[@type=\"1\"]");
+                break;
+            case "Day-Of-Week":
+                dateIndex = DateFormat.MEDIUM;
+                toAppend =
+                        cldrFile.getStringValue(
+                                "//ldml/dates/calendars/calendar[@type=\""
+                                        + calendar
+                                        + "\"]/days/dayContext[@type=\"format\"]/dayWidth[@type=\"abbreviated\"]/day[@type=\"sun\"]");
+                break;
+            case "Time-Day-Of-Week":
+                timeIndex = DateFormat.MEDIUM;
+                toAppend =
+                        cldrFile.getStringValue(
+                                "//ldml/dates/calendars/calendar[@type=\""
+                                        + calendar
+                                        + "\"]/days/dayContext[@type=\"format\"]/dayWidth[@type=\"abbreviated\"]/day[@type=\"sun\"]");
+                break;
+            case "Timezone":
+                timeIndex = DateFormat.MEDIUM;
+                toAppend = cldrFile.getStringValue("//ldml/dates/timeZoneNames/gmtZeroFormat");
+                break;
+            case "Date-Timezone":
+                dateIndex = DateFormat.MEDIUM;
+                toAppend = cldrFile.getStringValue("//ldml/dates/timeZoneNames/gmtZeroFormat");
+                break;
+            default:
+                return;
+        }
 
         SimpleDateFormat sdf =
-                icuServiceBuilder.getDateFormat(calendar, 0, DateFormat.MEDIUM, null);
-        String zone = cldrFile.getStringValue("//ldml/dates/timeZoneNames/gmtZeroFormat");
-        examples.add(format(value, setBackground(sdf.format(DATE_SAMPLE)), setBackground(zone)));
+                icuServiceBuilder.getDateFormat(calendar, dateIndex, timeIndex, null);
+        examples.add(
+                format(value, setBackground(sdf.format(DATE_SAMPLE)), setBackground(toAppend)));
     }
 
     public class IntervalFormat {
@@ -2893,33 +2933,7 @@ public class ExampleGenerator {
     }
 
     private String formatWithOrdinalHack(SimpleDateFormat sdf, String calendar, Date date) {
-        String pattern = sdf.toPattern();
-        if (!pattern.contains("ddd")) {
-            return sdf.format(date);
-        }
-        PluralRules ordinalRules =
-                supplementalDataInfo.getPluralRules(
-                        cldrFile.getLocaleID(), PluralRules.PluralType.ORDINAL);
-        if (ordinalRules == null) {
-            return sdf.format(date);
-        }
-        int dayOfMonth = date.getDate();
-        String keyword = ordinalRules.select(dayOfMonth, 0, 0);
-        String path =
-                CldrPathUtilities.dayOfMonthPath(
-                        Count.valueOf(keyword), calendar, "format", "abbreviated");
-        String ordinalPattern = cldrFile.getStringValueWithBailey(path);
-        if (ordinalPattern == null) {
-            ordinalPattern = "{0}missing";
-        }
-        String ordinalString =
-                ordinalPattern.replace(
-                        "{0}", String.valueOf(dayOfMonth)); // TODO fix for native digits
-        // quote to prevent substitutions within the pattern.
-        String newPattern = pattern.replace("ddd", "'" + ordinalString + "'");
-        SimpleDateFormat sdf2 = sdf.clone();
-        sdf2.applyLocalizedPattern(newPattern);
-        return sdf2.format(date);
+        return ICUServiceBuilder.formatWithOrdinalHack(sdf, calendar, date, cldrFile);
     }
 
     private void addRelatedAvailable(
@@ -3824,6 +3838,32 @@ public class ExampleGenerator {
                                 MessageFormat.format(
                                         keyTypePattern, keyName, setBackground(value)));
                 examples.add(combined);
+            }
+        } else if (parts.getElement(-1).equals("typeValue")) {
+            final String COL_ALTERNATE =
+                    "//ldml/localeDisplayNames/keys/key[@type=\"colAlternate\"]";
+            String type = parts.getAttributeValue(-1, "type");
+            String exampleValue = getCldrFile().getStringValue(COL_ALTERNATE);
+            if (exampleValue == null || exampleValue.isEmpty()) {
+                exampleValue = englishFile.getStringValue(COL_ALTERNATE);
+            }
+            if (YES_NO.contains(type)) {
+                for (final String t : YES_NO) {
+                    if (type.equals(t)) {
+                        examples.add(exampleValue + ": " + setBackground(value));
+                    } else {
+                        // show all others that are present
+                        String otherValue =
+                                getCldrFile()
+                                        .getStringValue(
+                                                "//ldml/localeDisplayNames/typeValues/typeValue[@type=\""
+                                                        + t
+                                                        + "\"]");
+                        if (otherValue != null && !otherValue.isEmpty()) {
+                            examples.add(exampleValue + ": " + otherValue);
+                        }
+                    }
+                }
             }
         }
     }
